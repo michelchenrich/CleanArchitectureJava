@@ -1,11 +1,14 @@
 package hm;
 
+import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import hm.usecases.customer.Customer;
 import hm.usecases.customer.CustomerUseCaseFactory;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+@RunWith(HierarchicalContextRunner.class)
 public class CustomerUseCasesTest {
     private FakeResponder responder;
     private FakeRequest request;
@@ -18,148 +21,151 @@ public class CustomerUseCasesTest {
         factory = new CustomerUseCaseFactory(gateway);
     }
 
-    @Test
-    public void readNonexistentCustomer() {
-        presentCustomer("nonexistent-id");
+    public class ReadTests {
+        @Test
+        public void readNonexistentCustomer() {
+            presentCustomer("nonexistent-id");
 
-        assertTrue(responder.customerNotFound);
+            assertTrue(responder.customerNotFound);
+        }
+
+        @Test
+        public void readPresentableCustomer() {
+            String id1 = createCustomer("First", "Last");
+            String id2 = createCustomer("First 1", "Last 2");
+
+            assertPresentableCustomer(id2, "Last 2, First 1");
+            assertPresentableCustomer(id1, "Last, First");
+        }
+
+        private void assertPresentableCustomer(String id, String name) {
+            presentCustomer(id);
+            assertFalse(responder.customerNotFound);
+            assertEquals(name, responder.presentableCustomer.getName());
+        }
+
+        private void presentCustomer(String id) {
+            request = new FakeRequest();
+            request.id = id;
+            responder = new FakeResponder();
+            factory.makePresenter(request, responder).execute();
+        }
     }
 
-    @Test
-    public void readPresentableCustomer() {
-        String id1 = createCustomer("First", "Last");
-        String id2 = createCustomer("First 1", "Last 2");
+    private abstract class PersistenceTests {
+        @Test
+        public void validations() {
+            act("", "Last");
+            assertValidationError(responder.firstNameIsEmpty);
 
-        assertPresentableCustomer(id2, "Last 2, First 1");
-        assertPresentableCustomer(id1, "Last, First");
+            act(" \r\n  ", "Last");
+            assertValidationError(responder.firstNameIsEmpty);
+
+            act(null, "Last");
+            assertValidationError(responder.firstNameIsEmpty);
+
+            act("First", "");
+            assertValidationError(responder.lastNameIsEmpty);
+
+            act("First", " \r\n  ");
+            assertValidationError(responder.lastNameIsEmpty);
+
+            act("First", null);
+            assertValidationError(responder.lastNameIsEmpty);
+
+            act(null, null);
+            assertValidationError(responder.firstNameIsEmpty && responder.lastNameIsEmpty);
+        }
+
+        protected void assertPersisted(String id, String firstName, String lastName) {
+            Customer customer = gateway.findById(id);
+            assertEquals(firstName, customer.getFirstName());
+            assertEquals(lastName, customer.getLastName());
+        }
+
+        protected abstract void act(String firstName, String lastName);
+
+        protected abstract void assertNothingWasPersisted();
+
+        private void assertValidationError(boolean messageWasSent) {
+            assertTrue(messageWasSent);
+            assertNothingWasPersisted();
+        }
     }
 
-    @Test
-    public void cannotCreateCustomerWithInvalidInput() {
-        createCustomer("", "Last");
-        assertTrue(responder.firstNameIsEmpty);
-        assertNull(responder.createdWithId);
+    public class CreateTests extends PersistenceTests {
+        @Test
+        public void createCustomerThenReadItBack() {
+            String id = createCustomer("First", "Last");
+            assertPersisted(id, "First", "Last");
+        }
 
-        createCustomer(" \r\n  ", "Last");
-        assertTrue(responder.firstNameIsEmpty);
-        assertNull(responder.createdWithId);
+        protected void act(String firstName, String lastName) {
+            createCustomer(firstName, lastName);
+        }
 
-        createCustomer(null, "Last");
-        assertTrue(responder.firstNameIsEmpty);
-        assertNull(responder.createdWithId);
-
-        createCustomer("First", "");
-        assertTrue(responder.lastNameIsEmpty);
-        assertNull(responder.createdWithId);
-
-        createCustomer("First", " \r\n  ");
-        assertTrue(responder.lastNameIsEmpty);
-        assertNull(responder.createdWithId);
-
-        createCustomer("First", null);
-        assertTrue(responder.lastNameIsEmpty);
-        assertNull(responder.createdWithId);
-
-        createCustomer(null, null);
-        assertTrue(responder.firstNameIsEmpty);
-        assertTrue(responder.lastNameIsEmpty);
-        assertNull(responder.createdWithId);
+        protected void assertNothingWasPersisted() {
+            assertNull(responder.createdWithId);
+        }
     }
 
-    @Test
-    public void createCustomerThenReadItBack() {
-        String id = createCustomer("First", "Last");
-        assertPersisted(id, "First", "Last");
+    public class UpdateTests extends PersistenceTests {
+        private String id;
+
+        @Before
+        public void setUp() {
+            id = createCustomer("First", "Last");
+        }
+
+        @Test
+        public void cannotUpdateNonexistentCustomer() {
+            updateCustomer("nonexistent-id", "First", "Last");
+            assertTrue(responder.customerNotFound);
+            assertFalse(responder.firstNameIsEmpty);
+            assertFalse(responder.lastNameIsEmpty);
+
+            updateCustomer("nonexistent-id", null, "");
+            assertTrue(responder.customerNotFound);
+            assertTrue(responder.firstNameIsEmpty);
+            assertTrue(responder.lastNameIsEmpty);
+        }
+
+        @Test
+        public void updateCustomerThenReadItBack1() {
+            updateCustomer(id, "First 2", "Last 2");
+            assertPersisted(id, "First 2", "Last 2");
+        }
+
+        @Test
+        public void updateCustomerThenReadItBack2() {
+            updateCustomer(id, "First 3", "Last 3");
+            assertPersisted(id, "First 3", "Last 3");
+        }
+
+        protected void act(String firstName, String lastName) {
+            updateCustomer(id, firstName, lastName);
+        }
+
+        protected void assertNothingWasPersisted() {
+            assertPersisted(id, "First", "Last");
+        }
+
+        private void updateCustomer(String id, String firstName, String lastName) {
+            request = new FakeRequest();
+            request.id = id;
+            request.firstName = firstName;
+            request.lastName = lastName;
+            responder = new FakeResponder();
+            factory.makeUpdater(request, responder).execute();
+        }
     }
 
-    @Test
-    public void cannotUpdateCustomerWithInvalidInput() {
-        String id = createCustomer("First", "Last");
-
-        updateCustomer(id, "", "Last");
-        assertTrue(responder.firstNameIsEmpty);
-        assertPersisted(id, "First", "Last");
-
-        updateCustomer(id, " \r\n  ", "Last");
-        assertTrue(responder.firstNameIsEmpty);
-        assertPersisted(id, "First", "Last");
-
-        updateCustomer(id, null, "Last");
-        assertTrue(responder.firstNameIsEmpty);
-        assertPersisted(id, "First", "Last");
-
-        updateCustomer(id, "First", "");
-        assertTrue(responder.lastNameIsEmpty);
-        assertPersisted(id, "First", "Last");
-
-        updateCustomer(id, "First", " \r\n  ");
-        assertTrue(responder.lastNameIsEmpty);
-        assertPersisted(id, "First", "Last");
-
-        updateCustomer(id, "First", null);
-        assertTrue(responder.lastNameIsEmpty);
-        assertPersisted(id, "First", "Last");
-
-        updateCustomer(id, null, null);
-        assertTrue(responder.firstNameIsEmpty);
-        assertTrue(responder.lastNameIsEmpty);
-        assertPersisted(id, "First", "Last");
-    }
-
-    @Test
-    public void cannotUpdateNonexistentCustomer() {
-        updateCustomer("nonexistent-id", "First", "Last");
-        assertTrue(responder.customerNotFound);
-        assertFalse(responder.firstNameIsEmpty);
-        assertFalse(responder.lastNameIsEmpty);
-
-        updateCustomer("nonexistent-id", null, "");
-        assertTrue(responder.customerNotFound);
-        assertTrue(responder.firstNameIsEmpty);
-        assertTrue(responder.lastNameIsEmpty);
-    }
-
-    @Test
-    public void updateCustomerThenReadItBack() {
-        String id = createCustomer("First", "Last");
-        updateCustomer(id, "First 2", "Last 2");
-        assertPersisted(id, "First 2", "Last 2");
-    }
-
-    private void updateCustomer(String id, String firstName, String lastName) {
-        request = new FakeRequest();
-        request.id = id;
-        request.firstName = firstName;
-        request.lastName = lastName;
-        responder = new FakeResponder();
-        factory.makeUpdater(request, responder).execute();
-    }
-
-    private String createCustomer(String firstName, String lastName) {
+    protected String createCustomer(String firstName, String lastName) {
         request = new FakeRequest();
         request.firstName = firstName;
         request.lastName = lastName;
         responder = new FakeResponder();
         factory.makeCreator(request, responder).execute();
         return responder.createdWithId;
-    }
-
-    private void presentCustomer(String id) {
-        request = new FakeRequest();
-        request.id = id;
-        responder = new FakeResponder();
-        factory.makePresenter(request, responder).execute();
-    }
-
-    private void assertPresentableCustomer(String id, String name) {
-        presentCustomer(id);
-        assertFalse(responder.customerNotFound);
-        assertEquals(name, responder.presentableCustomer.getName());
-    }
-
-    private void assertPersisted(String id, String firstName, String lastName) {
-        Customer customer = gateway.findById(id);
-        assertEquals(firstName, customer.getFirstName());
-        assertEquals(lastName, customer.getLastName());
     }
 }

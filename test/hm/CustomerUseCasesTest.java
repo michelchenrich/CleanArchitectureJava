@@ -55,25 +55,25 @@ public class CustomerUseCasesTest {
     private abstract class PersistenceTests {
         @Test
         public void validations() {
-            act("", "Last");
+            executeUseCase("", "Last");
             assertValidationError(responder.firstNameIsEmpty);
 
-            act(" \r\n  ", "Last");
+            executeUseCase(" \r\n  ", "Last");
             assertValidationError(responder.firstNameIsEmpty);
 
-            act(null, "Last");
+            executeUseCase(null, "Last");
             assertValidationError(responder.firstNameIsEmpty);
 
-            act("First", "");
+            executeUseCase("First", "");
             assertValidationError(responder.lastNameIsEmpty);
 
-            act("First", " \r\n  ");
+            executeUseCase("First", " \r\n  ");
             assertValidationError(responder.lastNameIsEmpty);
 
-            act("First", null);
+            executeUseCase("First", null);
             assertValidationError(responder.lastNameIsEmpty);
 
-            act(null, null);
+            executeUseCase(null, null);
             assertValidationError(responder.firstNameIsEmpty && responder.lastNameIsEmpty);
         }
 
@@ -83,13 +83,13 @@ public class CustomerUseCasesTest {
             assertEquals(lastName, customer.getLastName());
         }
 
-        protected abstract void act(String firstName, String lastName);
+        protected abstract void executeUseCase(String firstName, String lastName);
 
-        protected abstract void assertNothingWasPersisted();
+        protected abstract void assertNothingChanged();
 
         private void assertValidationError(boolean messageWasSent) {
             assertTrue(messageWasSent);
-            assertNothingWasPersisted();
+            assertNothingChanged();
         }
     }
 
@@ -100,11 +100,11 @@ public class CustomerUseCasesTest {
             assertPersisted(id, "First", "Last");
         }
 
-        protected void act(String firstName, String lastName) {
+        protected void executeUseCase(String firstName, String lastName) {
             createCustomer(firstName, lastName);
         }
 
-        protected void assertNothingWasPersisted() {
+        protected void assertNothingChanged() {
             assertNull(responder.createdWithId);
         }
     }
@@ -142,11 +142,11 @@ public class CustomerUseCasesTest {
             assertPersisted(id, "First 3", "Last 3");
         }
 
-        protected void act(String firstName, String lastName) {
+        protected void executeUseCase(String firstName, String lastName) {
             updateCustomer(id, firstName, lastName);
         }
 
-        protected void assertNothingWasPersisted() {
+        protected void assertNothingChanged() {
             assertPersisted(id, "First", "Last");
         }
 

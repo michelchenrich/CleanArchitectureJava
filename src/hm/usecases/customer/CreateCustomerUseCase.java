@@ -21,7 +21,8 @@ public class CreateCustomerUseCase implements UseCase {
     }
 
     public void execute() {
-        responder.createdWithId(gateway.persist(makeCustomer()).getId());
+        Customer customer = gateway.persist(makeCustomer());
+        responder.createdWithId(customer.getId());
     }
 
     private Customer makeCustomer() {

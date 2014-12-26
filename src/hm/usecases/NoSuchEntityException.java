@@ -1,13 +1,13 @@
 package hm.usecases;
 
 public class NoSuchEntityException extends RuntimeException {
-    private String key;
+    private String id;
 
     public NoSuchEntityException(String id) {
-        this.key = id;
+        this.id = id;
     }
 
     public String getId() {
-        return key;
+        return id;
     }
 }

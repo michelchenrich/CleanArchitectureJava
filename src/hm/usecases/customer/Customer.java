@@ -1,6 +1,6 @@
 package hm.usecases.customer;
 
-import hm.usecases.commons.Identifiable;
+import hm.usecases.Identifiable;
 
 public class Customer implements Identifiable<Customer> {
     private String id;

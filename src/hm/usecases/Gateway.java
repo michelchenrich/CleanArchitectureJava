@@ -3,9 +3,9 @@ package hm.usecases;
 import hm.usecases.commons.Identifiable;
 
 public interface Gateway<TEntity extends Identifiable> {
-    boolean containsWithId(String key);
+    boolean containsWithId(String id);
 
     TEntity persist(TEntity identifiable);
 
-    TEntity findById(String key);
+    TEntity findById(String id);
 }

@@ -1,7 +1,7 @@
 package hm;
 
 import hm.usecases.Gateway;
-import hm.usecases.NoSuchKeyException;
+import hm.usecases.NoSuchEntityException;
 import hm.usecases.customer.Customer;
 
 import java.util.HashMap;
@@ -11,8 +11,8 @@ class FakeGateway implements Gateway<Customer> {
     private Map<String, Customer> customers = new HashMap<String, Customer>();
     private int incrementalId;
 
-    public boolean containsWithId(String key) {
-        return customers.containsKey(key);
+    public boolean containsWithId(String id) {
+        return customers.containsKey(id);
     }
 
     public Customer persist(Customer customer) {
@@ -22,9 +22,9 @@ class FakeGateway implements Gateway<Customer> {
         return customer;
     }
 
-    public Customer findById(String key) {
-        if (!containsWithId(key)) throw new NoSuchKeyException(key);
-        return customers.get(key);
+    public Customer findById(String id) {
+        if (!containsWithId(id)) throw new NoSuchEntityException(id);
+        return customers.get(id);
     }
 
     private String nextId() {

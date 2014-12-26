@@ -1,7 +1,7 @@
 package hm;
 
 import hm.usecases.Gateway;
-import hm.usecases.NoSuchKeyException;
+import hm.usecases.NoSuchEntityException;
 import hm.usecases.customer.Customer;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -25,30 +25,38 @@ public class CustomerGatewayTest {
     }
 
     @Test
-    public void afterPuttingMustHaveId() {
-        Customer customer = Customer.create().withId("id").with("First", "Last");
-        customers.persist(customer);
-        assertTrue(customers.containsWithId("id"));
+    public void afterPersistingMustComeUpWithNewId() {
+        Customer customer = Customer.create().with("First", "Last");
+        assertTrue(customer.getId().isEmpty());
+        customer = customers.persist(customer);
+        assertFalse(customer.getId().isEmpty());
+    }
+
+    @Test
+    public void afterPersistingMustHaveId() {
+        Customer customer = Customer.create().with("First", "Last");
+        customer = customers.persist(customer);
+        assertTrue(customers.containsWithId(customer.getId()));
         assertFalse(customers.containsWithId("any-other"));
     }
 
     @Test
-    public void afterPuttingMustReturnSameValue() {
-        Customer original = Customer.create().withId("id").with("First", "Last");
-        customers.persist(original);
-        Customer retrieved = customers.findById("id");
+    public void afterPersistingMustReturnSameValues() {
+        Customer original = Customer.create().with("First", "Last");
+        original = customers.persist(original);
+        Customer retrieved = customers.findById(original.getId());
         assertEquals(original.getId(), retrieved.getId());
         assertEquals(original.getFirstName(), retrieved.getFirstName());
         assertEquals(original.getLastName(), retrieved.getLastName());
     }
 
     @Test
-    public void throwsExceptionWhenGettingUnknownKey() {
+    public void throwsExceptionWhenGettingUnknownId() {
         try {
             customers.findById("1");
             fail();
-        } catch (NoSuchKeyException exception) {
-            assertEquals("1", exception.getKey());
+        } catch (NoSuchEntityException exception) {
+            assertEquals("1", exception.getId());
         }
     }
 }

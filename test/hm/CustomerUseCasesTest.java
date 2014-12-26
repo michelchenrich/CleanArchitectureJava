@@ -15,7 +15,7 @@ public class CustomerUseCasesTest {
     @Before
     public void setUp() {
         gateway = new FakeGateway();
-        factory = new CustomerUseCaseFactory(new FakeContext(gateway));
+        factory = new CustomerUseCaseFactory(gateway);
     }
 
     @Test

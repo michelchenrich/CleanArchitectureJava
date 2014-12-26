@@ -1,6 +1,5 @@
 package hm.usecases.customer;
 
-import hm.usecases.Context;
 import hm.usecases.Gateway;
 import hm.usecases.UseCase;
 import hm.usecases.commons.IdBasedRequest;
@@ -9,23 +8,23 @@ import hm.usecases.commons.ValidatedUseCase;
 import hm.usecases.customer.PresentCustomerResponder.PresentableCustomer;
 
 public class PresentCustomerUseCase implements UseCase {
-    private Gateway<Customer> customers;
+    private Gateway<Customer> gateway;
     private IdBasedRequest request;
     private PresentCustomerResponder responder;
 
-    public static UseCase create(Context context, IdBasedRequest request, PresentCustomerResponder responder) {
-        PresentCustomerUseCase useCase = new PresentCustomerUseCase(context, request, responder);
-        return new ValidatedUseCase(useCase, responder, new IdentityValidation(request, context.getCustomers()));
+    public static UseCase create(Gateway<Customer> gateway, IdBasedRequest request, PresentCustomerResponder responder) {
+        UseCase useCase = new PresentCustomerUseCase(gateway, request, responder);
+        return new ValidatedUseCase(useCase, responder, new IdentityValidation(request, gateway));
     }
 
-    private PresentCustomerUseCase(Context context, IdBasedRequest request, PresentCustomerResponder responder) {
-        customers = context.getCustomers();
+    private PresentCustomerUseCase(Gateway<Customer> gateway, IdBasedRequest request, PresentCustomerResponder responder) {
+        this.gateway = gateway;
         this.request = request;
         this.responder = responder;
     }
 
     public void execute() {
-        Customer customer = customers.findById(request.getId());
+        Customer customer = gateway.findById(request.getId());
         responder.customerFound(makePresentable(customer));
     }
 

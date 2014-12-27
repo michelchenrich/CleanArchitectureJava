@@ -1,24 +1,19 @@
-package hm;
+package hm.usecases.sale;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import hm.usecases.sale.Cart;
-import hm.usecases.sale.CartItem;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(HierarchicalContextRunner.class)
-public class SaleUseCaseTest extends UseCaseTest {
-
+public class AddToCartUseCaseTest extends CartUseCaseTest {
     private String customerId;
     private String productId;
 
     @Before
     public void setUpForSale() {
-        customerId = createCustomer("First", "Last");
-        productId = createProduct("Name", "Description", "PictureURI", 10.0);
+        customerId = createDefaultCustomer();
+        productId = createDefaultProduct();
         addUnitToProduct(productId, 1);
     }
 
@@ -102,23 +97,16 @@ public class SaleUseCaseTest extends UseCaseTest {
         assertInCart(customerId, productId, 1, 10.0);
         assertInCart(customerId, productId2, 5, 12.0);
         assertInCart(customerId, productId3, 9, 15.0);
-        assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 0);
     }
 
-    private void assertNotInCart(String customerId, String productId) {
-        Cart cart = presentCustomerCart(customerId);
-        for (CartItem item : cart.getItems())
-            if (item.getProductId().equals(productId))
-                fail();
-    }
 
-    private void assertInCart(String customerId, String productId, int numberOfUnits, double price) {
-        Cart cart = presentCustomerCart(customerId);
-        for (CartItem item : cart.getItems())
-            if (item.getProductId().equals(productId) && item.getPrice() == price) {
-                assertEquals(numberOfUnits, item.getNumberOfUnits());
-                return;
-            }
-        fail();
+    @Test
+    public void addingSameProductToCartTwiceSimplySumsTheUnits() throws Exception {
+        addUnitToProduct(productId, 10);
+
+        addProductToCart(customerId, productId, 5);
+        addProductToCart(customerId, productId, 5);
+
+        assertInCart(customerId, productId, 10, 10.0);
     }
 }

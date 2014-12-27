@@ -8,8 +8,12 @@ public class CartItem {
     private double price;
 
     CartItem(Product product, int numberOfUnits) {
-        this.productId = product.getId();
-        this.price = product.getPrice();
+        this(product.getId(), product.getPrice(), numberOfUnits);
+    }
+
+    CartItem(String productId, double price, int numberOfUnits) {
+        this.productId = productId;
+        this.price = price;
         this.numberOfUnits = numberOfUnits;
     }
 
@@ -24,4 +28,9 @@ public class CartItem {
     public double getPrice() {
         return price;
     }
+
+    public CartItem withMoreUnits(int numberOfUnits) {
+        return new CartItem(productId, price, this.numberOfUnits + numberOfUnits);
+    }
+
 }

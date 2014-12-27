@@ -19,7 +19,7 @@ public class CustomerUseCasesTest extends UseCaseTest {
 
         @Test
         public void readPresentableCustomer() {
-            String id1 = createCustomer("First", "Last");
+            String id1 = createDefaultCustomer();
             String id2 = createCustomer("First 1", "Last 2");
 
             assertPresented(id2, "Last 2, First 1");
@@ -61,7 +61,7 @@ public class CustomerUseCasesTest extends UseCaseTest {
     public class DataValidationsOnCreation extends DataValidationsOnPersistence {
         @Test
         public void createCustomerThenReadItBack() {
-            String id = createCustomer("First", "Last");
+            String id = createDefaultCustomer();
             assertPresented(id, "Last" + ", " + "First");
         }
 
@@ -80,7 +80,7 @@ public class CustomerUseCasesTest extends UseCaseTest {
 
         @Before
         public void setUp() {
-            id = createCustomer("First", "Last");
+            id = createDefaultCustomer();
         }
 
         @Test

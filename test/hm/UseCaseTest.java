@@ -106,6 +106,15 @@ public abstract class UseCaseTest {
         saleUseCaseFactory.makeCartAdder(request, responder).execute();
     }
 
+    protected void dropProductFromCart(String customerId, String productId) {
+        FakeRequest request = new FakeRequest();
+        request.customerId = customerId;
+        request.productId = productId;
+        responder = new FakeResponder();
+        saleUseCaseFactory.makeCartDropper(request, responder).execute();
+
+    }
+
     protected void assertFound() {
         assertFalse(responder.idIsInvalid);
     }
@@ -137,5 +146,13 @@ public abstract class UseCaseTest {
 
     protected void assertNothingCreated() {
         assertNull(responder.createdWithId);
+    }
+
+    protected String createDefaultProduct() {
+        return createProduct("Name", "Description", "PictureURI", 10.0);
+    }
+
+    protected String createDefaultCustomer() {
+        return createCustomer("First", "Last");
     }
 }

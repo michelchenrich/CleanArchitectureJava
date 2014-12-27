@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 public class ProductUseCasesTest extends UseCaseTest {
     @Test
     public void whenJustCreatedShouldHaveNoUnits() {
-        String id = createProduct("Name", "Description", "PictureURI", 10.0);
+        String id = createDefaultProduct();
 
         assertProduct(id, "Name", "Description", "PictureURI", 10.0, 0);
     }
@@ -26,7 +26,7 @@ public class ProductUseCasesTest extends UseCaseTest {
 
     @Test
     public void afterUpdating1() {
-        String id = createProduct("Name", "Description", "PictureURI", 10.0);
+        String id = createDefaultProduct();
         addUnitToProduct(id, 2);
         addUnitToProduct(id, 3);
         updateProduct(id, "New Name", "New Description", "New PictureURI", 5.0);

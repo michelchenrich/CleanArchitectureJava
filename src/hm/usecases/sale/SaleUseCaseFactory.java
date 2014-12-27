@@ -3,6 +3,7 @@ package hm.usecases.sale;
 import hm.usecases.Gateway;
 import hm.usecases.UseCase;
 import hm.usecases.commons.IdBasedRequest;
+import hm.usecases.commons.IdentityResponder;
 import hm.usecases.customer.Customer;
 import hm.usecases.product.Product;
 
@@ -21,5 +22,9 @@ public class SaleUseCaseFactory {
 
     public UseCase makeCartPresenter(IdBasedRequest request, PresentCustomerCartResponder responder) {
         return PresentCustomerCartUseCase.create(customerGateway, request, responder);
+    }
+
+    public UseCase makeCartDropper(CartMovementRequest request, IdentityResponder responder) {
+        return DropProductFromCartUseCase.create(customerGateway, productGateway, request, responder);
     }
 }

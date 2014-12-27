@@ -16,14 +16,36 @@ public class Cart {
         this.items = items;
     }
 
-    public Cart withNewItem(Product product, int numberOfUnits) {
-        ImmutableList.Builder<CartItem> builder = ImmutableList.builder();
-        builder.addAll(items);
-        builder.add(new CartItem(product, numberOfUnits));
-        return new Cart(builder.build());
-    }
-
     public List<CartItem> getItems() {
         return items;
+    }
+
+    public int getNumberOfUnitsOf(Product product) {
+        for (CartItem item : items)
+            if (item.getProductId().equals(product.getId()))
+                return item.getNumberOfUnits();
+        return 0;
+    }
+
+    public Cart withNewItem(Product product, int numberOfUnits) {
+        ImmutableList.Builder<CartItem> builder = ImmutableList.builder();
+        CartItem newItem = new CartItem(product, 0);
+        for (CartItem item : items)
+            if (item.getProductId().equals(product.getId()))
+                newItem = item;
+            else
+                builder.add(item);
+        builder.add(newItem.withMoreUnits(numberOfUnits));
+        List<CartItem> newItems = builder.build();
+        return new Cart(newItems);
+    }
+
+    public Cart withoutItem(Product product) {
+        ImmutableList.Builder<CartItem> builder = ImmutableList.builder();
+        for (CartItem item : items)
+            if (!item.getProductId().equals(product.getId()))
+                builder.add(item);
+        List<CartItem> newItems = builder.build();
+        return new Cart(newItems);
     }
 }

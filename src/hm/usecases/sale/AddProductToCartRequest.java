@@ -1,9 +1,5 @@
 package hm.usecases.sale;
 
-public interface AddProductToCartRequest {
-    String getCustomerId();
-
-    String getProductId();
-
+public interface AddProductToCartRequest extends CartMovementRequest {
     int getNumberOfUnits();
 }

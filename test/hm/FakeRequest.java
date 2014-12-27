@@ -7,8 +7,9 @@ import hm.usecases.product.AddProductUnitRequest;
 import hm.usecases.product.PersistProductRequest;
 import hm.usecases.product.UpdateProductRequest;
 import hm.usecases.sale.AddProductToCartRequest;
+import hm.usecases.sale.CartMovementRequest;
 
-class FakeRequest implements IdBasedRequest, CustomerPersistenceRequest, UpdateCustomerRequest, PersistProductRequest, AddProductUnitRequest, UpdateProductRequest, AddProductToCartRequest {
+class FakeRequest implements IdBasedRequest, CustomerPersistenceRequest, UpdateCustomerRequest, PersistProductRequest, AddProductUnitRequest, UpdateProductRequest, AddProductToCartRequest, CartMovementRequest {
     public String id;
     public String firstName;
     public String lastName;

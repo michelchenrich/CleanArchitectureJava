@@ -41,6 +41,10 @@ public class Customer implements Identifiable<Customer> {
         return cart;
     }
 
+    public int getNumberOfUnitsInCartOf(Product product) {
+        return cart.getNumberOfUnitsOf(product);
+    }
+
     public Customer withId(String id) {
         return new Customer(id, firstName, lastName, cart);
     }
@@ -55,5 +59,9 @@ public class Customer implements Identifiable<Customer> {
 
     public Customer withNewItemInCart(Product product, int numberOfUnits) {
         return new Customer(id, firstName, lastName, cart.withNewItem(product, numberOfUnits));
+    }
+
+    public Customer withoutItemInCart(Product product) {
+        return new Customer(id, firstName, lastName, cart.withoutItem(product));
     }
 }

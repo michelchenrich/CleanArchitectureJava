@@ -21,6 +21,10 @@ public class Customer implements Identifiable<Customer> {
         return id;
     }
 
+    public String getName() {
+        return String.format("%s, %s", lastName, firstName);
+    }
+
     public String getFirstName() {
         return firstName;
     }

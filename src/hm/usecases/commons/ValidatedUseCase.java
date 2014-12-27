@@ -4,18 +4,16 @@ import hm.usecases.UseCase;
 
 public class ValidatedUseCase implements UseCase {
     private UseCase useCase;
-    private Object responder;
     private Validation validation;
 
-    public ValidatedUseCase(UseCase useCase, Object responder, Validation... validations) {
+    public ValidatedUseCase(UseCase useCase, Validation... validations) {
         this.useCase = useCase;
-        this.responder = responder;
         this.validation = new ValidationCombiner(validations);
     }
 
     public void execute() {
-        if (validation.isOK()) useCase.execute();
-        else validation.sendErrorsTo(responder);
+        if (validation.hasErrors()) validation.sendErrors();
+        else useCase.execute();
     }
 
     private static class ValidationCombiner implements Validation {
@@ -25,15 +23,15 @@ public class ValidatedUseCase implements UseCase {
             this.validations = validations;
         }
 
-        public boolean isOK() {
+        public boolean hasErrors() {
             for (Validation validation : validations)
-                if (!validation.isOK()) return false;
-            return true;
+                if (validation.hasErrors()) return true;
+            return false;
         }
 
-        public void sendErrorsTo(Object output) {
+        public void sendErrors() {
             for (Validation validation : validations)
-                validation.sendErrorsTo(output);
+                validation.sendErrors();
         }
     }
 }

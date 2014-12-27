@@ -11,7 +11,7 @@ public class UpdateCustomerUseCase implements UseCase {
 
     public static UseCase create(Gateway<Customer> gateway, UpdateCustomerRequest request, UpdateCustomerResponder responder) {
         UseCase useCase = new UpdateCustomerUseCase(gateway, request);
-        return new ValidatedUseCase(useCase, responder, new IdentityValidation(request, gateway), new CustomerDataValidation(request));
+        return new ValidatedUseCase(useCase, new IdentityValidation(gateway, request, responder), new CustomerDataValidation(request, responder));
     }
 
     private UpdateCustomerUseCase(Gateway<Customer> gateway, UpdateCustomerRequest request) {

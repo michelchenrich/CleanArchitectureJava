@@ -1,30 +1,30 @@
 package hm;
 
 import hm.usecases.Gateway;
+import hm.usecases.Identifiable;
 import hm.usecases.NoSuchEntityException;
-import hm.usecases.customer.Customer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-class FakeGateway implements Gateway<Customer> {
-    private Map<String, Customer> customers = new HashMap<String, Customer>();
+class FakeGateway<TEntity extends Identifiable<TEntity>> implements Gateway<TEntity> {
+    private Map<String, TEntity> entities = new HashMap<>();
     private int incrementalId;
 
     public boolean containsWithId(String id) {
-        return customers.containsKey(id);
+        return entities.containsKey(id);
     }
 
-    public Customer persist(Customer customer) {
+    public TEntity persist(TEntity customer) {
         if (customer.getId().isEmpty())
             customer = customer.withId(nextId());
-        customers.put(customer.getId(), customer);
+        entities.put(customer.getId(), customer);
         return customer;
     }
 
-    public Customer findById(String id) {
+    public TEntity findById(String id) {
         if (!containsWithId(id)) throw new NoSuchEntityException(id);
-        return customers.get(id);
+        return entities.get(id);
     }
 
     private String nextId() {

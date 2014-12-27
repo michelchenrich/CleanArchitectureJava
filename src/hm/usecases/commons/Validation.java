@@ -1,7 +1,7 @@
 package hm.usecases.commons;
 
 public interface Validation {
-    boolean isOK();
+    boolean hasErrors();
 
-    void sendErrorsTo(Object output);
+    void sendErrors();
 }

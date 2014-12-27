@@ -12,12 +12,12 @@ import org.junit.runner.RunWith;
 public class CustomerUseCasesTest {
     private FakeResponder responder;
     private FakeRequest request;
-    private FakeGateway gateway;
+    private FakeGateway<Customer> gateway;
     private CustomerUseCaseFactory factory;
 
     @Before
     public void setUp() {
-        gateway = new FakeGateway();
+        gateway = new FakeGateway<>();
         factory = new CustomerUseCaseFactory(gateway);
     }
 
@@ -26,7 +26,7 @@ public class CustomerUseCasesTest {
         public void readNonexistentCustomer() {
             presentCustomer("nonexistent-id");
 
-            assertTrue(responder.customerNotFound);
+            assertTrue(responder.invalidId);
         }
 
         @Test
@@ -40,8 +40,8 @@ public class CustomerUseCasesTest {
 
         private void assertPresentableCustomer(String id, String name) {
             presentCustomer(id);
-            assertFalse(responder.customerNotFound);
-            assertEquals(name, responder.presentableCustomer.getName());
+            assertFalse(responder.invalidId);
+            assertEquals(name, responder.customer.getName());
         }
 
         private void presentCustomer(String id) {
@@ -77,19 +77,19 @@ public class CustomerUseCasesTest {
             assertValidationError(responder.firstNameIsEmpty && responder.lastNameIsEmpty);
         }
 
-        protected void assertPersisted(String id, String firstName, String lastName) {
-            Customer customer = gateway.findById(id);
-            assertEquals(firstName, customer.getFirstName());
-            assertEquals(lastName, customer.getLastName());
-        }
-
         protected abstract void executeUseCase(String firstName, String lastName);
-
-        protected abstract void assertNothingChanged();
 
         private void assertValidationError(boolean messageWasSent) {
             assertTrue(messageWasSent);
             assertNothingChanged();
+        }
+
+        protected abstract void assertNothingChanged();
+
+        protected void assertPersisted(String id, String firstName, String lastName) {
+            Customer customer = gateway.findById(id);
+            assertEquals(firstName, customer.getFirstName());
+            assertEquals(lastName, customer.getLastName());
         }
     }
 
@@ -120,12 +120,12 @@ public class CustomerUseCasesTest {
         @Test
         public void cannotUpdateNonexistentCustomer() {
             updateCustomer("nonexistent-id", "First", "Last");
-            assertTrue(responder.customerNotFound);
+            assertTrue(responder.invalidId);
             assertFalse(responder.firstNameIsEmpty);
             assertFalse(responder.lastNameIsEmpty);
 
             updateCustomer("nonexistent-id", null, "");
-            assertTrue(responder.customerNotFound);
+            assertTrue(responder.invalidId);
             assertTrue(responder.firstNameIsEmpty);
             assertTrue(responder.lastNameIsEmpty);
         }

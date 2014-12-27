@@ -3,20 +3,21 @@ package hm.usecases.commons;
 import hm.usecases.Gateway;
 
 public class IdentityValidation implements Validation {
-    private String id;
     private Gateway gateway;
+    private IdBasedRequest request;
+    private IdentityResponder responder;
 
-    public IdentityValidation(IdBasedRequest request, Gateway gateway) {
-        id = request.getId();
+    public IdentityValidation(Gateway gateway, IdBasedRequest request, IdentityResponder responder) {
         this.gateway = gateway;
+        this.request = request;
+        this.responder = responder;
     }
 
-    public boolean isOK() {
-        return gateway.containsWithId(id);
+    public boolean hasErrors() {
+        return !gateway.containsWithId(request.getId());
     }
 
-    public void sendErrorsTo(Object output) {
-        IdentityResponder responder = (IdentityResponder) output;
-        responder.invalidId(id);
+    public void sendErrors() {
+        responder.invalidId(request.getId());
     }
 }

@@ -11,7 +11,7 @@ public class CreateCustomerUseCase implements UseCase {
 
     public static UseCase create(Gateway<Customer> gateway, CustomerPersistenceRequest request, CreateCustomerResponder responder) {
         UseCase useCase = new CreateCustomerUseCase(gateway, request, responder);
-        return new ValidatedUseCase(useCase, responder, new CustomerDataValidation(request));
+        return new ValidatedUseCase(useCase, new CustomerDataValidation(request, responder));
     }
 
     private CreateCustomerUseCase(Gateway<Customer> gateway, CustomerPersistenceRequest request, CreateCustomerResponder responder) {

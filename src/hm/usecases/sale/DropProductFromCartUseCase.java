@@ -3,6 +3,9 @@ package hm.usecases.sale;
 import hm.usecases.Gateway;
 import hm.usecases.UseCase;
 import hm.usecases.commons.IdentityResponder;
+import hm.usecases.commons.IdentityValidation;
+import hm.usecases.commons.ValidatedUseCase;
+import hm.usecases.commons.Validation;
 import hm.usecases.customer.Customer;
 import hm.usecases.product.Product;
 
@@ -13,7 +16,10 @@ public class DropProductFromCartUseCase implements UseCase {
     private IdentityResponder responder;
 
     public static UseCase create(Gateway<Customer> customerGateway, Gateway<Product> productGateway, CartMovementRequest request, IdentityResponder responder) {
-        return new DropProductFromCartUseCase(customerGateway, productGateway, request, responder);
+        UseCase useCase = new DropProductFromCartUseCase(customerGateway, productGateway, request, responder);
+        Validation customerIdValidation = new IdentityValidation(customerGateway, request.getCustomerId(), responder);
+        Validation productIdValidation = new IdentityValidation(productGateway, request.getProductId(), responder);
+        return new ValidatedUseCase(useCase, customerIdValidation, productIdValidation);
     }
 
     private DropProductFromCartUseCase(Gateway<Customer> customerGateway, Gateway<Product> productGateway, CartMovementRequest request, IdentityResponder responder) {

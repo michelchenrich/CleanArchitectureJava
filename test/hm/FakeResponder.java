@@ -22,6 +22,7 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
     public boolean pictureURIIsEmpty;
     public boolean priceIsNegative;
     public Cart cart;
+    public boolean numberOfUnitsIsLessThanOne;
 
     public void invalidId(String id) {
         idIsInvalid = true;
@@ -66,5 +67,9 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
 
     public void customerCartFound(Cart cart) {
         this.cart = cart;
+    }
+
+    public void numberOfUnitsIsLessThanOne() {
+        numberOfUnitsIsLessThanOne = true;
     }
 }

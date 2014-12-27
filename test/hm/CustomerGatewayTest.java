@@ -17,11 +17,11 @@ public class CustomerGatewayTest {
 
     @Test
     public void doesNotHaveIdsWhenEmpty() {
-        assertFalse(customers.containsWithId("id"));
-        assertFalse(customers.containsWithId("any"));
-        assertFalse(customers.containsWithId("0"));
-        assertFalse(customers.containsWithId("1"));
-        assertFalse(customers.containsWithId("2"));
+        assertFalse(customers.existsWithId("id"));
+        assertFalse(customers.existsWithId("any"));
+        assertFalse(customers.existsWithId("0"));
+        assertFalse(customers.existsWithId("1"));
+        assertFalse(customers.existsWithId("2"));
     }
 
     @Test
@@ -36,8 +36,8 @@ public class CustomerGatewayTest {
     public void afterPersistingMustHaveId() {
         Customer customer = makeCustomer();
         customer = customers.persist(customer);
-        assertTrue(customers.containsWithId(customer.getId()));
-        assertFalse(customers.containsWithId("any-other"));
+        assertTrue(customers.existsWithId(customer.getId()));
+        assertFalse(customers.existsWithId("any-other"));
     }
 
     @Test

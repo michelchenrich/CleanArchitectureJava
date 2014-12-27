@@ -11,7 +11,7 @@ class FakeGateway<TEntity extends Identifiable<TEntity>> implements Gateway<TEnt
     private Map<String, TEntity> entities = new HashMap<>();
     private int incrementalId;
 
-    public boolean containsWithId(String id) {
+    public boolean existsWithId(String id) {
         return entities.containsKey(id);
     }
 
@@ -23,7 +23,7 @@ class FakeGateway<TEntity extends Identifiable<TEntity>> implements Gateway<TEnt
     }
 
     public TEntity findById(String id) {
-        if (!containsWithId(id)) throw new NoSuchEntityException(id);
+        if (!existsWithId(id)) throw new NoSuchEntityException(id);
         return entities.get(id);
     }
 

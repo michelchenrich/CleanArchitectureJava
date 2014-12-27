@@ -18,10 +18,10 @@ public class IdentityValidation implements Validation {
     }
 
     public boolean hasErrors() {
-        return !gateway.containsWithId(id);
+        return !gateway.existsWithId(id);
     }
 
     public void sendErrors() {
-        if (!gateway.containsWithId(id)) responder.invalidId(id);
+        if (!gateway.existsWithId(id)) responder.invalidId(id);
     }
 }

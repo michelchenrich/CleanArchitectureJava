@@ -53,9 +53,63 @@ public class SaleUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void addToNonexistentProductCart() {
+    public void addNonexistentProductToCart() {
         addProductToCart(customerId, "nonexistent", 1);
         assertNotFound("nonexistent");
+        assertNotInCart(customerId, productId);
+    }
+
+    @Test
+    public void addNoUnitToCart() throws Exception {
+        addProductToCart(customerId, productId, 0);
+        assertErrorsSent("numberOfUnitsIsLessThanOne");
+        assertNotInCart(customerId, productId);
+    }
+
+
+    @Test
+    public void addOnlyAvailableUnitsToCart() throws Exception {
+        addUnitToProduct(productId, 1);
+        addUnitToProduct(productId, 1);
+        addProductToCart(customerId, productId, 100);
+
+        assertInCart(customerId, productId, 3, 10.0);
+        assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 0);
+    }
+
+    @Test
+    public void addLessThanAllAvailableUnitsToCart() throws Exception {
+        addUnitToProduct(productId, 100);
+        addProductToCart(customerId, productId, 100);
+
+        assertInCart(customerId, productId, 100, 10.0);
+        assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 1);
+    }
+
+
+    @Test
+    public void addMultipleItemsToCart() throws Exception {
+        String productId2 = createProduct("Name 2", "Description 2", "PictureURI 2", 12.0);
+        addUnitToProduct(productId2, 10);
+
+        String productId3 = createProduct("Name 3", "Description 3", "PictureURI 3", 15.0);
+        addUnitToProduct(productId3, 9);
+
+        addProductToCart(customerId, productId, 1);
+        addProductToCart(customerId, productId2, 5);
+        addProductToCart(customerId, productId3, 10);
+
+        assertInCart(customerId, productId, 1, 10.0);
+        assertInCart(customerId, productId2, 5, 12.0);
+        assertInCart(customerId, productId3, 9, 15.0);
+        assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 0);
+    }
+
+    private void assertNotInCart(String customerId, String productId) {
+        Cart cart = presentCustomerCart(customerId);
+        for (CartItem item : cart.getItems())
+            if (item.getProductId().equals(productId))
+                fail();
     }
 
     private void assertInCart(String customerId, String productId, int numberOfUnits, double price) {

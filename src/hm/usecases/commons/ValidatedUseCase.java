@@ -4,34 +4,26 @@ import hm.usecases.UseCase;
 
 public class ValidatedUseCase implements UseCase {
     private UseCase useCase;
-    private Validation validation;
+    private Validation[] validations;
 
     public ValidatedUseCase(UseCase useCase, Validation... validations) {
         this.useCase = useCase;
-        this.validation = new ValidationCombiner(validations);
+        this.validations = validations;
     }
 
     public void execute() {
-        if (validation.hasErrors()) validation.sendErrors();
+        if (hasErrors()) sendErrors();
         else useCase.execute();
     }
 
-    private static class ValidationCombiner implements Validation {
-        private Validation[] validations;
+    private boolean hasErrors() {
+        for (Validation validation : validations)
+            if (validation.hasErrors()) return true;
+        return false;
+    }
 
-        public ValidationCombiner(Validation[] validations) {
-            this.validations = validations;
-        }
-
-        public boolean hasErrors() {
-            for (Validation validation : validations)
-                if (validation.hasErrors()) return true;
-            return false;
-        }
-
-        public void sendErrors() {
-            for (Validation validation : validations)
-                validation.sendErrors();
-        }
+    private void sendErrors() {
+        for (Validation validation : validations)
+            validation.sendErrors();
     }
 }

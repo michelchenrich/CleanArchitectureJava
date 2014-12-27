@@ -7,7 +7,7 @@ public class CartItem {
     private int numberOfUnits;
     private double price;
 
-    public CartItem(Product product, int numberOfUnits) {
+    CartItem(Product product, int numberOfUnits) {
         this.productId = product.getId();
         this.price = product.getPrice();
         this.numberOfUnits = numberOfUnits;

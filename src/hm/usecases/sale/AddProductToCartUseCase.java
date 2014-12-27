@@ -12,29 +12,34 @@ public class AddProductToCartUseCase implements UseCase {
     private Gateway<Customer> customerGateway;
     private Gateway<Product> productGateway;
     private AddProductToCartRequest request;
-    private AddProductToCartResponder responder;
 
     public static UseCase create(Gateway<Customer> customerGateway, Gateway<Product> productGateway, AddProductToCartRequest request, AddProductToCartResponder responder) {
-        UseCase useCase = new AddProductToCartUseCase(customerGateway, productGateway, request, responder);
+        UseCase useCase = new AddProductToCartUseCase(customerGateway, productGateway, request);
         Validation customerIdValidation = new IdentityValidation(customerGateway, request.getCustomerId(), responder);
         Validation productIdValidation = new IdentityValidation(productGateway, request.getProductId(), responder);
-        return new ValidatedUseCase(useCase, customerIdValidation, productIdValidation);
+        Validation numberOfUnitsValidation = new NumberOfUnitsValidation(request, responder);
+        return new ValidatedUseCase(useCase, customerIdValidation, productIdValidation, numberOfUnitsValidation);
     }
 
-    private AddProductToCartUseCase(Gateway<Customer> customerGateway, Gateway<Product> productGateway, AddProductToCartRequest request, AddProductToCartResponder responder) {
+    private AddProductToCartUseCase(Gateway<Customer> customerGateway, Gateway<Product> productGateway, AddProductToCartRequest request) {
         this.customerGateway = customerGateway;
         this.productGateway = productGateway;
         this.request = request;
-        this.responder = responder;
     }
 
     public void execute() {
         Product product = productGateway.findById(request.getProductId());
-        product = product.withLessUnits(request.getNumberOfUnits());
-        productGateway.persist(product);
+        int numberOfUnits = getAvailableNumberOfUnits(product);
 
         Customer customer = customerGateway.findById(request.getCustomerId());
-        customer = customer.withNewItemInCart(product, request.getNumberOfUnits());
-        customerGateway.persist(customer);
+        customerGateway.persist(customer.withNewItemInCart(product, numberOfUnits));
+        productGateway.persist(product.withLessUnits(numberOfUnits));
+    }
+
+    private int getAvailableNumberOfUnits(Product product) {
+        int numberOfUnits = request.getNumberOfUnits();
+        if (numberOfUnits > product.getNumberOfUnits())
+            numberOfUnits = product.getNumberOfUnits();
+        return numberOfUnits;
     }
 }

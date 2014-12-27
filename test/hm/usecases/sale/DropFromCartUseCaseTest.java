@@ -22,6 +22,17 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
     }
 
     @Test
+    public void shouldRemoveOnlyTheDroppedProduct() {
+        String productId2 = createDefaultProduct();
+        addUnitToProduct(productId2, 10);
+        addProductToCart(customerId, productId2, 10);
+
+        dropProductFromCart(customerId, productId);
+        assertNotInCart(customerId, productId);
+        assertInCart(customerId, productId2, 10, 10.0);
+    }
+
+    @Test
     public void dropFromNonexistentCustomersCart() {
         dropProductFromCart("nonexistent", productId);
         assertNotFound("nonexistent");
@@ -32,5 +43,14 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
         dropProductFromCart(customerId, "nonexistent");
         assertNotFound("nonexistent");
         assertInCart(customerId, productId, 10, 10.0);
+    }
+
+    @Test
+    public void droppingAProductThatIsNotInCartShouldHaveNoEffect() {
+        String productId2 = createDefaultProduct();
+
+        dropProductFromCart(customerId, productId2);
+        assertInCart(customerId, productId, 10, 10.0);
+        assertProduct(productId2, "Name", "Description", "PictureURI", 10.0, 0);
     }
 }

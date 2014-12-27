@@ -12,7 +12,8 @@ import hm.usecases.sale.PresentCustomerCartResponder;
 class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, AddProductUnitResponder, UpdateProductResponder, AddProductToCartResponder, PresentCustomerCartResponder {
     public boolean firstNameIsEmpty;
     public boolean lastNameIsEmpty;
-    public boolean invalidId;
+    public String invalidId;
+    public boolean idIsInvalid;
     public String createdWithId;
     public Customer customer;
     public Product product;
@@ -23,7 +24,8 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
     public Cart cart;
 
     public void invalidId(String id) {
-        invalidId = true;
+        idIsInvalid = true;
+        invalidId = id;
     }
 
     public void createdWithId(String id) {

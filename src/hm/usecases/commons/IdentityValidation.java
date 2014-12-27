@@ -4,20 +4,24 @@ import hm.usecases.Gateway;
 
 public class IdentityValidation implements Validation {
     private Gateway gateway;
-    private IdBasedRequest request;
+    private String id;
     private IdentityResponder responder;
 
-    public IdentityValidation(Gateway gateway, IdBasedRequest request, IdentityResponder responder) {
+    public IdentityValidation(Gateway gateway, String id, IdentityResponder responder) {
         this.gateway = gateway;
-        this.request = request;
+        this.id = id;
         this.responder = responder;
     }
 
+    public IdentityValidation(Gateway gateway, IdBasedRequest request, IdentityResponder responder) {
+        this(gateway, request.getId(), responder);
+    }
+
     public boolean hasErrors() {
-        return !gateway.containsWithId(request.getId());
+        return !gateway.containsWithId(id);
     }
 
     public void sendErrors() {
-        responder.invalidId(request.getId());
+        if (!gateway.containsWithId(id)) responder.invalidId(id);
     }
 }

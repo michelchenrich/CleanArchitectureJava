@@ -107,11 +107,12 @@ public abstract class UseCaseTest {
     }
 
     protected void assertFound() {
-        assertFalse(responder.invalidId);
+        assertFalse(responder.idIsInvalid);
     }
 
-    protected void assertNotFound() {
-        assertTrue(responder.invalidId);
+    protected void assertNotFound(String invalidId) {
+        assertTrue(responder.idIsInvalid);
+        assertEquals(invalidId, responder.invalidId);
     }
 
     protected void assertErrorsSent(String... errorMessages) throws Exception {

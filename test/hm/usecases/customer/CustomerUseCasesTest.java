@@ -12,9 +12,9 @@ public class CustomerUseCasesTest extends UseCaseTest {
     public class ReadTests {
         @Test
         public void readNonexistentCustomer() {
-            presentCustomer("nonexistent-id");
+            presentCustomer("nonexistent");
 
-            assertNotFound();
+            assertNotFound("nonexistent");
         }
 
         @Test
@@ -85,12 +85,12 @@ public class CustomerUseCasesTest extends UseCaseTest {
 
         @Test
         public void cannotUpdateNonexistentCustomer() throws Exception {
-            updateCustomer("nonexistent-id", "First", "Last");
-            assertNotFound();
+            updateCustomer("nonexistent", "First", "Last");
+            assertNotFound("nonexistent");
             assertErrorsNotSent("firstNameIsEmpty", "lastNameIsEmpty");
 
-            updateCustomer("nonexistent-id", null, "");
-            assertNotFound();
+            updateCustomer("nonexistent", null, "");
+            assertNotFound("nonexistent");
             assertErrorsSent("firstNameIsEmpty", "lastNameIsEmpty");
         }
 

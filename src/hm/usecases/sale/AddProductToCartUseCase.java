@@ -2,6 +2,9 @@ package hm.usecases.sale;
 
 import hm.usecases.Gateway;
 import hm.usecases.UseCase;
+import hm.usecases.commons.IdentityValidation;
+import hm.usecases.commons.ValidatedUseCase;
+import hm.usecases.commons.Validation;
 import hm.usecases.customer.Customer;
 import hm.usecases.product.Product;
 
@@ -12,7 +15,10 @@ public class AddProductToCartUseCase implements UseCase {
     private AddProductToCartResponder responder;
 
     public static UseCase create(Gateway<Customer> customerGateway, Gateway<Product> productGateway, AddProductToCartRequest request, AddProductToCartResponder responder) {
-        return new AddProductToCartUseCase(customerGateway, productGateway, request, responder);
+        UseCase useCase = new AddProductToCartUseCase(customerGateway, productGateway, request, responder);
+        Validation customerIdValidation = new IdentityValidation(customerGateway, request.getCustomerId(), responder);
+        Validation productIdValidation = new IdentityValidation(productGateway, request.getProductId(), responder);
+        return new ValidatedUseCase(useCase, customerIdValidation, productIdValidation);
     }
 
     private AddProductToCartUseCase(Gateway<Customer> customerGateway, Gateway<Product> productGateway, AddProductToCartRequest request, AddProductToCartResponder responder) {

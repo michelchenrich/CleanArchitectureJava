@@ -1,5 +1,7 @@
 package hm.usecases.sale;
 
-public interface PresentCustomerCartResponder {
+import hm.usecases.commons.IdentityResponder;
+
+public interface PresentCustomerCartResponder extends IdentityResponder {
     void customerCartFound(Cart cart);
 }

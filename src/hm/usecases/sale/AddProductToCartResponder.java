@@ -1,4 +1,6 @@
 package hm.usecases.sale;
 
-public interface AddProductToCartResponder {
+import hm.usecases.commons.IdentityResponder;
+
+public interface AddProductToCartResponder extends IdentityResponder {
 }

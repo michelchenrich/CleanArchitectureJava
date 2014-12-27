@@ -45,19 +45,19 @@ public class ProductUseCasesTest extends UseCaseTest {
         @Test
         public void presentingNonexistentProduct() {
             presentProduct("nonexistent");
-            assertNotFound();
+            assertNotFound("nonexistent");
         }
 
         @Test
         public void updatingNonexistentProduct() {
             updateProduct("nonexistent", "Name", "Description", "PictureURI", 10.0);
-            assertNotFound();
+            assertNotFound("nonexistent");
         }
 
         @Test
         public void addUnitToNonexistentProduct() {
             addUnitToProduct("nonexistent", 10);
-            assertNotFound();
+            assertNotFound("nonexistent");
         }
     }
 

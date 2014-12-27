@@ -2,15 +2,15 @@ package hm.usecases.customer;
 
 import hm.usecases.Identifiable;
 import hm.usecases.product.Product;
-import hm.usecases.sale.CustomerCart;
+import hm.usecases.sale.Cart;
 
 public class Customer implements Identifiable<Customer> {
     private String id;
     private String firstName;
     private String lastName;
-    private CustomerCart cart;
+    private Cart cart;
 
-    private Customer(String id, String firstName, String lastName, CustomerCart cart) {
+    private Customer(String id, String firstName, String lastName, Cart cart) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -18,7 +18,7 @@ public class Customer implements Identifiable<Customer> {
     }
 
     public static Customer create() {
-        return new Customer("", "", "", CustomerCart.create());
+        return new Customer("", "", "", Cart.create());
     }
 
     public String getId() {
@@ -37,7 +37,7 @@ public class Customer implements Identifiable<Customer> {
         return lastName;
     }
 
-    public CustomerCart getCart() {
+    public Cart getCart() {
         return cart;
     }
 

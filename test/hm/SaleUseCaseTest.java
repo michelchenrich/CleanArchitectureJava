@@ -1,8 +1,8 @@
 package hm;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import hm.usecases.sale.CustomerCart;
-import hm.usecases.sale.CustomerCartItem;
+import hm.usecases.sale.Cart;
+import hm.usecases.sale.CartItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Test;
@@ -21,8 +21,8 @@ public class SaleUseCaseTest extends UseCaseTest {
     }
 
     private void assertInCart(String customerId, String productId, int numberOfUnits, double price) {
-        CustomerCart cart = presentCustomerCart(customerId);
-        for (CustomerCartItem item : cart.getItems())
+        Cart cart = presentCustomerCart(customerId);
+        for (CartItem item : cart.getItems())
             if (item.getProductId().equals(productId) && item.getPrice() == price) {
                 assertEquals(numberOfUnits, item.getNumberOfUnits());
                 return;

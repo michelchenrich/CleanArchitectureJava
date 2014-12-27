@@ -4,7 +4,7 @@ import hm.usecases.customer.Customer;
 import hm.usecases.customer.CustomerUseCaseFactory;
 import hm.usecases.product.Product;
 import hm.usecases.product.ProductUseCaseFactory;
-import hm.usecases.sale.CustomerCart;
+import hm.usecases.sale.Cart;
 import hm.usecases.sale.SaleUseCaseFactory;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -71,12 +71,12 @@ public abstract class UseCaseTest {
         return responder.customer;
     }
 
-    protected CustomerCart presentCustomerCart(String id) {
+    protected Cart presentCustomerCart(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
         saleUseCaseFactory.makeCartPresenter(request, responder).execute();
-        return responder.customerCart;
+        return responder.cart;
     }
 
     protected void updateCustomer(String id, String firstName, String lastName) {

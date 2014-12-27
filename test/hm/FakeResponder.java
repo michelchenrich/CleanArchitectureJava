@@ -6,7 +6,7 @@ import hm.usecases.customer.PresentCustomerResponder;
 import hm.usecases.customer.UpdateCustomerResponder;
 import hm.usecases.product.*;
 import hm.usecases.sale.AddProductToCartResponder;
-import hm.usecases.sale.CustomerCart;
+import hm.usecases.sale.Cart;
 import hm.usecases.sale.PresentCustomerCartResponder;
 
 class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, AddProductUnitResponder, UpdateProductResponder, AddProductToCartResponder, PresentCustomerCartResponder {
@@ -20,7 +20,7 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
     public boolean descriptionIsEmpty;
     public boolean pictureURIIsEmpty;
     public boolean priceIsNegative;
-    public CustomerCart customerCart;
+    public Cart cart;
 
     public void invalidId(String id) {
         invalidId = true;
@@ -62,7 +62,7 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
         priceIsNegative = true;
     }
 
-    public void customerCartFound(CustomerCart customerCart) {
-        this.customerCart = customerCart;
+    public void customerCartFound(Cart cart) {
+        this.cart = cart;
     }
 }

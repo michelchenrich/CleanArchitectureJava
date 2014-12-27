@@ -24,6 +24,7 @@ public class UpdateProductUseCase implements UseCase {
         product = product.withName(request.getName());
         product = product.withDescription(request.getDescription());
         product = product.withPictureURI(request.getPictureURI());
+        product = product.withPrice(request.getPrice());
         gateway.persist(product);
     }
 }

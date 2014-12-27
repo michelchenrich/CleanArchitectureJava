@@ -25,6 +25,7 @@ public class CreateProductUseCase implements UseCase {
         product = product.withName(request.getName());
         product = product.withDescription(request.getDescription());
         product = product.withPictureURI(request.getPictureURI());
+        product = product.withPrice(request.getPrice());
         product = gateway.persist(product);
         responder.createdWithId(product.getId());
     }

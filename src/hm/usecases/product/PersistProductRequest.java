@@ -6,4 +6,6 @@ public interface PersistProductRequest {
     String getDescription();
 
     String getPictureURI();
+
+    double getPrice();
 }

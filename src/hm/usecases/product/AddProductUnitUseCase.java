@@ -21,12 +21,8 @@ public class AddProductUnitUseCase implements UseCase {
 
     public void execute() {
         Product product = gateway.findById(request.getId());
-        gateway.persist(withNewUnits(product));
+        product = product.withMoreUnits(request.getNumberOfUnits());
+        gateway.persist(product);
     }
 
-    private Product withNewUnits(Product product) {
-        for (int unit = 0; unit < request.getNumberOfUnits(); unit++)
-            product = product.withNewUnit(request.getPrice());
-        return product;
-    }
 }

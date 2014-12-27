@@ -33,7 +33,11 @@ public class Customer implements Identifiable<Customer> {
         return new Customer(id, firstName, lastName);
     }
 
-    public Customer with(String firstName, String lastName) {
+    public Customer withFirstName(String firstName) {
+        return new Customer(id, firstName, lastName);
+    }
+
+    public Customer withLastName(String lastName) {
         return new Customer(id, firstName, lastName);
     }
 }

@@ -20,10 +20,9 @@ public class UpdateCustomerUseCase implements UseCase {
     }
 
     public void execute() {
-        gateway.persist(makeCustomer());
-    }
-
-    private Customer makeCustomer() {
-        return gateway.findById(request.getId()).with(request.getFirstName(), request.getLastName());
+        Customer customer = gateway.findById(request.getId());
+        customer = customer.withFirstName(request.getFirstName());
+        customer = customer.withLastName(request.getLastName());
+        gateway.persist(customer);
     }
 }

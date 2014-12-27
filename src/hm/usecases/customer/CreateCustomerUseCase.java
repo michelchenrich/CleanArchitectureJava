@@ -21,11 +21,10 @@ public class CreateCustomerUseCase implements UseCase {
     }
 
     public void execute() {
-        Customer customer = gateway.persist(makeCustomer());
+        Customer customer = Customer.create();
+        customer = customer.withFirstName(request.getFirstName());
+        customer = customer.withLastName(request.getLastName());
+        customer = gateway.persist(customer);
         responder.createdWithId(customer.getId());
-    }
-
-    private Customer makeCustomer() {
-        return Customer.create().with(request.getFirstName(), request.getLastName());
     }
 }

@@ -26,7 +26,7 @@ public class CustomerGatewayTest {
 
     @Test
     public void afterPersistingMustComeUpWithNewId() {
-        Customer customer = Customer.create().with("First", "Last");
+        Customer customer = makeCustomer();
         assertTrue(customer.getId().isEmpty());
         customer = customers.persist(customer);
         assertFalse(customer.getId().isEmpty());
@@ -34,7 +34,7 @@ public class CustomerGatewayTest {
 
     @Test
     public void afterPersistingMustHaveId() {
-        Customer customer = Customer.create().with("First", "Last");
+        Customer customer = makeCustomer();
         customer = customers.persist(customer);
         assertTrue(customers.containsWithId(customer.getId()));
         assertFalse(customers.containsWithId("any-other"));
@@ -42,7 +42,7 @@ public class CustomerGatewayTest {
 
     @Test
     public void afterPersistingMustReturnSameValues() {
-        Customer original = Customer.create().with("First", "Last");
+        Customer original = makeCustomer();
         original = customers.persist(original);
         Customer retrieved = customers.findById(original.getId());
         assertEquals(original.getId(), retrieved.getId());
@@ -58,5 +58,9 @@ public class CustomerGatewayTest {
         } catch (NoSuchEntityException exception) {
             assertEquals("1", exception.getId());
         }
+    }
+
+    private Customer makeCustomer() {
+        return Customer.create().withFirstName("First").withLastName("Last");
     }
 }

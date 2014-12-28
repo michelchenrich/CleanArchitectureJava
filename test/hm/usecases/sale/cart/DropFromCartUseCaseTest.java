@@ -18,7 +18,8 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
     @Test
     public void dropProductAndRestoreNumberOfUnits() {
         dropProductFromCart(customerId, productId);
-        assertNotInCart(customerId, productId);
+        PresentableCart cart = presentCart(customerId);
+        assertNotInCart(cart, productId);
         assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 10);
     }
 
@@ -29,8 +30,9 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
         addProductToCart(customerId, productId2, 10);
 
         dropProductFromCart(customerId, productId);
-        assertNotInCart(customerId, productId);
-        assertInCart(customerId, productId2, 10, 10.0);
+        PresentableCart cart = presentCart(customerId);
+        assertNotInCart(cart, productId);
+        assertInCart(cart, productId2, "Name", "Description", "PictureURI", 10, 10.0);
     }
 
     @Test
@@ -43,7 +45,8 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
     public void dropNonexistentProductFromCart() {
         dropProductFromCart(customerId, "nonexistent");
         assertNotFound("nonexistent");
-        assertInCart(customerId, productId, 10, 10.0);
+        PresentableCart cart = presentCart(customerId);
+        assertInCart(cart, productId, "Name", "Description", "PictureURI", 10, 10.0);
     }
 
     @Test
@@ -51,7 +54,8 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
         String productId2 = createDefaultProduct();
 
         dropProductFromCart(customerId, productId2);
-        assertInCart(customerId, productId, 10, 10.0);
+        PresentableCart cart = presentCart(customerId);
+        assertInCart(cart, productId, "Name", "Description", "PictureURI", 10, 10.0);
         assertProduct(productId2, "Name", "Description", "PictureURI", 10.0, 0);
     }
 
@@ -66,9 +70,10 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
         addProductToCart(customerId, productId3, 15);
 
         dropAllFromCart(customerId);
-        assertNotInCart(customerId, productId);
-        assertNotInCart(customerId, productId2);
-        assertNotInCart(customerId, productId3);
+        PresentableCart cart = presentCart(customerId);
+        assertNotInCart(cart, productId);
+        assertNotInCart(cart, productId2);
+        assertNotInCart(cart, productId3);
         assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 10);
         assertProduct(productId2, "Name", "Description", "PictureURI", 10.0, 50);
         assertProduct(productId3, "Name", "Description", "PictureURI", 10.0, 15);

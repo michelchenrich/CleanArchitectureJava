@@ -2,15 +2,15 @@ package hm.usecases;
 
 import hm.usecases.customer.Customer;
 import hm.usecases.customer.CustomerUseCaseFactory;
+import hm.usecases.customer.PresentableCustomer;
+import hm.usecases.product.PresentableProduct;
 import hm.usecases.product.Product;
 import hm.usecases.product.ProductUseCaseFactory;
 import hm.usecases.sale.SaleUseCaseFactory;
-import hm.usecases.sale.cart.Item;
+import hm.usecases.sale.cart.PresentableCart;
 import hm.usecases.sale.order.SaleOrder;
 import static org.junit.Assert.*;
 import org.junit.Before;
-
-import java.util.List;
 
 public abstract class UseCaseTest {
     public static final double PRICE_PRECISION = .001;
@@ -58,7 +58,7 @@ public abstract class UseCaseTest {
         return responder.createdWithId;
     }
 
-    protected Product presentProduct(String id) {
+    protected PresentableProduct presentProduct(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
@@ -66,7 +66,7 @@ public abstract class UseCaseTest {
         return responder.product;
     }
 
-    protected Customer presentCustomer(String id) {
+    protected PresentableCustomer presentCustomer(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
@@ -74,12 +74,12 @@ public abstract class UseCaseTest {
         return responder.customer;
     }
 
-    protected List<Item> presentCustomerCart(String id) {
+    protected PresentableCart presentCart(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
         saleUseCaseFactory.makeCartPresenter(request, responder).execute();
-        return responder.items;
+        return responder.cart;
     }
 
     protected void updateCustomer(String id, String firstName, String lastName) {
@@ -124,11 +124,19 @@ public abstract class UseCaseTest {
         saleUseCaseFactory.makeCartDropper(request, responder).execute();
     }
 
-    protected SaleOrder submitOrder(String id) {
+    protected String submitOrder(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
-        saleUseCaseFactory.makeSubmitter(request, responder).execute();
+        saleUseCaseFactory.makeOrderSubmitter(request, responder).execute();
+        return responder.createdWithId;
+    }
+
+    protected SaleOrder presentOrder(String id) {
+        FakeRequest request = new FakeRequest();
+        request.id = id;
+        responder = new FakeResponder();
+        saleUseCaseFactory.makeOrderPresenter(request, responder).execute();
         return responder.order;
     }
 
@@ -152,7 +160,7 @@ public abstract class UseCaseTest {
     }
 
     protected void assertProduct(String id, String name, String description, String pictureURI, double price, int numberOfUnits) {
-        Product product = presentProduct(id);
+        PresentableProduct product = presentProduct(id);
         assertFound();
         assertEquals(name, product.getName());
         assertEquals(description, product.getDescription());

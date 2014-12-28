@@ -24,6 +24,6 @@ public class PresentProductUseCase implements UseCase {
 
     public void execute() {
         Product product = gateway.findById(request.getId());
-        responder.productFound(product);
+        responder.productFound(new PresentableProduct(product));
     }
 }

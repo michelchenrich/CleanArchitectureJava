@@ -21,6 +21,5 @@ public class SubmitSaleOrderUseCase implements UseCase {
     }
 
     public void execute() {
-        responder.submitted(new SaleOrder());
     }
 }

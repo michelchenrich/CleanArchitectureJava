@@ -3,6 +3,7 @@ package hm.usecases.sale.order;
 import hm.usecases.sale.cart.CartUseCaseTest;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SubmitSaleOrderUseCaseTest extends CartUseCaseTest {
@@ -28,9 +29,11 @@ public class SubmitSaleOrderUseCaseTest extends CartUseCaseTest {
         addProductToCart(customerId, productId3, 15);
     }
 
+    @Ignore
     @Test
-    public void itsSomething() {
-        SaleOrder order = submitOrder(customerId);
+    public void itsSomething() { //TODO Continue here
+        String orderId = submitOrder(customerId);
+        SaleOrder order = presentOrder(orderId);
         assertEquals(750.0, order.getTotalPrice(), .001);
     }
 }

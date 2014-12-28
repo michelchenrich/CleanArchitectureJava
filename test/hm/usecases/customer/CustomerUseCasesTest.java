@@ -26,7 +26,6 @@ public class CustomerUseCasesTest extends UseCaseTest {
             assertPresented(id1, "Last, First");
         }
     }
-
     private abstract class DataValidationsOnPersistence {
         @Test
         public void validations() throws Exception {
@@ -53,11 +52,8 @@ public class CustomerUseCasesTest extends UseCaseTest {
         }
 
         protected abstract void executeUseCase(String firstName, String lastName);
-
         protected abstract void assertNothingChanged();
-
     }
-
     public class DataValidationsOnCreation extends DataValidationsOnPersistence {
         @Test
         public void createCustomerThenReadItBack() {
@@ -72,9 +68,7 @@ public class CustomerUseCasesTest extends UseCaseTest {
         protected void assertNothingChanged() {
             assertNothingCreated();
         }
-
     }
-
     public class DataValidationsOnUpdate extends DataValidationsOnPersistence {
         private String id;
 
@@ -116,7 +110,7 @@ public class CustomerUseCasesTest extends UseCaseTest {
     }
 
     private void assertPresented(String id, String name) {
-        Customer customer = presentCustomer(id);
+        PresentableCustomer customer = presentCustomer(id);
         assertFound();
         assertEquals(name, customer.getName());
     }

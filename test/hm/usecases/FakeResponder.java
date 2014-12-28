@@ -1,31 +1,30 @@
 package hm.usecases;
 
 import hm.usecases.customer.CreateCustomerResponder;
-import hm.usecases.customer.Customer;
 import hm.usecases.customer.PresentCustomerResponder;
+import hm.usecases.customer.PresentableCustomer;
 import hm.usecases.customer.UpdateCustomerResponder;
 import hm.usecases.product.*;
 import hm.usecases.sale.cart.AddProductToCartResponder;
-import hm.usecases.sale.cart.Item;
-import hm.usecases.sale.cart.PresentCustomerCartResponder;
+import hm.usecases.sale.cart.PresentCartResponder;
+import hm.usecases.sale.cart.PresentableCart;
+import hm.usecases.sale.order.PresentSaleOrderResponder;
 import hm.usecases.sale.order.SaleOrder;
 import hm.usecases.sale.order.SubmitSaleOrderResponder;
 
-import java.util.List;
-
-class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, AddProductUnitResponder, UpdateProductResponder, AddProductToCartResponder, PresentCustomerCartResponder, SubmitSaleOrderResponder {
+class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, AddProductUnitResponder, UpdateProductResponder, AddProductToCartResponder, PresentCartResponder, SubmitSaleOrderResponder, PresentSaleOrderResponder {
     public boolean firstNameIsEmpty;
     public boolean lastNameIsEmpty;
     public String invalidId;
     public boolean idIsInvalid;
     public String createdWithId;
-    public Customer customer;
-    public Product product;
+    public PresentableCustomer customer;
+    public PresentableProduct product;
     public boolean nameIsEmpty;
     public boolean descriptionIsEmpty;
     public boolean pictureURIIsEmpty;
     public boolean priceIsNegative;
-    public List<Item> items;
+    public PresentableCart cart;
     public boolean numberOfUnitsIsLessThanOne;
     public SaleOrder order;
 
@@ -58,11 +57,11 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
         lastNameIsEmpty = true;
     }
 
-    public void customerFound(Customer customer) {
+    public void customerFound(PresentableCustomer customer) {
         this.customer = customer;
     }
 
-    public void productFound(Product product) {
+    public void productFound(PresentableProduct product) {
         this.product = product;
     }
 
@@ -74,8 +73,8 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
         numberOfUnitsIsLessThanOne = true;
     }
 
-    public void cartFound(List<Item> items) {
-        this.items = items;
+    public void cartFound(PresentableCart cart) {
+        this.cart = cart;
     }
 
     public void submitted(SaleOrder order) {

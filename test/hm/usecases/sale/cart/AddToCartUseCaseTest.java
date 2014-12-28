@@ -21,7 +21,8 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
     public void addToCart() {
         addProductToCart(customerId, productId, 1);
 
-        assertInCart(customerId, productId, 1, 10.0);
+        PresentableCart cart = presentCart(customerId);
+        assertInCart(cart, productId, "Name", "Description", "PictureURI", 1, 10.0);
         assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 0);
     }
 
@@ -31,13 +32,14 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
 
         updateProduct(productId, "Name", "Description", "PictureURI", 11.0);
 
-        assertInCart(customerId, productId, 1, 10.0);
+        PresentableCart cart = presentCart(customerId);
+        assertInCart(cart, productId, "Name", "Description", "PictureURI", 1, 10.0);
         assertProduct(productId, "Name", "Description", "PictureURI", 11.0, 0);
     }
 
     @Test
     public void presentingCartOfNonexistentCustomer() {
-        presentCustomerCart("nonexistent");
+        presentCart("nonexistent");
         assertNotFound("nonexistent");
     }
 
@@ -51,16 +53,17 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
     public void addNonexistentProductToCart() {
         addProductToCart(customerId, "nonexistent", 1);
         assertNotFound("nonexistent");
-        assertNotInCart(customerId, productId);
+        PresentableCart cart = presentCart(customerId);
+        assertNotInCart(cart, productId);
     }
 
     @Test
     public void addNoUnitToCart() throws Exception {
         addProductToCart(customerId, productId, 0);
         assertErrorsSent("numberOfUnitsIsLessThanOne");
-        assertNotInCart(customerId, productId);
+        PresentableCart cart = presentCart(customerId);
+        assertNotInCart(cart, productId);
     }
-
 
     @Test
     public void addOnlyAvailableUnitsToCart() throws Exception {
@@ -68,7 +71,8 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
         addUnitToProduct(productId, 1);
         addProductToCart(customerId, productId, 100);
 
-        assertInCart(customerId, productId, 3, 10.0);
+        PresentableCart cart = presentCart(customerId);
+        assertInCart(cart, productId, "Name", "Description", "PictureURI", 3, 10.0);
         assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 0);
     }
 
@@ -77,10 +81,10 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
         addUnitToProduct(productId, 100);
         addProductToCart(customerId, productId, 100);
 
-        assertInCart(customerId, productId, 100, 10.0);
+        PresentableCart cart = presentCart(customerId);
+        assertInCart(cart, productId, "Name", "Description", "PictureURI", 100, 10.0);
         assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 1);
     }
-
 
     @Test
     public void addMultipleItemsToCart() throws Exception {
@@ -94,11 +98,11 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
         addProductToCart(customerId, productId2, 5);
         addProductToCart(customerId, productId3, 10);
 
-        assertInCart(customerId, productId, 1, 10.0);
-        assertInCart(customerId, productId2, 5, 12.0);
-        assertInCart(customerId, productId3, 9, 15.0);
+        PresentableCart cart = presentCart(customerId);
+        assertInCart(cart, productId, "Name", "Description", "PictureURI", 1, 10.0);
+        assertInCart(cart, productId2, "Name 2", "Description 2", "PictureURI 2", 5, 12.0);
+        assertInCart(cart, productId3, "Name 3", "Description 3", "PictureURI 3", 9, 15.0);
     }
-
 
     @Test
     public void addingSameProductToCartTwiceSimplySumsTheUnits() throws Exception {
@@ -107,6 +111,7 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
         addProductToCart(customerId, productId, 5);
         addProductToCart(customerId, productId, 5);
 
-        assertInCart(customerId, productId, 10, 10.0);
+        PresentableCart cart = presentCart(customerId);
+        assertInCart(cart, productId, "Name", "Description", "PictureURI", 10, 10.0);
     }
 }

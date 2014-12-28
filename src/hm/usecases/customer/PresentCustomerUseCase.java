@@ -24,6 +24,6 @@ public class PresentCustomerUseCase implements UseCase {
 
     public void execute() {
         Customer customer = gateway.findById(request.getId());
-        responder.customerFound(customer);
+        responder.customerFound(new PresentableCustomer(customer));
     }
 }

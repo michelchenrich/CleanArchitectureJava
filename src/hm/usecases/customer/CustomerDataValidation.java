@@ -18,8 +18,10 @@ public class CustomerDataValidation implements Validation {
     }
 
     public void sendErrors() {
-        if (firstName.isEmpty()) responder.firstNameIsEmpty();
-        if (lastName.isEmpty()) responder.lastNameIsEmpty();
+        if (firstName.isEmpty())
+            responder.firstNameIsEmpty();
+        if (lastName.isEmpty())
+            responder.lastNameIsEmpty();
     }
 
     private static String makeSafe(String input) {

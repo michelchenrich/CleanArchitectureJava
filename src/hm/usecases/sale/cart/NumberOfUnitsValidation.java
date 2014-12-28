@@ -16,6 +16,7 @@ public class NumberOfUnitsValidation implements Validation {
     }
 
     public void sendErrors() {
-        if (request.getNumberOfUnits() < 1) responder.numberOfUnitsIsLessThanOne();
+        if (request.getNumberOfUnits() < 1)
+            responder.numberOfUnitsIsLessThanOne();
     }
 }

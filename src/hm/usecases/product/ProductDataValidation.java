@@ -22,10 +22,14 @@ public class ProductDataValidation implements Validation {
     }
 
     public void sendErrors() {
-        if (name.isEmpty()) responder.nameIsEmpty();
-        if (description.isEmpty()) responder.descriptionIsEmpty();
-        if (pictureURI.isEmpty()) responder.pictureURIIsEmpty();
-        if (price < 0) responder.priceIsNegative();
+        if (name.isEmpty())
+            responder.nameIsEmpty();
+        if (description.isEmpty())
+            responder.descriptionIsEmpty();
+        if (pictureURI.isEmpty())
+            responder.pictureURIIsEmpty();
+        if (price < 0)
+            responder.priceIsNegative();
     }
 
     private static String makeSafe(String input) {

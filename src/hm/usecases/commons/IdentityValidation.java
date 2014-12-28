@@ -22,6 +22,7 @@ public class IdentityValidation implements Validation {
     }
 
     public void sendErrors() {
-        if (!gateway.existsWithId(id)) responder.invalidId(id);
+        if (!gateway.existsWithId(id))
+            responder.invalidId(id);
     }
 }

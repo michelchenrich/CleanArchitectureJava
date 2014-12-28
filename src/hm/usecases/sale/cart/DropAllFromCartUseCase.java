@@ -33,7 +33,8 @@ public class DropAllFromCartUseCase implements UseCase {
     }
 
     private void restoreUnits(Customer customer) {
-        for (Item item : customer.getCartItems()) restoreProductUnits(item);
+        for (Item item : customer.getCartItems())
+            restoreProductUnits(item);
     }
 
     private void restoreProductUnits(Item item) {

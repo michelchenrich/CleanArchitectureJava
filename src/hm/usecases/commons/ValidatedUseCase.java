@@ -12,13 +12,16 @@ public class ValidatedUseCase implements UseCase {
     }
 
     public void execute() {
-        if (hasErrors()) sendErrors();
-        else useCase.execute();
+        if (hasErrors())
+            sendErrors();
+        else
+            useCase.execute();
     }
 
     private boolean hasErrors() {
         for (Validation validation : validations)
-            if (validation.hasErrors()) return true;
+            if (validation.hasErrors())
+                return true;
         return false;
     }
 

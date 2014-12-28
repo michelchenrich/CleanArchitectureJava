@@ -25,7 +25,8 @@ public class SalePresenter {
 
     private List<PresentableItem> asPresentable(List<Item> items) {
         ImmutableList.Builder<PresentableItem> builder = ImmutableList.builder();
-        for (Item item : items) builder.add(asPresentable(item));
+        for (Item item : items)
+            builder.add(asPresentable(item));
         return builder.build();
     }
 

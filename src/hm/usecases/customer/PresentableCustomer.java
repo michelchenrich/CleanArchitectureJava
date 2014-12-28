@@ -1,6 +1,6 @@
 package hm.usecases.customer;
 
-import hm.entities.Customer;
+import hm.domain.Customer;
 
 public class PresentableCustomer {
     private Customer customer;

@@ -1,7 +1,7 @@
 package hm.usecases;
 
-import hm.entities.Customer;
-import hm.entities.Gateway;
+import hm.domain.Customer;
+import hm.domain.Gateway;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;

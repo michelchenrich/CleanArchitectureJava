@@ -1,32 +1,29 @@
 package hm.usecases;
 
-import hm.entities.SaleOrder;
-import hm.usecases.cart.AddProductToCartResponder;
-import hm.usecases.cart.PresentCartResponder;
-import hm.usecases.cart.PresentableCart;
 import hm.usecases.customer.CreateCustomerResponder;
 import hm.usecases.customer.PresentCustomerResponder;
 import hm.usecases.customer.PresentableCustomer;
 import hm.usecases.customer.UpdateCustomerResponder;
 import hm.usecases.product.*;
-import hm.usecases.saleorder.PresentSaleOrderResponder;
-import hm.usecases.saleorder.SubmitSaleOrderResponder;
+import hm.usecases.sale.PresentSaleResponder;
+import hm.usecases.sale.PresentableSale;
+import hm.usecases.sale.cart.AddProductToCartResponder;
+import hm.usecases.sale.order.SubmitSaleOrderResponder;
 
-class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, AddProductUnitResponder, UpdateProductResponder, AddProductToCartResponder, PresentCartResponder, SubmitSaleOrderResponder, PresentSaleOrderResponder {
+class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, AddProductUnitResponder, UpdateProductResponder, AddProductToCartResponder, PresentSaleResponder, SubmitSaleOrderResponder {
+    public PresentableCustomer customer;
     public boolean firstNameIsEmpty;
     public boolean lastNameIsEmpty;
-    public String invalidId;
     public boolean idIsInvalid;
+    public String invalidId;
     public String createdWithId;
-    public PresentableCustomer customer;
     public PresentableProduct product;
     public boolean nameIsEmpty;
     public boolean descriptionIsEmpty;
     public boolean pictureURIIsEmpty;
     public boolean priceIsNegative;
-    public PresentableCart cart;
     public boolean numberOfUnitsIsLessThanOne;
-    public SaleOrder order;
+    public PresentableSale items;
 
     public void invalidId(String id) {
         idIsInvalid = true;
@@ -73,11 +70,7 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
         numberOfUnitsIsLessThanOne = true;
     }
 
-    public void cartFound(PresentableCart cart) {
-        this.cart = cart;
-    }
-
-    public void submitted(SaleOrder order) {
-        this.order = order;
+    public void saleFound(PresentableSale sale) {
+        this.items = sale;
     }
 }

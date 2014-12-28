@@ -1,7 +1,7 @@
 package hm.usecases.customer;
 
-import hm.entities.Customer;
-import hm.entities.Gateway;
+import hm.domain.Customer;
+import hm.domain.Gateway;
 import hm.usecases.UseCase;
 import hm.usecases.commons.IdentityValidation;
 import hm.usecases.commons.ValidatedUseCase;

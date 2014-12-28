@@ -60,7 +60,6 @@ public class ProductUseCasesTest extends UseCaseTest {
             assertNotFound("nonexistent");
         }
     }
-
     private abstract class DataValidationOnPersistence {
         @Test
         public void invalidInputs() throws Exception {
@@ -104,7 +103,6 @@ public class ProductUseCasesTest extends UseCaseTest {
 
         protected abstract void assertNothingChanged();
     }
-
     public class DataValidationOnCreation extends DataValidationOnPersistence {
         protected void persistProduct(String name, String description, String pictureURI, double price) {
             createProduct(name, description, pictureURI, price);
@@ -114,7 +112,6 @@ public class ProductUseCasesTest extends UseCaseTest {
             assertNothingCreated();
         }
     }
-
     public class DataValidationOnUpdate extends DataValidationOnPersistence {
         private String id;
 

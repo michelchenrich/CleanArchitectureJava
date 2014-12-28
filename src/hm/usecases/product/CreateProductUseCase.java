@@ -1,7 +1,7 @@
 package hm.usecases.product;
 
-import hm.entities.Gateway;
-import hm.entities.Product;
+import hm.domain.Gateway;
+import hm.domain.Product;
 import hm.usecases.UseCase;
 import hm.usecases.commons.ValidatedUseCase;
 
@@ -30,5 +30,4 @@ public class CreateProductUseCase implements UseCase {
         product = gateway.persist(product);
         responder.createdWithId(product.getId());
     }
-
 }

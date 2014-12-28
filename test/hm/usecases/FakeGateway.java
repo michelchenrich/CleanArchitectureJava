@@ -1,7 +1,7 @@
 package hm.usecases;
 
-import hm.entities.Gateway;
-import hm.entities.Identifiable;
+import hm.domain.Gateway;
+import hm.domain.Identifiable;
 
 import java.util.HashMap;
 import java.util.Map;

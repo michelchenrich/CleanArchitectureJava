@@ -1,7 +1,7 @@
 package hm.usecases.product;
 
-import hm.entities.Gateway;
-import hm.entities.Product;
+import hm.domain.Gateway;
+import hm.domain.Product;
 import hm.usecases.UseCase;
 import hm.usecases.commons.IdBasedRequest;
 import hm.usecases.commons.IdentityValidation;

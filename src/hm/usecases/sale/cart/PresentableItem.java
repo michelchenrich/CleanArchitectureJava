@@ -1,7 +1,8 @@
 package hm.usecases.sale.cart;
 
+import hm.entities.Item;
+import hm.entities.Product;
 import hm.usecases.product.PresentableProduct;
-import hm.usecases.product.Product;
 
 public class PresentableItem extends PresentableProduct {
     private Item item;

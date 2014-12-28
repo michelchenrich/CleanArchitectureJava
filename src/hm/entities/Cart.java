@@ -1,7 +1,6 @@
-package hm.usecases.sale.cart;
+package hm.entities;
 
 import com.google.common.collect.ImmutableList;
-import hm.usecases.product.Product;
 
 import java.util.List;
 

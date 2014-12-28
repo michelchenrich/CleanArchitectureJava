@@ -1,6 +1,6 @@
 package hm.usecases.commons;
 
-import hm.usecases.Gateway;
+import hm.entities.Gateway;
 
 public class IdentityValidation implements Validation {
     private Gateway gateway;

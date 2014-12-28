@@ -1,4 +1,4 @@
-package hm.usecases;
+package hm.entities;
 
 public interface Identifiable<TEntity extends Identifiable> {
     String getId();

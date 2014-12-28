@@ -1,12 +1,12 @@
 package hm.usecases.sale.cart;
 
-import hm.usecases.Gateway;
+import hm.entities.Customer;
+import hm.entities.Gateway;
+import hm.entities.Product;
 import hm.usecases.UseCase;
 import hm.usecases.commons.IdBasedRequest;
 import hm.usecases.commons.IdentityValidation;
 import hm.usecases.commons.ValidatedUseCase;
-import hm.usecases.customer.Customer;
-import hm.usecases.product.Product;
 
 public class PresentCartUseCase implements UseCase {
     private Gateway<Customer> customerGateway;

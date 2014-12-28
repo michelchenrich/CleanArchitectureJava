@@ -1,6 +1,6 @@
 package hm.usecases.sale.order;
 
-import hm.usecases.Identifiable;
+import hm.entities.Identifiable;
 
 public class SaleOrder implements Identifiable {
     private double totalPrice = 750.0;

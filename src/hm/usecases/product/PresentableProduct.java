@@ -1,5 +1,7 @@
 package hm.usecases.product;
 
+import hm.entities.Product;
+
 public class PresentableProduct {
     private Product product;
 

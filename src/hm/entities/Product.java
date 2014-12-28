@@ -1,6 +1,4 @@
-package hm.usecases.product;
-
-import hm.usecases.Identifiable;
+package hm.entities;
 
 public class Product implements Identifiable<Product> {
     private String id;

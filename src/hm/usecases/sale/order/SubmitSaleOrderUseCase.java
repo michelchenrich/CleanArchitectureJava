@@ -1,9 +1,9 @@
 package hm.usecases.sale.order;
 
-import hm.usecases.Gateway;
+import hm.entities.Customer;
+import hm.entities.Gateway;
 import hm.usecases.UseCase;
 import hm.usecases.commons.IdBasedRequest;
-import hm.usecases.customer.Customer;
 
 public class SubmitSaleOrderUseCase implements UseCase {
     private Gateway<Customer> gateway;

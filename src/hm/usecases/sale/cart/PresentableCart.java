@@ -1,8 +1,9 @@
 package hm.usecases.sale.cart;
 
 import com.google.common.collect.ImmutableList;
-import hm.usecases.Gateway;
-import hm.usecases.product.Product;
+import hm.entities.Gateway;
+import hm.entities.Item;
+import hm.entities.Product;
 
 import java.util.List;
 

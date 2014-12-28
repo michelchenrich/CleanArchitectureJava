@@ -1,10 +1,10 @@
 package hm.usecases;
 
-import hm.usecases.customer.Customer;
+import hm.entities.Customer;
+import hm.entities.Product;
 import hm.usecases.customer.CustomerUseCaseFactory;
 import hm.usecases.customer.PresentableCustomer;
 import hm.usecases.product.PresentableProduct;
-import hm.usecases.product.Product;
 import hm.usecases.product.ProductUseCaseFactory;
 import hm.usecases.sale.SaleUseCaseFactory;
 import hm.usecases.sale.cart.PresentableCart;

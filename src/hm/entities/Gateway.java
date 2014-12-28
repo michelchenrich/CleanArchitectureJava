@@ -1,4 +1,4 @@
-package hm.usecases;
+package hm.entities;
 
 public interface Gateway<TEntity extends Identifiable> {
     boolean existsWithId(String id);

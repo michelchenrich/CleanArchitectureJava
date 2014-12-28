@@ -1,6 +1,7 @@
 package hm.usecases.product;
 
-import hm.usecases.Gateway;
+import hm.entities.Gateway;
+import hm.entities.Product;
 import hm.usecases.UseCase;
 import hm.usecases.commons.ValidatedUseCase;
 

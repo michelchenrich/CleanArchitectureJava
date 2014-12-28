@@ -1,9 +1,4 @@
-package hm.usecases.customer;
-
-import hm.usecases.Identifiable;
-import hm.usecases.product.Product;
-import hm.usecases.sale.cart.Cart;
-import hm.usecases.sale.cart.Item;
+package hm.entities;
 
 import java.util.List;
 

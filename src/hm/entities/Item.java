@@ -1,6 +1,4 @@
-package hm.usecases.sale.cart;
-
-import hm.usecases.product.Product;
+package hm.entities;
 
 public class Item {
     private String productId;

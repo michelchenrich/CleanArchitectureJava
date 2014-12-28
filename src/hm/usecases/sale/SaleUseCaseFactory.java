@@ -1,11 +1,11 @@
 package hm.usecases.sale;
 
-import hm.usecases.Gateway;
+import hm.entities.Customer;
+import hm.entities.Gateway;
+import hm.entities.Product;
 import hm.usecases.UseCase;
 import hm.usecases.commons.IdBasedRequest;
 import hm.usecases.commons.IdentityResponder;
-import hm.usecases.customer.Customer;
-import hm.usecases.product.Product;
 import hm.usecases.sale.cart.*;
 import hm.usecases.sale.order.*;
 

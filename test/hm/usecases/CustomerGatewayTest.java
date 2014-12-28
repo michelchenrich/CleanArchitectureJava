@@ -1,7 +1,5 @@
-package hm;
+package hm.usecases;
 
-import hm.usecases.Gateway;
-import hm.usecases.NoSuchEntityException;
 import hm.usecases.customer.Customer;
 import static org.junit.Assert.*;
 import org.junit.Before;

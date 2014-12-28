@@ -1,4 +1,4 @@
-package hm.usecases.sale;
+package hm.usecases.sale.cart;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import org.junit.Before;

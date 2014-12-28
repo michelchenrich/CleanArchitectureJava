@@ -1,7 +1,7 @@
 package hm.usecases.product;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
-import hm.UseCaseTest;
+import hm.usecases.UseCaseTest;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;

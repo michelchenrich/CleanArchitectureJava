@@ -1,4 +1,4 @@
-package hm.usecases.sale;
+package hm.usecases.sale.cart;
 
 public interface CartMovementRequest {
     String getCustomerId();

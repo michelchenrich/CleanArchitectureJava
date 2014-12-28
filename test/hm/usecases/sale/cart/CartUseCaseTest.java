@@ -1,6 +1,6 @@
-package hm.usecases.sale;
+package hm.usecases.sale.cart;
 
-import hm.UseCaseTest;
+import hm.usecases.UseCaseTest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 

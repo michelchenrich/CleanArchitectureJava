@@ -1,5 +1,6 @@
-package hm.usecases.sale;
+package hm.usecases.sale.order;
 
+import hm.usecases.sale.cart.CartUseCaseTest;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;

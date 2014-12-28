@@ -1,4 +1,4 @@
-package hm.usecases.sale;
+package hm.usecases.sale.cart;
 
 import org.junit.Before;
 import org.junit.Test;

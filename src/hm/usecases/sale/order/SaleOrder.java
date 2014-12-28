@@ -1,4 +1,4 @@
-package hm.usecases.sale;
+package hm.usecases.sale.order;
 
 public class SaleOrder {
     private double totalPrice = 750.0;

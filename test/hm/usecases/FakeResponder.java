@@ -1,11 +1,15 @@
-package hm;
+package hm.usecases;
 
 import hm.usecases.customer.CreateCustomerResponder;
 import hm.usecases.customer.Customer;
 import hm.usecases.customer.PresentCustomerResponder;
 import hm.usecases.customer.UpdateCustomerResponder;
 import hm.usecases.product.*;
-import hm.usecases.sale.*;
+import hm.usecases.sale.cart.AddProductToCartResponder;
+import hm.usecases.sale.cart.Item;
+import hm.usecases.sale.cart.PresentCustomerCartResponder;
+import hm.usecases.sale.order.SaleOrder;
+import hm.usecases.sale.order.SubmitSaleOrderResponder;
 
 import java.util.List;
 

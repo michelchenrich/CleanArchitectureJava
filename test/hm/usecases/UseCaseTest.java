@@ -1,12 +1,12 @@
-package hm;
+package hm.usecases;
 
 import hm.usecases.customer.Customer;
 import hm.usecases.customer.CustomerUseCaseFactory;
 import hm.usecases.product.Product;
 import hm.usecases.product.ProductUseCaseFactory;
-import hm.usecases.sale.Item;
-import hm.usecases.sale.SaleOrder;
 import hm.usecases.sale.SaleUseCaseFactory;
+import hm.usecases.sale.cart.Item;
+import hm.usecases.sale.order.SaleOrder;
 import static org.junit.Assert.*;
 import org.junit.Before;
 
@@ -114,14 +114,14 @@ public abstract class UseCaseTest {
         request.customerId = customerId;
         request.productId = productId;
         responder = new FakeResponder();
-        saleUseCaseFactory.makeCartProductDrooper(request, responder).execute();
+        saleUseCaseFactory.makeCartProductDropper(request, responder).execute();
     }
 
     protected void dropAllFromCart(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
-        saleUseCaseFactory.makeCartDrooper(request, responder).execute();
+        saleUseCaseFactory.makeCartDropper(request, responder).execute();
     }
 
     protected SaleOrder submitOrder(String id) {

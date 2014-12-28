@@ -1,4 +1,4 @@
-package hm.usecases.sale;
+package hm.usecases.sale.order;
 
 import hm.usecases.Gateway;
 import hm.usecases.UseCase;

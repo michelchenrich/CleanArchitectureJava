@@ -6,6 +6,9 @@ import hm.usecases.commons.IdBasedRequest;
 import hm.usecases.commons.IdentityResponder;
 import hm.usecases.customer.Customer;
 import hm.usecases.product.Product;
+import hm.usecases.sale.cart.*;
+import hm.usecases.sale.order.SubmitSaleOrderResponder;
+import hm.usecases.sale.order.SubmitSaleOrderUseCase;
 
 public class SaleUseCaseFactory {
     private Gateway<Customer> customerGateway;
@@ -24,11 +27,11 @@ public class SaleUseCaseFactory {
         return PresentCustomerCartUseCase.create(customerGateway, request, responder);
     }
 
-    public UseCase makeCartProductDrooper(CartMovementRequest request, IdentityResponder responder) {
+    public UseCase makeCartProductDropper(CartMovementRequest request, IdentityResponder responder) {
         return DropProductFromCartUseCase.create(customerGateway, productGateway, request, responder);
     }
 
-    public UseCase makeCartDrooper(IdBasedRequest request, IdentityResponder responder) {
+    public UseCase makeCartDropper(IdBasedRequest request, IdentityResponder responder) {
         return DropAllFromCartUseCase.create(customerGateway, productGateway, request, responder);
     }
 

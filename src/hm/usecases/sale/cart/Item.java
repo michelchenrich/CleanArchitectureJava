@@ -1,4 +1,4 @@
-package hm.usecases.sale;
+package hm.usecases.sale.cart;
 
 import hm.usecases.product.Product;
 

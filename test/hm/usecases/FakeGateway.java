@@ -1,8 +1,4 @@
-package hm;
-
-import hm.usecases.Gateway;
-import hm.usecases.Identifiable;
-import hm.usecases.NoSuchEntityException;
+package hm.usecases;
 
 import java.util.HashMap;
 import java.util.Map;

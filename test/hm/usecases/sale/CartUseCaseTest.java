@@ -6,13 +6,13 @@ import static org.junit.Assert.fail;
 
 public class CartUseCaseTest extends UseCaseTest {
     protected void assertNotInCart(String customerId, String productId) {
-        for (CartItem item : presentCustomerCart(customerId))
+        for (Item item : presentCustomerCart(customerId))
             if (item.getProductId().equals(productId))
                 fail();
     }
 
     protected void assertInCart(String customerId, String productId, int numberOfUnits, double price) {
-        for (CartItem item : presentCustomerCart(customerId))
+        for (Item item : presentCustomerCart(customerId))
             if (item.getProductId().equals(productId) && item.getPrice() == price) {
                 assertEquals(numberOfUnits, item.getNumberOfUnits());
                 return;

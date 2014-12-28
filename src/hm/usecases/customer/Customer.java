@@ -3,7 +3,7 @@ package hm.usecases.customer;
 import hm.usecases.Identifiable;
 import hm.usecases.product.Product;
 import hm.usecases.sale.Cart;
-import hm.usecases.sale.CartItem;
+import hm.usecases.sale.Item;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class Customer implements Identifiable<Customer> {
         return lastName;
     }
 
-    public List<CartItem> getCartItems() {
+    public List<Item> getCartItems() {
         return cart.getItems();
     }
 

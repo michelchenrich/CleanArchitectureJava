@@ -4,7 +4,8 @@ import hm.usecases.customer.Customer;
 import hm.usecases.customer.CustomerUseCaseFactory;
 import hm.usecases.product.Product;
 import hm.usecases.product.ProductUseCaseFactory;
-import hm.usecases.sale.CartItem;
+import hm.usecases.sale.Item;
+import hm.usecases.sale.SaleOrder;
 import hm.usecases.sale.SaleUseCaseFactory;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -73,12 +74,12 @@ public abstract class UseCaseTest {
         return responder.customer;
     }
 
-    protected List<CartItem> presentCustomerCart(String id) {
+    protected List<Item> presentCustomerCart(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
         saleUseCaseFactory.makeCartPresenter(request, responder).execute();
-        return responder.cartItems;
+        return responder.items;
     }
 
     protected void updateCustomer(String id, String firstName, String lastName) {
@@ -114,7 +115,6 @@ public abstract class UseCaseTest {
         request.productId = productId;
         responder = new FakeResponder();
         saleUseCaseFactory.makeCartProductDrooper(request, responder).execute();
-
     }
 
     protected void dropAllFromCart(String id) {
@@ -122,6 +122,14 @@ public abstract class UseCaseTest {
         request.id = id;
         responder = new FakeResponder();
         saleUseCaseFactory.makeCartDrooper(request, responder).execute();
+    }
+
+    protected SaleOrder submitOrder(String id) {
+        FakeRequest request = new FakeRequest();
+        request.id = id;
+        responder = new FakeResponder();
+        saleUseCaseFactory.makeSubmitter(request, responder).execute();
+        return responder.order;
     }
 
     protected void assertFound() {

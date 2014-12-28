@@ -31,4 +31,8 @@ public class SaleUseCaseFactory {
     public UseCase makeCartDrooper(IdBasedRequest request, IdentityResponder responder) {
         return DropAllFromCartUseCase.create(customerGateway, productGateway, request, responder);
     }
+
+    public UseCase makeSubmitter(IdBasedRequest request, SubmitSaleOrderResponder responder) {
+        return SubmitSaleOrderUseCase.create(customerGateway, request, responder);
+    }
 }

@@ -22,9 +22,8 @@ public class Cart implements Sale {
     }
 
     public int getNumberOfUnitsOf(String productId) {
-        for (Item item : itemMap.values())
-            if (item.getProductId().equals(productId))
-                return item.getNumberOfUnits();
+        if (itemMap.containsKey(productId))
+            return itemMap.get(productId).getNumberOfUnits();
         return 0;
     }
 

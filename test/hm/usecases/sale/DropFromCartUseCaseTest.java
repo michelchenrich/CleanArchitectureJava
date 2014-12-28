@@ -73,4 +73,10 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
         assertProduct(productId2, "Name", "Description", "PictureURI", 10.0, 50);
         assertProduct(productId3, "Name", "Description", "PictureURI", 10.0, 15);
     }
+
+    @Test
+    public void dropAllFromNonexistentCustomer() {
+        dropAllFromCart("nonexistent");
+        assertNotFound("nonexistent");
+    }
 }

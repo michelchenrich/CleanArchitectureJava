@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BuyFromCartUseCaseTest extends CartUseCaseTest {
+public class SubmitSaleOrderUseCaseTest extends CartUseCaseTest {
     private String customerId;
     private String productId;
     private String productId2;

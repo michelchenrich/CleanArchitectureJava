@@ -49,11 +49,15 @@ public class CustomerGatewayTest {
         assertEquals(original.getLastName(), retrieved.getLastName());
     }
 
-    @Test
+    @Test(expected = NoSuchEntityException.class)
     public void throwsExceptionWhenGettingUnknownId() {
+        customers.findById("1");
+    }
+
+    @Test
+    public void theExceptionMustCarryTheUnknownId() {
         try {
             customers.findById("1");
-            fail();
         } catch (NoSuchEntityException exception) {
             assertEquals("1", exception.getId());
         }

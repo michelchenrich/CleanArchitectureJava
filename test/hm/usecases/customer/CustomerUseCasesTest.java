@@ -31,24 +31,31 @@ public class CustomerUseCasesTest extends UseCaseTest {
         public void validations() throws Exception {
             executeUseCase("", "Last");
             assertErrorsSent("firstNameIsEmpty");
+            assertNothingChanged();
 
             executeUseCase(" \r\n  ", "Last");
             assertErrorsSent("firstNameIsEmpty");
+            assertNothingChanged();
 
             executeUseCase(null, "Last");
             assertErrorsSent("firstNameIsEmpty");
+            assertNothingChanged();
 
             executeUseCase("First", "");
             assertErrorsSent("lastNameIsEmpty");
+            assertNothingChanged();
 
             executeUseCase("First", " \r\n  ");
             assertErrorsSent("lastNameIsEmpty");
+            assertNothingChanged();
 
             executeUseCase("First", null);
             assertErrorsSent("lastNameIsEmpty");
+            assertNothingChanged();
 
             executeUseCase(null, null);
             assertErrorsSent("firstNameIsEmpty", "lastNameIsEmpty");
+            assertNothingChanged();
         }
 
         protected abstract void executeUseCase(String firstName, String lastName);

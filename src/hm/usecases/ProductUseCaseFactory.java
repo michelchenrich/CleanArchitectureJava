@@ -3,6 +3,7 @@ package hm.usecases;
 import hm.domain.Gateway;
 import hm.domain.Product;
 import hm.usecases.commons.IdBasedRequest;
+import hm.usecases.commons.IdentityResponder;
 import hm.usecases.product.*;
 
 public class ProductUseCaseFactory {
@@ -20,7 +21,7 @@ public class ProductUseCaseFactory {
         return PresentProductUseCase.create(gateway, request, responder);
     }
 
-    public UseCase makeUnitAdder(AddProductUnitRequest request, AddProductUnitResponder responder) {
+    public UseCase makeUnitAdder(AddProductUnitRequest request, IdentityResponder responder) {
         return AddProductUnitUseCase.create(gateway, request, responder);
     }
 

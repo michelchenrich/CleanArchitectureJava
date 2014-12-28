@@ -1,16 +1,20 @@
 package hm.usecases;
 
+import hm.usecases.commons.IdentityResponder;
 import hm.usecases.customer.CreateCustomerResponder;
 import hm.usecases.customer.PresentCustomerResponder;
 import hm.usecases.customer.PresentableCustomer;
 import hm.usecases.customer.UpdateCustomerResponder;
-import hm.usecases.product.*;
+import hm.usecases.product.CreateProductResponder;
+import hm.usecases.product.PresentProductResponder;
+import hm.usecases.product.PresentableProduct;
+import hm.usecases.product.UpdateProductResponder;
 import hm.usecases.sale.PresentSaleResponder;
 import hm.usecases.sale.PresentableSale;
 import hm.usecases.sale.cart.AddProductToCartResponder;
 import hm.usecases.sale.order.SubmitSaleOrderResponder;
 
-class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, AddProductUnitResponder, UpdateProductResponder, AddProductToCartResponder, PresentSaleResponder, SubmitSaleOrderResponder {
+class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, UpdateProductResponder, AddProductToCartResponder, PresentSaleResponder, SubmitSaleOrderResponder, IdentityResponder {
     public PresentableCustomer customer;
     public boolean firstNameIsEmpty;
     public boolean lastNameIsEmpty;

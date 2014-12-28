@@ -4,4 +4,5 @@ public interface ProductDataResponder {
     void nameIsEmpty();
     void descriptionIsEmpty();
     void pictureURIIsEmpty();
+    void priceIsNegative();
 }

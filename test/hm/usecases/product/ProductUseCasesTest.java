@@ -2,7 +2,6 @@ package hm.usecases.product;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import hm.usecases.UseCaseTest;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,42 +64,49 @@ public class ProductUseCasesTest extends UseCaseTest {
         public void invalidInputs() throws Exception {
             persistProduct("", "Description", "PictureURI", 10.0);
             assertErrorsSent("nameIsEmpty");
+            assertNothingChanged();
 
             persistProduct(" \r\n  ", "Description", "PictureURI", 10.0);
             assertErrorsSent("nameIsEmpty");
+            assertNothingChanged();
 
             persistProduct(null, "Description", "PictureURI", 10.0);
             assertErrorsSent("nameIsEmpty");
+            assertNothingChanged();
 
             persistProduct("Name", "", "PictureURI", 10.0);
             assertErrorsSent("descriptionIsEmpty");
+            assertNothingChanged();
 
             persistProduct("Name", " \r\n  ", "PictureURI", 10.0);
             assertErrorsSent("descriptionIsEmpty");
+            assertNothingChanged();
 
             persistProduct("Name", null, "PictureURI", 10.0);
             assertErrorsSent("descriptionIsEmpty");
+            assertNothingChanged();
 
             persistProduct("Name", "Description", "", 10.0);
             assertErrorsSent("pictureURIIsEmpty");
+            assertNothingChanged();
 
             persistProduct("Name", "Description", " \r\n  ", 10.0);
             assertErrorsSent("pictureURIIsEmpty");
+            assertNothingChanged();
 
             persistProduct("Name", "Description", null, 10.0);
             assertErrorsSent("pictureURIIsEmpty");
+            assertNothingChanged();
 
-            persistProduct(null, null, null, 10.0);
-            assertErrorsSent("nameIsEmpty", "descriptionIsEmpty", "pictureURIIsEmpty");
+            persistProduct("Name", "Description", "PictureURI", -0.01);
+            assertErrorsSent("priceIsNegative");
+            assertNothingChanged();
+
+            persistProduct(null, null, null, -0.01);
+            assertErrorsSent("nameIsEmpty", "descriptionIsEmpty", "pictureURIIsEmpty", "priceIsNegative");
         }
 
         protected abstract void persistProduct(String name, String description, String pictureURI, double price);
-
-        private void assertMessagesSent(boolean messageWasSent) {
-            assertTrue(messageWasSent);
-            assertNothingChanged();
-        }
-
         protected abstract void assertNothingChanged();
     }
     public class DataValidationOnCreation extends DataValidationOnPersistence {

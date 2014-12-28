@@ -1,4 +1,4 @@
-package hm.usecases.sale.order;
+package hm.usecases.saleorder;
 
 public interface PresentSaleOrderResponder {
 }

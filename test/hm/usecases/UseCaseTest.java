@@ -2,30 +2,35 @@ package hm.usecases;
 
 import hm.entities.Customer;
 import hm.entities.Product;
+import hm.entities.SaleOrder;
+import hm.usecases.cart.CartUseCaseFactory;
+import hm.usecases.cart.PresentableCart;
 import hm.usecases.customer.CustomerUseCaseFactory;
 import hm.usecases.customer.PresentableCustomer;
 import hm.usecases.product.PresentableProduct;
 import hm.usecases.product.ProductUseCaseFactory;
-import hm.usecases.sale.SaleUseCaseFactory;
-import hm.usecases.sale.cart.PresentableCart;
-import hm.usecases.sale.order.SaleOrder;
+import hm.usecases.saleorder.SaleOrderUseCaseFactory;
 import static org.junit.Assert.*;
 import org.junit.Before;
 
 public abstract class UseCaseTest {
-    public static final double PRICE_PRECISION = .001;
+    protected static final double PRICE_PRECISION = .001;
     private FakeResponder responder;
     private ProductUseCaseFactory productUseCaseFactory;
     private CustomerUseCaseFactory customerUseCaseFactory;
-    private SaleUseCaseFactory saleUseCaseFactory;
+    private CartUseCaseFactory cartUseCaseFactory;
+    private SaleOrderUseCaseFactory saleOrderUseCaseFactory;
 
     @Before
     public void setUp() {
         FakeGateway<Product> productGateway = new FakeGateway<>();
         FakeGateway<Customer> customerGateway = new FakeGateway<>();
+        FakeGateway<SaleOrder> saleOrderGateway = new FakeGateway<>();
+
         productUseCaseFactory = new ProductUseCaseFactory(productGateway);
         customerUseCaseFactory = new CustomerUseCaseFactory(customerGateway);
-        saleUseCaseFactory = new SaleUseCaseFactory(customerGateway, productGateway);
+        cartUseCaseFactory = new CartUseCaseFactory(customerGateway, productGateway);
+        saleOrderUseCaseFactory = new SaleOrderUseCaseFactory(customerGateway, productGateway, saleOrderGateway);
     }
 
     protected void addUnitToProduct(String id, int numberOfUnits) {
@@ -78,7 +83,7 @@ public abstract class UseCaseTest {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
-        saleUseCaseFactory.makeCartPresenter(request, responder).execute();
+        cartUseCaseFactory.makePresenter(request, responder).execute();
         return responder.cart;
     }
 
@@ -106,7 +111,7 @@ public abstract class UseCaseTest {
         request.productId = productId;
         request.numberOfUnits = numberOfUnits;
         responder = new FakeResponder();
-        saleUseCaseFactory.makeCartProductAdder(request, responder).execute();
+        cartUseCaseFactory.makeProductAdder(request, responder).execute();
     }
 
     protected void dropProductFromCart(String customerId, String productId) {
@@ -114,21 +119,21 @@ public abstract class UseCaseTest {
         request.customerId = customerId;
         request.productId = productId;
         responder = new FakeResponder();
-        saleUseCaseFactory.makeCartProductDropper(request, responder).execute();
+        cartUseCaseFactory.makeProductDropper(request, responder).execute();
     }
 
     protected void dropAllFromCart(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
-        saleUseCaseFactory.makeCartDropper(request, responder).execute();
+        cartUseCaseFactory.makeDropper(request, responder).execute();
     }
 
     protected String submitOrder(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
-        saleUseCaseFactory.makeOrderSubmitter(request, responder).execute();
+        saleOrderUseCaseFactory.makeOrderSubmitter(request, responder).execute();
         return responder.createdWithId;
     }
 
@@ -136,7 +141,7 @@ public abstract class UseCaseTest {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
-        saleUseCaseFactory.makeOrderPresenter(request, responder).execute();
+        saleOrderUseCaseFactory.makeOrderPresenter(request, responder).execute();
         return responder.order;
     }
 

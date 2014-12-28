@@ -1,13 +1,13 @@
 package hm.usecases;
 
+import hm.usecases.cart.AddProductToCartRequest;
+import hm.usecases.cart.CartMovementRequest;
 import hm.usecases.commons.IdBasedRequest;
 import hm.usecases.customer.CustomerPersistenceRequest;
 import hm.usecases.customer.UpdateCustomerRequest;
 import hm.usecases.product.AddProductUnitRequest;
 import hm.usecases.product.PersistProductRequest;
 import hm.usecases.product.UpdateProductRequest;
-import hm.usecases.sale.cart.AddProductToCartRequest;
-import hm.usecases.sale.cart.CartMovementRequest;
 
 class FakeRequest implements IdBasedRequest, CustomerPersistenceRequest, UpdateCustomerRequest, PersistProductRequest, AddProductUnitRequest, UpdateProductRequest, AddProductToCartRequest, CartMovementRequest {
     public String id;

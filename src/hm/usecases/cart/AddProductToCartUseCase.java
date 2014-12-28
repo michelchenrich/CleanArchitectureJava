@@ -1,4 +1,4 @@
-package hm.usecases.sale.cart;
+package hm.usecases.cart;
 
 import hm.entities.Customer;
 import hm.entities.Gateway;
@@ -32,7 +32,7 @@ public class AddProductToCartUseCase implements UseCase {
         int numberOfUnits = getAvailableNumberOfUnits(product);
 
         Customer customer = customerGateway.findById(request.getCustomerId());
-        customerGateway.persist(customer.withNewItemInCart(product, numberOfUnits));
+        customerGateway.persist(customer.withItemInCart(product, numberOfUnits));
         productGateway.persist(product.withLessUnits(numberOfUnits));
     }
 

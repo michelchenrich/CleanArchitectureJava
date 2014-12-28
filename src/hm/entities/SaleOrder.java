@@ -1,8 +1,6 @@
-package hm.usecases.sale.order;
+package hm.entities;
 
-import hm.entities.Identifiable;
-
-public class SaleOrder implements Identifiable {
+public class SaleOrder implements Identifiable<SaleOrder> {
     private double totalPrice = 750.0;
 
     public double getTotalPrice() {
@@ -13,7 +11,7 @@ public class SaleOrder implements Identifiable {
         return null;
     }
 
-    public Identifiable withId(String id) {
+    public SaleOrder withId(String id) {
         return null;
     }
 }

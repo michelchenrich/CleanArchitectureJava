@@ -1,11 +1,8 @@
-package hm.usecases.sale.cart;
+package hm.usecases.cart;
 
-import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(HierarchicalContextRunner.class)
 public class AddToCartUseCaseTest extends CartUseCaseTest {
     private String customerId;
     private String productId;
@@ -21,20 +18,22 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
     public void addToCart() {
         addProductToCart(customerId, productId, 1);
 
+        assertProductUnits(productId, 0);
+
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 1, 10.0);
         assertInCart(cart, productId, "Name", "Description", "PictureURI", 1, 10.0);
-        assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 0);
     }
 
     @Test
     public void afterAddingToCartPriceUpdatesShouldNotBeReflected() {
         addProductToCart(customerId, productId, 1);
-
+        assertProductUnits(productId, 0);
         updateProduct(productId, "Name", "Description", "PictureURI", 11.0);
 
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 1, 10.0);
         assertInCart(cart, productId, "Name", "Description", "PictureURI", 1, 10.0);
-        assertProduct(productId, "Name", "Description", "PictureURI", 11.0, 0);
     }
 
     @Test
@@ -54,6 +53,7 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
         addProductToCart(customerId, "nonexistent", 1);
         assertNotFound("nonexistent");
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 0, 0.0);
         assertNotInCart(cart, productId);
     }
 
@@ -62,6 +62,7 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
         addProductToCart(customerId, productId, 0);
         assertErrorsSent("numberOfUnitsIsLessThanOne");
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 0, 0.0);
         assertNotInCart(cart, productId);
     }
 
@@ -70,20 +71,22 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
         addUnitToProduct(productId, 1);
         addUnitToProduct(productId, 1);
         addProductToCart(customerId, productId, 100);
+        assertProductUnits(productId, 0);
 
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 1, 30.0);
         assertInCart(cart, productId, "Name", "Description", "PictureURI", 3, 10.0);
-        assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 0);
     }
 
     @Test
     public void addLessThanAllAvailableUnitsToCart() throws Exception {
         addUnitToProduct(productId, 100);
         addProductToCart(customerId, productId, 100);
+        assertProductUnits(productId, 1);
 
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 1, 1000.0);
         assertInCart(cart, productId, "Name", "Description", "PictureURI", 100, 10.0);
-        assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 1);
     }
 
     @Test
@@ -99,6 +102,7 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
         addProductToCart(customerId, productId3, 10);
 
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 3, 205.0);
         assertInCart(cart, productId, "Name", "Description", "PictureURI", 1, 10.0);
         assertInCart(cart, productId2, "Name 2", "Description 2", "PictureURI 2", 5, 12.0);
         assertInCart(cart, productId3, "Name 3", "Description 3", "PictureURI 3", 9, 15.0);
@@ -112,6 +116,7 @@ public class AddToCartUseCaseTest extends CartUseCaseTest {
         addProductToCart(customerId, productId, 5);
 
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 1, 100.0);
         assertInCart(cart, productId, "Name", "Description", "PictureURI", 10, 10.0);
     }
 }

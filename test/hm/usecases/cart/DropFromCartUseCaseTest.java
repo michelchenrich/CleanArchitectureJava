@@ -1,4 +1,4 @@
-package hm.usecases.sale.cart;
+package hm.usecases.cart;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +19,9 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
     public void dropProductAndRestoreNumberOfUnits() {
         dropProductFromCart(customerId, productId);
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 0, 0.0);
         assertNotInCart(cart, productId);
-        assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 10);
+        assertProductUnits(productId, 10);
     }
 
     @Test
@@ -31,6 +32,7 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
 
         dropProductFromCart(customerId, productId);
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 1, 100.0);
         assertNotInCart(cart, productId);
         assertInCart(cart, productId2, "Name", "Description", "PictureURI", 10, 10.0);
     }
@@ -46,6 +48,7 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
         dropProductFromCart(customerId, "nonexistent");
         assertNotFound("nonexistent");
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 1, 100.0);
         assertInCart(cart, productId, "Name", "Description", "PictureURI", 10, 10.0);
     }
 
@@ -55,8 +58,9 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
 
         dropProductFromCart(customerId, productId2);
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 1, 100.0);
         assertInCart(cart, productId, "Name", "Description", "PictureURI", 10, 10.0);
-        assertProduct(productId2, "Name", "Description", "PictureURI", 10.0, 0);
+        assertProductUnits(productId2, 0);
     }
 
     @Test
@@ -71,12 +75,14 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
 
         dropAllFromCart(customerId);
         PresentableCart cart = presentCart(customerId);
+        assertCart(cart, 0, 0.0);
         assertNotInCart(cart, productId);
         assertNotInCart(cart, productId2);
         assertNotInCart(cart, productId3);
-        assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 10);
-        assertProduct(productId2, "Name", "Description", "PictureURI", 10.0, 50);
-        assertProduct(productId3, "Name", "Description", "PictureURI", 10.0, 15);
+
+        assertProductUnits(productId, 10);
+        assertProductUnits(productId2, 50);
+        assertProductUnits(productId3, 15);
     }
 
     @Test

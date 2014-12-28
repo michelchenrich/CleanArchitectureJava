@@ -23,10 +23,6 @@ public class Customer implements Identifiable<Customer> {
         return id;
     }
 
-    public String getName() {
-        return String.format("%s, %s", lastName, firstName);
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -55,7 +51,7 @@ public class Customer implements Identifiable<Customer> {
         return new Customer(id, firstName, lastName, cart);
     }
 
-    public Customer withNewItemInCart(Product product, int numberOfUnits) {
+    public Customer withItemInCart(Product product, int numberOfUnits) {
         return new Customer(id, firstName, lastName, cart.withItem(product, numberOfUnits));
     }
 

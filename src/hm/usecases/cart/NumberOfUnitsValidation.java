@@ -1,4 +1,4 @@
-package hm.usecases.sale.cart;
+package hm.usecases.cart;
 
 import hm.usecases.commons.Validation;
 

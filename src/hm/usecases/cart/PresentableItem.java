@@ -1,4 +1,4 @@
-package hm.usecases.sale.cart;
+package hm.usecases.cart;
 
 import hm.entities.Item;
 import hm.entities.Product;
@@ -22,5 +22,9 @@ public class PresentableItem extends PresentableProduct {
 
     public double getPrice() {
         return item.getPrice();
+    }
+
+    public double getTotalPrice() {
+        return getPrice() * getNumberOfUnits();
     }
 }

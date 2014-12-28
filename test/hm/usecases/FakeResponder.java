@@ -1,16 +1,16 @@
 package hm.usecases;
 
+import hm.entities.SaleOrder;
+import hm.usecases.cart.AddProductToCartResponder;
+import hm.usecases.cart.PresentCartResponder;
+import hm.usecases.cart.PresentableCart;
 import hm.usecases.customer.CreateCustomerResponder;
 import hm.usecases.customer.PresentCustomerResponder;
 import hm.usecases.customer.PresentableCustomer;
 import hm.usecases.customer.UpdateCustomerResponder;
 import hm.usecases.product.*;
-import hm.usecases.sale.cart.AddProductToCartResponder;
-import hm.usecases.sale.cart.PresentCartResponder;
-import hm.usecases.sale.cart.PresentableCart;
-import hm.usecases.sale.order.PresentSaleOrderResponder;
-import hm.usecases.sale.order.SaleOrder;
-import hm.usecases.sale.order.SubmitSaleOrderResponder;
+import hm.usecases.saleorder.PresentSaleOrderResponder;
+import hm.usecases.saleorder.SubmitSaleOrderResponder;
 
 class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, AddProductUnitResponder, UpdateProductResponder, AddProductToCartResponder, PresentCartResponder, SubmitSaleOrderResponder, PresentSaleOrderResponder {
     public boolean firstNameIsEmpty;

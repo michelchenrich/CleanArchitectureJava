@@ -13,20 +13,18 @@ public class DropProductFromCartUseCase implements UseCase {
     private Gateway<Customer> customerGateway;
     private Gateway<Product> productGateway;
     private CartMovementRequest request;
-    private IdentityResponder responder;
 
     public static UseCase create(Gateway<Customer> customerGateway, Gateway<Product> productGateway, CartMovementRequest request, IdentityResponder responder) {
-        UseCase useCase = new DropProductFromCartUseCase(customerGateway, productGateway, request, responder);
+        UseCase useCase = new DropProductFromCartUseCase(customerGateway, productGateway, request);
         Validation customerIdValidation = new IdentityValidation(customerGateway, request.getCustomerId(), responder);
         Validation productIdValidation = new IdentityValidation(productGateway, request.getProductId(), responder);
         return new ValidatedUseCase(useCase, customerIdValidation, productIdValidation);
     }
 
-    private DropProductFromCartUseCase(Gateway<Customer> customerGateway, Gateway<Product> productGateway, CartMovementRequest request, IdentityResponder responder) {
+    private DropProductFromCartUseCase(Gateway<Customer> customerGateway, Gateway<Product> productGateway, CartMovementRequest request) {
         this.customerGateway = customerGateway;
         this.productGateway = productGateway;
         this.request = request;
-        this.responder = responder;
     }
 
     public void execute() {

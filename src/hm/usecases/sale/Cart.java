@@ -27,7 +27,7 @@ public class Cart {
         return 0;
     }
 
-    public Cart withNewItem(Product product, int numberOfUnits) {
+    public Cart withItem(Product product, int numberOfUnits) {
         ImmutableList.Builder<CartItem> builder = ImmutableList.builder();
         CartItem newItem = new CartItem(product, 0);
         for (CartItem item : items)

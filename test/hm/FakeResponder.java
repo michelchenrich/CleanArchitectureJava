@@ -6,8 +6,10 @@ import hm.usecases.customer.PresentCustomerResponder;
 import hm.usecases.customer.UpdateCustomerResponder;
 import hm.usecases.product.*;
 import hm.usecases.sale.AddProductToCartResponder;
-import hm.usecases.sale.Cart;
+import hm.usecases.sale.CartItem;
 import hm.usecases.sale.PresentCustomerCartResponder;
+
+import java.util.List;
 
 class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, AddProductUnitResponder, UpdateProductResponder, AddProductToCartResponder, PresentCustomerCartResponder {
     public boolean firstNameIsEmpty;
@@ -21,7 +23,7 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
     public boolean descriptionIsEmpty;
     public boolean pictureURIIsEmpty;
     public boolean priceIsNegative;
-    public Cart cart;
+    public List<CartItem> cartItems;
     public boolean numberOfUnitsIsLessThanOne;
 
     public void invalidId(String id) {
@@ -65,11 +67,11 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
         priceIsNegative = true;
     }
 
-    public void customerCartFound(Cart cart) {
-        this.cart = cart;
-    }
-
     public void numberOfUnitsIsLessThanOne() {
         numberOfUnitsIsLessThanOne = true;
+    }
+
+    public void cartFound(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 }

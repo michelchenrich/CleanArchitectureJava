@@ -16,7 +16,7 @@ public class SaleUseCaseFactory {
         this.productGateway = productGateway;
     }
 
-    public UseCase makeCartAdder(AddProductToCartRequest request, AddProductToCartResponder responder) {
+    public UseCase makeCartProductAdder(AddProductToCartRequest request, AddProductToCartResponder responder) {
         return AddProductToCartUseCase.create(customerGateway, productGateway, request, responder);
     }
 
@@ -24,7 +24,11 @@ public class SaleUseCaseFactory {
         return PresentCustomerCartUseCase.create(customerGateway, request, responder);
     }
 
-    public UseCase makeCartDropper(CartMovementRequest request, IdentityResponder responder) {
+    public UseCase makeCartProductDrooper(CartMovementRequest request, IdentityResponder responder) {
         return DropProductFromCartUseCase.create(customerGateway, productGateway, request, responder);
+    }
+
+    public UseCase makeCartDrooper(IdBasedRequest request, IdentityResponder responder) {
+        return DropAllFromCartUseCase.create(customerGateway, productGateway, request, responder);
     }
 }

@@ -16,9 +16,10 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
     }
 
     @Test
-    public void shouldBeGoneFromCartAfterDropping() {
+    public void dropProductAndRestoreNumberOfUnits() {
         dropProductFromCart(customerId, productId);
         assertNotInCart(customerId, productId);
+        assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 10);
     }
 
     @Test
@@ -52,5 +53,24 @@ public class DropFromCartUseCaseTest extends CartUseCaseTest {
         dropProductFromCart(customerId, productId2);
         assertInCart(customerId, productId, 10, 10.0);
         assertProduct(productId2, "Name", "Description", "PictureURI", 10.0, 0);
+    }
+
+    @Test
+    public void dropAllAndRestoreNumberOfUnits() {
+        String productId2 = createDefaultProduct();
+        addUnitToProduct(productId2, 50);
+        addProductToCart(customerId, productId2, 50);
+
+        String productId3 = createDefaultProduct();
+        addUnitToProduct(productId3, 15);
+        addProductToCart(customerId, productId3, 15);
+
+        dropAllFromCart(customerId);
+        assertNotInCart(customerId, productId);
+        assertNotInCart(customerId, productId2);
+        assertNotInCart(customerId, productId3);
+        assertProduct(productId, "Name", "Description", "PictureURI", 10.0, 10);
+        assertProduct(productId2, "Name", "Description", "PictureURI", 10.0, 50);
+        assertProduct(productId3, "Name", "Description", "PictureURI", 10.0, 15);
     }
 }

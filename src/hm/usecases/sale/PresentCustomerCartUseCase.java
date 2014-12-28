@@ -25,6 +25,6 @@ public class PresentCustomerCartUseCase implements UseCase {
 
     public void execute() {
         Customer customer = gateway.findById(request.getId());
-        responder.customerCartFound(customer.getCart());
+        responder.cartFound(customer.getCartItems());
     }
 }

@@ -2,6 +2,8 @@ package hm.usecases.sale;
 
 import hm.usecases.commons.IdentityResponder;
 
+import java.util.List;
+
 public interface PresentCustomerCartResponder extends IdentityResponder {
-    void customerCartFound(Cart cart);
+    void cartFound(List<CartItem> cartItems);
 }

@@ -3,6 +3,9 @@ package hm.usecases.customer;
 import hm.usecases.Identifiable;
 import hm.usecases.product.Product;
 import hm.usecases.sale.Cart;
+import hm.usecases.sale.CartItem;
+
+import java.util.List;
 
 public class Customer implements Identifiable<Customer> {
     private String id;
@@ -37,8 +40,8 @@ public class Customer implements Identifiable<Customer> {
         return lastName;
     }
 
-    public Cart getCart() {
-        return cart;
+    public List<CartItem> getCartItems() {
+        return cart.getItems();
     }
 
     public int getNumberOfUnitsInCartOf(Product product) {
@@ -58,10 +61,14 @@ public class Customer implements Identifiable<Customer> {
     }
 
     public Customer withNewItemInCart(Product product, int numberOfUnits) {
-        return new Customer(id, firstName, lastName, cart.withNewItem(product, numberOfUnits));
+        return new Customer(id, firstName, lastName, cart.withItem(product, numberOfUnits));
     }
 
     public Customer withoutItemInCart(Product product) {
         return new Customer(id, firstName, lastName, cart.withoutItem(product));
+    }
+
+    public Customer withEmptyCart() {
+        return new Customer(id, firstName, lastName, Cart.create());
     }
 }

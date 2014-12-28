@@ -4,10 +4,12 @@ import hm.usecases.customer.Customer;
 import hm.usecases.customer.CustomerUseCaseFactory;
 import hm.usecases.product.Product;
 import hm.usecases.product.ProductUseCaseFactory;
-import hm.usecases.sale.Cart;
+import hm.usecases.sale.CartItem;
 import hm.usecases.sale.SaleUseCaseFactory;
 import static org.junit.Assert.*;
 import org.junit.Before;
+
+import java.util.List;
 
 public abstract class UseCaseTest {
     public static final double PRICE_PRECISION = .001;
@@ -71,12 +73,12 @@ public abstract class UseCaseTest {
         return responder.customer;
     }
 
-    protected Cart presentCustomerCart(String id) {
+    protected List<CartItem> presentCustomerCart(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
         saleUseCaseFactory.makeCartPresenter(request, responder).execute();
-        return responder.cart;
+        return responder.cartItems;
     }
 
     protected void updateCustomer(String id, String firstName, String lastName) {
@@ -103,7 +105,7 @@ public abstract class UseCaseTest {
         request.productId = productId;
         request.numberOfUnits = numberOfUnits;
         responder = new FakeResponder();
-        saleUseCaseFactory.makeCartAdder(request, responder).execute();
+        saleUseCaseFactory.makeCartProductAdder(request, responder).execute();
     }
 
     protected void dropProductFromCart(String customerId, String productId) {
@@ -111,8 +113,15 @@ public abstract class UseCaseTest {
         request.customerId = customerId;
         request.productId = productId;
         responder = new FakeResponder();
-        saleUseCaseFactory.makeCartDropper(request, responder).execute();
+        saleUseCaseFactory.makeCartProductDrooper(request, responder).execute();
 
+    }
+
+    protected void dropAllFromCart(String id) {
+        FakeRequest request = new FakeRequest();
+        request.id = id;
+        responder = new FakeResponder();
+        saleUseCaseFactory.makeCartDrooper(request, responder).execute();
     }
 
     protected void assertFound() {

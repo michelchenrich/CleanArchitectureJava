@@ -45,4 +45,10 @@ public class CancelSaleOrderUseCaseTest extends UseCaseTest {
         assertProductUnits(productId2, 50);
         assertProductUnits(productId3, 15);
     }
+
+    @Test
+    public void cancellingNonexistentOrder() {
+        cancelOrder("nonexistent");
+        assertNotFound("nonexistent");
+    }
 }

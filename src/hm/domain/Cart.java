@@ -9,12 +9,12 @@ import java.util.Map;
 public class Cart implements Sale {
     private ImmutableMap<String, Item> itemMap;
 
-    public static Cart create() {
-        return new Cart(ImmutableMap.<String, Item>of());
+    private Cart(Map<String, Item> itemMap) {
+        this.itemMap = ImmutableMap.copyOf(itemMap);
     }
 
-    protected Cart(Map<String, Item> itemMap) {
-        this.itemMap = ImmutableMap.copyOf(itemMap);
+    public static Cart create() {
+        return new Cart(ImmutableMap.of());
     }
 
     public List<Item> getItems() {

@@ -6,24 +6,24 @@ import hm.domain.Memory;
 import java.util.HashMap;
 import java.util.Map;
 
-class FakeMemory<TEntity extends Identifiable<TEntity>> implements Memory<TEntity> {
-    private Map<String, TEntity> entities = new HashMap<>();
+class FakeMemory<E extends Identifiable<E>> implements Memory<E> {
+    private Map<String, E> map = new HashMap<>();
     private int incrementalId;
 
     public boolean existsWithId(String id) {
-        return entities.containsKey(id);
+        return map.containsKey(id);
     }
 
-    public TEntity persist(TEntity customer) {
-        if (customer.getId().isEmpty())
-            customer = customer.withId(nextId());
-        entities.put(customer.getId(), customer);
-        return customer;
+    public E persist(E identifiable) {
+        if (identifiable.getId().isEmpty())
+            identifiable = identifiable.withId(nextId());
+        map.put(identifiable.getId(), identifiable);
+        return identifiable;
     }
 
-    public TEntity findById(String id) {
+    public E findById(String id) {
         if (!existsWithId(id)) throw new NoSuchEntityException(id);
-        return entities.get(id);
+        return map.get(id);
     }
 
     private String nextId() {

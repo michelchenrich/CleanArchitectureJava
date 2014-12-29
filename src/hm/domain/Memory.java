@@ -1,7 +1,7 @@
 package hm.domain;
 
-public interface Memory<TEntity extends Identifiable> {
+public interface Memory<E extends Identifiable> {
     boolean existsWithId(String id);
-    TEntity persist(TEntity entity);
-    TEntity findById(String id);
+    E persist(E identifiable);
+    E findById(String id);
 }

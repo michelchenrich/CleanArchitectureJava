@@ -1,6 +1,6 @@
 package hm.domain;
 
-public interface Identifiable<TEntity extends Identifiable> {
+public interface Identifiable<T extends Identifiable> {
     String getId();
-    TEntity withId(String id);
+    T withId(String id);
 }

@@ -1,31 +1,31 @@
 package hm.usecases;
 
-import hm.domain.Gateway;
+import hm.domain.Memory;
 import hm.domain.Product;
 import hm.usecases.commons.IdBasedRequest;
 import hm.usecases.commons.IdentityResponder;
 import hm.usecases.product.*;
 
 public class ProductUseCaseFactory {
-    private Gateway<Product> gateway;
+    private Memory<Product> memory;
 
-    public ProductUseCaseFactory(Gateway<Product> gateway) {
-        this.gateway = gateway;
+    public ProductUseCaseFactory(Memory<Product> memory) {
+        this.memory = memory;
     }
 
     public UseCase makeCreator(PersistProductRequest request, CreateProductResponder responder) {
-        return CreateProductUseCase.create(gateway, request, responder);
+        return CreateProductUseCase.create(memory, request, responder);
     }
 
     public UseCase makePresenter(IdBasedRequest request, PresentProductResponder responder) {
-        return PresentProductUseCase.create(gateway, request, responder);
+        return PresentProductUseCase.create(memory, request, responder);
     }
 
     public UseCase makeUnitAdder(AddProductUnitRequest request, IdentityResponder responder) {
-        return AddProductUnitUseCase.create(gateway, request, responder);
+        return AddProductUnitUseCase.create(memory, request, responder);
     }
 
     public UseCase makeUpdater(UpdateProductRequest request, UpdateProductResponder responder) {
-        return UpdateProductUseCase.create(gateway, request, responder);
+        return UpdateProductUseCase.create(memory, request, responder);
     }
 }

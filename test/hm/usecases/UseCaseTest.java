@@ -20,9 +20,9 @@ public abstract class UseCaseTest {
 
     @Before
     public void setUp() {
-        FakeGateway<Product> productGateway = new FakeGateway<>();
-        FakeGateway<Customer> customerGateway = new FakeGateway<>();
-        FakeGateway<SaleOrder> saleOrderGateway = new FakeGateway<>();
+        FakeMemory<Product> productGateway = new FakeMemory<>();
+        FakeMemory<Customer> customerGateway = new FakeMemory<>();
+        FakeMemory<SaleOrder> saleOrderGateway = new FakeMemory<>();
 
         productUseCaseFactory = new ProductUseCaseFactory(productGateway);
         customerUseCaseFactory = new CustomerUseCaseFactory(customerGateway);

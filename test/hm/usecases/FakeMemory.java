@@ -1,12 +1,12 @@
 package hm.usecases;
 
-import hm.domain.Gateway;
 import hm.domain.Identifiable;
+import hm.domain.Memory;
 
 import java.util.HashMap;
 import java.util.Map;
 
-class FakeGateway<TEntity extends Identifiable<TEntity>> implements Gateway<TEntity> {
+class FakeMemory<TEntity extends Identifiable<TEntity>> implements Memory<TEntity> {
     private Map<String, TEntity> entities = new HashMap<>();
     private int incrementalId;
 

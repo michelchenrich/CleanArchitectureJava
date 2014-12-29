@@ -1,29 +1,29 @@
 package hm.usecases.customer;
 
 import hm.domain.Customer;
-import hm.domain.Gateway;
+import hm.domain.Memory;
 import hm.usecases.UseCase;
 import hm.usecases.commons.IdentityValidation;
 import hm.usecases.commons.ValidatedUseCase;
 
 public class UpdateCustomerUseCase implements UseCase {
-    private Gateway<Customer> gateway;
+    private Memory<Customer> memory;
     private UpdateCustomerRequest request;
 
-    public static UseCase create(Gateway<Customer> gateway, UpdateCustomerRequest request, UpdateCustomerResponder responder) {
-        UseCase useCase = new UpdateCustomerUseCase(gateway, request);
-        return new ValidatedUseCase(useCase, new IdentityValidation(gateway, request, responder), new CustomerDataValidation(request, responder));
+    public static UseCase create(Memory<Customer> memory, UpdateCustomerRequest request, UpdateCustomerResponder responder) {
+        UseCase useCase = new UpdateCustomerUseCase(memory, request);
+        return new ValidatedUseCase(useCase, new IdentityValidation(memory, request, responder), new CustomerDataValidation(request, responder));
     }
 
-    private UpdateCustomerUseCase(Gateway<Customer> gateway, UpdateCustomerRequest request) {
-        this.gateway = gateway;
+    private UpdateCustomerUseCase(Memory<Customer> memory, UpdateCustomerRequest request) {
+        this.memory = memory;
         this.request = request;
     }
 
     public void execute() {
-        Customer customer = gateway.findById(request.getId());
+        Customer customer = memory.findById(request.getId());
         customer = customer.withFirstName(request.getFirstName());
         customer = customer.withLastName(request.getLastName());
-        gateway.persist(customer);
+        memory.persist(customer);
     }
 }

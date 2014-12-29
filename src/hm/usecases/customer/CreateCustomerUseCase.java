@@ -1,22 +1,22 @@
 package hm.usecases.customer;
 
 import hm.domain.Customer;
-import hm.domain.Gateway;
+import hm.domain.Memory;
 import hm.usecases.UseCase;
 import hm.usecases.commons.ValidatedUseCase;
 
 public class CreateCustomerUseCase implements UseCase {
-    private Gateway<Customer> gateway;
+    private Memory<Customer> memory;
     private CustomerPersistenceRequest request;
     private CreateCustomerResponder responder;
 
-    public static UseCase create(Gateway<Customer> gateway, CustomerPersistenceRequest request, CreateCustomerResponder responder) {
-        UseCase useCase = new CreateCustomerUseCase(gateway, request, responder);
+    public static UseCase create(Memory<Customer> memory, CustomerPersistenceRequest request, CreateCustomerResponder responder) {
+        UseCase useCase = new CreateCustomerUseCase(memory, request, responder);
         return new ValidatedUseCase(useCase, new CustomerDataValidation(request, responder));
     }
 
-    private CreateCustomerUseCase(Gateway<Customer> gateway, CustomerPersistenceRequest request, CreateCustomerResponder responder) {
-        this.gateway = gateway;
+    private CreateCustomerUseCase(Memory<Customer> memory, CustomerPersistenceRequest request, CreateCustomerResponder responder) {
+        this.memory = memory;
         this.request = request;
         this.responder = responder;
     }
@@ -25,7 +25,7 @@ public class CreateCustomerUseCase implements UseCase {
         Customer customer = Customer.create();
         customer = customer.withFirstName(request.getFirstName());
         customer = customer.withLastName(request.getLastName());
-        customer = gateway.persist(customer);
+        customer = memory.persist(customer);
         responder.createdWithId(customer.getId());
     }
 }

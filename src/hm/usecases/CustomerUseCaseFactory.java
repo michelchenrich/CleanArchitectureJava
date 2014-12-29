@@ -1,26 +1,26 @@
 package hm.usecases;
 
 import hm.domain.Customer;
-import hm.domain.Gateway;
+import hm.domain.Memory;
 import hm.usecases.commons.IdBasedRequest;
 import hm.usecases.customer.*;
 
 public class CustomerUseCaseFactory {
-    private Gateway<Customer> gateway;
+    private Memory<Customer> memory;
 
-    public CustomerUseCaseFactory(Gateway<Customer> gateway) {
-        this.gateway = gateway;
+    public CustomerUseCaseFactory(Memory<Customer> memory) {
+        this.memory = memory;
     }
 
     public UseCase makePresenter(IdBasedRequest request, PresentCustomerResponder responder) {
-        return PresentCustomerUseCase.create(gateway, request, responder);
+        return PresentCustomerUseCase.create(memory, request, responder);
     }
 
     public UseCase makeCreator(CustomerPersistenceRequest request, CreateCustomerResponder responder) {
-        return CreateCustomerUseCase.create(gateway, request, responder);
+        return CreateCustomerUseCase.create(memory, request, responder);
     }
 
     public UseCase makeUpdater(UpdateCustomerRequest request, UpdateCustomerResponder responder) {
-        return UpdateCustomerUseCase.create(gateway, request, responder);
+        return UpdateCustomerUseCase.create(memory, request, responder);
     }
 }

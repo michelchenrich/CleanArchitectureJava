@@ -1,22 +1,22 @@
 package hm.usecases.product;
 
-import hm.domain.Gateway;
+import hm.domain.Memory;
 import hm.domain.Product;
 import hm.usecases.UseCase;
 import hm.usecases.commons.ValidatedUseCase;
 
 public class CreateProductUseCase implements UseCase {
-    private Gateway<Product> gateway;
+    private Memory<Product> memory;
     private PersistProductRequest request;
     private CreateProductResponder responder;
 
-    public static UseCase create(Gateway<Product> gateway, PersistProductRequest request, CreateProductResponder responder) {
-        UseCase useCase = new CreateProductUseCase(gateway, request, responder);
+    public static UseCase create(Memory<Product> memory, PersistProductRequest request, CreateProductResponder responder) {
+        UseCase useCase = new CreateProductUseCase(memory, request, responder);
         return new ValidatedUseCase(useCase, new ProductDataValidation(request, responder));
     }
 
-    private CreateProductUseCase(Gateway<Product> gateway, PersistProductRequest request, CreateProductResponder responder) {
-        this.gateway = gateway;
+    private CreateProductUseCase(Memory<Product> memory, PersistProductRequest request, CreateProductResponder responder) {
+        this.memory = memory;
         this.request = request;
         this.responder = responder;
     }
@@ -27,7 +27,7 @@ public class CreateProductUseCase implements UseCase {
         product = product.withDescription(request.getDescription());
         product = product.withPictureURI(request.getPictureURI());
         product = product.withPrice(request.getPrice());
-        product = gateway.persist(product);
+        product = memory.persist(product);
         responder.createdWithId(product.getId());
     }
 }

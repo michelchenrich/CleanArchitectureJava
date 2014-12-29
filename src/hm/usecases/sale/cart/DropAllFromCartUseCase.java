@@ -1,8 +1,8 @@
 package hm.usecases.sale.cart;
 
 import hm.domain.Customer;
-import hm.domain.Gateway;
 import hm.domain.Item;
+import hm.domain.Memory;
 import hm.domain.Product;
 import hm.usecases.UseCase;
 import hm.usecases.commons.IdBasedRequest;
@@ -11,25 +11,25 @@ import hm.usecases.commons.IdentityValidation;
 import hm.usecases.commons.ValidatedUseCase;
 
 public class DropAllFromCartUseCase implements UseCase {
-    private Gateway<Customer> customerGateway;
-    private Gateway<Product> productGateway;
+    private Memory<Customer> customerMemory;
+    private Memory<Product> productMemory;
     private IdBasedRequest request;
 
-    public static UseCase create(Gateway<Customer> customerGateway, Gateway<Product> productGateway, IdBasedRequest request, IdentityResponder responder) {
-        UseCase useCase = new DropAllFromCartUseCase(customerGateway, productGateway, request);
-        return new ValidatedUseCase(useCase, new IdentityValidation(customerGateway, request, responder));
+    public static UseCase create(Memory<Customer> customerMemory, Memory<Product> productMemory, IdBasedRequest request, IdentityResponder responder) {
+        UseCase useCase = new DropAllFromCartUseCase(customerMemory, productMemory, request);
+        return new ValidatedUseCase(useCase, new IdentityValidation(customerMemory, request, responder));
     }
 
-    private DropAllFromCartUseCase(Gateway<Customer> customerGateway, Gateway<Product> productGateway, IdBasedRequest request) {
-        this.customerGateway = customerGateway;
-        this.productGateway = productGateway;
+    private DropAllFromCartUseCase(Memory<Customer> customerMemory, Memory<Product> productMemory, IdBasedRequest request) {
+        this.customerMemory = customerMemory;
+        this.productMemory = productMemory;
         this.request = request;
     }
 
     public void execute() {
-        Customer customer = customerGateway.findById(request.getId());
+        Customer customer = customerMemory.findById(request.getId());
         restoreUnits(customer);
-        customerGateway.persist(customer.withEmptyCart());
+        customerMemory.persist(customer.withEmptyCart());
     }
 
     private void restoreUnits(Customer customer) {
@@ -38,7 +38,7 @@ public class DropAllFromCartUseCase implements UseCase {
     }
 
     private void restoreProductUnits(Item item) {
-        Product product = productGateway.findById(item.getProductId());
-        productGateway.persist(product.withMoreUnits(item.getNumberOfUnits()));
+        Product product = productMemory.findById(item.getProductId());
+        productMemory.persist(product.withMoreUnits(item.getNumberOfUnits()));
     }
 }

@@ -1,17 +1,17 @@
 package hm.usecases;
 
 import hm.domain.Customer;
-import hm.domain.Gateway;
+import hm.domain.Memory;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CustomerGatewayTest {
-    private Gateway<Customer> customers;
+public class CustomerMemoryTest {
+    private Memory<Customer> customers;
 
     @Before
     public void setUp() throws Exception {
-        customers = new FakeGateway();
+        customers = new FakeMemory();
     }
 
     @Test

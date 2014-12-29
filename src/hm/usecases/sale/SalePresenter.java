@@ -1,18 +1,18 @@
 package hm.usecases.sale;
 
 import com.google.common.collect.ImmutableList;
-import hm.domain.Gateway;
 import hm.domain.Item;
+import hm.domain.Memory;
 import hm.domain.Product;
 import hm.domain.Sale;
 
 import java.util.List;
 
 public class SalePresenter {
-    private Gateway<Product> productGateway;
+    private Memory<Product> productMemory;
 
-    public SalePresenter(Gateway<Product> productGateway) {
-        this.productGateway = productGateway;
+    public SalePresenter(Memory<Product> productMemory) {
+        this.productMemory = productMemory;
     }
 
     public PresentableSale present(Sale sale) {
@@ -31,7 +31,7 @@ public class SalePresenter {
     }
 
     private PresentableItem asPresentable(Item item) {
-        Product product = productGateway.findById(item.getProductId());
+        Product product = productMemory.findById(item.getProductId());
         return new PresentableItem(item, product);
     }
 }

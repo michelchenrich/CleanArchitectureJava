@@ -7,28 +7,28 @@ import hm.usecases.commons.IdentityValidation;
 import hm.usecases.commons.ValidatedUseCase;
 
 public class SubmitSaleOrderUseCase implements UseCase {
-    private Gateway<SaleOrder> saleOrderGateway;
-    private Gateway<Customer> customerGateway;
+    private Memory<SaleOrder> saleOrderMemory;
+    private Memory<Customer> customerMemory;
     private IdBasedRequest request;
     private SubmitSaleOrderResponder responder;
 
-    public static UseCase create(Gateway<SaleOrder> saleOrderGateway, Gateway<Customer> customerGateway, IdBasedRequest request, SubmitSaleOrderResponder responder) {
-        UseCase useCase = new SubmitSaleOrderUseCase(saleOrderGateway, customerGateway, request, responder);
-        return new ValidatedUseCase(useCase, new IdentityValidation(customerGateway, request, responder));
+    public static UseCase create(Memory<SaleOrder> saleOrderMemory, Memory<Customer> customerMemory, IdBasedRequest request, SubmitSaleOrderResponder responder) {
+        UseCase useCase = new SubmitSaleOrderUseCase(saleOrderMemory, customerMemory, request, responder);
+        return new ValidatedUseCase(useCase, new IdentityValidation(customerMemory, request, responder));
     }
 
-    private SubmitSaleOrderUseCase(Gateway<SaleOrder> saleOrderGateway, Gateway<Customer> customerGateway, IdBasedRequest request, SubmitSaleOrderResponder responder) {
-        this.saleOrderGateway = saleOrderGateway;
-        this.customerGateway = customerGateway;
+    private SubmitSaleOrderUseCase(Memory<SaleOrder> saleOrderMemory, Memory<Customer> customerMemory, IdBasedRequest request, SubmitSaleOrderResponder responder) {
+        this.saleOrderMemory = saleOrderMemory;
+        this.customerMemory = customerMemory;
         this.request = request;
         this.responder = responder;
     }
 
     public void execute() {
-        Customer customer = customerGateway.findById(request.getId());
+        Customer customer = customerMemory.findById(request.getId());
         SaleOrder saleOrder = asSaleOrder(customer.getCart());
-        saleOrder = saleOrderGateway.persist(saleOrder);
-        customerGateway.persist(customer.withEmptyCart());
+        saleOrder = saleOrderMemory.persist(saleOrder);
+        customerMemory.persist(customer.withEmptyCart());
         responder.createdWithId(saleOrder.getId());
     }
 

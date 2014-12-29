@@ -1,28 +1,28 @@
 package hm.usecases.commons;
 
-import hm.domain.Gateway;
+import hm.domain.Memory;
 
 public class IdentityValidation implements Validation {
-    private Gateway gateway;
+    private Memory memory;
     private String id;
     private IdentityResponder responder;
 
-    public IdentityValidation(Gateway gateway, String id, IdentityResponder responder) {
-        this.gateway = gateway;
+    public IdentityValidation(Memory memory, String id, IdentityResponder responder) {
+        this.memory = memory;
         this.id = id;
         this.responder = responder;
     }
 
-    public IdentityValidation(Gateway gateway, IdBasedRequest request, IdentityResponder responder) {
-        this(gateway, request.getId(), responder);
+    public IdentityValidation(Memory memory, IdBasedRequest request, IdentityResponder responder) {
+        this(memory, request.getId(), responder);
     }
 
     public boolean hasErrors() {
-        return !gateway.existsWithId(id);
+        return !memory.existsWithId(id);
     }
 
     public void sendErrors() {
-        if (!gateway.existsWithId(id))
+        if (!memory.existsWithId(id))
             responder.invalidId(id);
     }
 }

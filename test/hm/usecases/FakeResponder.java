@@ -9,12 +9,14 @@ import hm.usecases.product.CreateProductResponder;
 import hm.usecases.product.PresentProductResponder;
 import hm.usecases.product.PresentableProduct;
 import hm.usecases.product.UpdateProductResponder;
-import hm.usecases.sale.PresentSaleResponder;
 import hm.usecases.sale.PresentableSale;
 import hm.usecases.sale.cart.AddProductToCartResponder;
+import hm.usecases.sale.cart.PresentCartResponder;
+import hm.usecases.sale.order.PresentSaleOrderResponder;
+import hm.usecases.sale.order.PresentableSaleOrder;
 import hm.usecases.sale.order.SubmitSaleOrderResponder;
 
-class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, UpdateProductResponder, AddProductToCartResponder, PresentSaleResponder, SubmitSaleOrderResponder, IdentityResponder {
+class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, UpdateProductResponder, AddProductToCartResponder, PresentCartResponder, SubmitSaleOrderResponder, IdentityResponder, PresentSaleOrderResponder {
     public PresentableCustomer customer;
     public boolean firstNameIsEmpty;
     public boolean lastNameIsEmpty;
@@ -27,7 +29,8 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
     public boolean pictureURIIsEmpty;
     public boolean priceIsNegative;
     public boolean numberOfUnitsIsLessThanOne;
-    public PresentableSale items;
+    public PresentableSale sale;
+    public PresentableSaleOrder order;
 
     public void invalidId(String id) {
         idIsInvalid = true;
@@ -74,7 +77,11 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
         numberOfUnitsIsLessThanOne = true;
     }
 
-    public void saleFound(PresentableSale sale) {
-        this.items = sale;
+    public void cartFound(PresentableSale sale) {
+        this.sale = sale;
+    }
+
+    public void saleOrderFound(PresentableSaleOrder order) {
+        this.order = order;
     }
 }

@@ -21,7 +21,7 @@ public class DropFromCartUseCaseTest extends UseCaseTest {
     public void dropProductAndRestoreNumberOfUnits() {
         dropProductFromCart(customerId, productId);
         PresentableSale cart = presentCart(customerId);
-        assertAttributes(cart, 0, 0.0);
+        assertSaleAttributes(cart, 0, 0.0);
         assertNotInCart(cart, productId);
         assertProductUnits(productId, 10);
     }
@@ -34,9 +34,9 @@ public class DropFromCartUseCaseTest extends UseCaseTest {
 
         dropProductFromCart(customerId, productId);
         PresentableSale cart = presentCart(customerId);
-        assertAttributes(cart, 1, 100.0);
+        assertSaleAttributes(cart, 1, 100.0);
         assertNotInCart(cart, productId);
-        assertHasItem(cart, productId2, "Name", "Description", "PictureURI", 10, 10.0);
+        assertSaleItem(cart, productId2, "Name", "Description", "PictureURI", 10, 10.0);
     }
 
     @Test
@@ -50,8 +50,8 @@ public class DropFromCartUseCaseTest extends UseCaseTest {
         dropProductFromCart(customerId, "nonexistent");
         assertNotFound("nonexistent");
         PresentableSale cart = presentCart(customerId);
-        assertAttributes(cart, 1, 100.0);
-        assertHasItem(cart, productId, "Name", "Description", "PictureURI", 10, 10.0);
+        assertSaleAttributes(cart, 1, 100.0);
+        assertSaleItem(cart, productId, "Name", "Description", "PictureURI", 10, 10.0);
     }
 
     @Test
@@ -60,8 +60,8 @@ public class DropFromCartUseCaseTest extends UseCaseTest {
 
         dropProductFromCart(customerId, productId2);
         PresentableSale cart = presentCart(customerId);
-        assertAttributes(cart, 1, 100.0);
-        assertHasItem(cart, productId, "Name", "Description", "PictureURI", 10, 10.0);
+        assertSaleAttributes(cart, 1, 100.0);
+        assertSaleItem(cart, productId, "Name", "Description", "PictureURI", 10, 10.0);
         assertProductUnits(productId2, 0);
     }
 
@@ -77,7 +77,7 @@ public class DropFromCartUseCaseTest extends UseCaseTest {
 
         dropAllFromCart(customerId);
         PresentableSale cart = presentCart(customerId);
-        assertAttributes(cart, 0, 0.0);
+        assertSaleAttributes(cart, 0, 0.0);
         assertNotInCart(cart, productId);
         assertNotInCart(cart, productId2);
         assertNotInCart(cart, productId3);

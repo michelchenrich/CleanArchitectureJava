@@ -5,7 +5,6 @@ import hm.domain.Memory;
 import hm.domain.Product;
 import hm.usecases.commons.IdBasedRequest;
 import hm.usecases.commons.IdentityResponder;
-import hm.usecases.sale.PresentSaleResponder;
 import hm.usecases.sale.cart.*;
 
 public class CartUseCaseFactory {
@@ -21,7 +20,7 @@ public class CartUseCaseFactory {
         return AddProductToCartUseCase.create(customerMemory, productMemory, request, responder);
     }
 
-    public UseCase makePresenter(IdBasedRequest request, PresentSaleResponder responder) {
+    public UseCase makePresenter(IdBasedRequest request, PresentCartResponder responder) {
         return PresentCartUseCase.create(customerMemory, productMemory, request, responder);
     }
 

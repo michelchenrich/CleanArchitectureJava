@@ -5,7 +5,7 @@ import java.util.List;
 public class PresentableSale {
     private List<PresentableItem> items;
 
-    PresentableSale(List<PresentableItem> items) {
+    protected PresentableSale(List<PresentableItem> items) {
         this.items = items;
     }
 
@@ -18,5 +18,9 @@ public class PresentableSale {
         for (PresentableItem item : items)
             totalPrice += item.getTotalPrice();
         return totalPrice;
+    }
+
+    public boolean isCanceled() {
+        return false;
     }
 }

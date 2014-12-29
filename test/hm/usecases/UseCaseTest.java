@@ -7,6 +7,7 @@ import hm.usecases.customer.PresentableCustomer;
 import hm.usecases.product.PresentableProduct;
 import hm.usecases.sale.PresentableItem;
 import hm.usecases.sale.PresentableSale;
+import hm.usecases.sale.order.PresentableSaleOrder;
 import static org.junit.Assert.*;
 import org.junit.Before;
 
@@ -127,7 +128,7 @@ public abstract class UseCaseTest {
         request.id = id;
         responder = new FakeResponder();
         cartUseCaseFactory.makePresenter(request, responder).execute();
-        return responder.items;
+        return responder.sale;
     }
 
     protected String submitOrder(String id) {
@@ -138,12 +139,19 @@ public abstract class UseCaseTest {
         return responder.createdWithId;
     }
 
-    protected PresentableSale presentOrder(String id) {
+    protected void cancelOrder(String id) {
+        FakeRequest request = new FakeRequest();
+        request.id = id;
+        responder = new FakeResponder();
+        saleOrderUseCaseFactory.makeOrderCanceler(request, responder).execute();
+    }
+
+    protected PresentableSaleOrder presentOrder(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
         saleOrderUseCaseFactory.makeOrderPresenter(request, responder).execute();
-        return responder.items;
+        return responder.order;
     }
 
     protected void assertFound() {
@@ -183,9 +191,9 @@ public abstract class UseCaseTest {
         return createCustomer("First", "Last");
     }
 
-    protected void assertAttributes(PresentableSale cart, int itemNumber, double totalPrice) {
-        assertEquals(itemNumber, cart.getItems().size());
-        assertEquals(totalPrice, cart.getTotalPrice(), PRICE_PRECISION);
+    protected void assertSaleAttributes(PresentableSale sale, int itemNumber, double totalPrice) {
+        assertEquals(itemNumber, sale.getItems().size());
+        assertEquals(totalPrice, sale.getTotalPrice(), PRICE_PRECISION);
     }
 
     protected void assertNotInCart(PresentableSale cart, String productId) {
@@ -194,7 +202,7 @@ public abstract class UseCaseTest {
                 fail();
     }
 
-    protected void assertHasItem(PresentableSale cart, String productId, String name, String description, String pictureURI, int numberOfUnits, double price) {
+    protected void assertSaleItem(PresentableSale cart, String productId, String name, String description, String pictureURI, int numberOfUnits, double price) {
         for (PresentableItem item : cart.getItems())
             if (item.getProductId().equals(productId)) {
                 assertPresentedItem(item, name, description, pictureURI, numberOfUnits, price);
@@ -215,5 +223,9 @@ public abstract class UseCaseTest {
     protected void assertProductUnits(String id, int numberOfUnits) {
         PresentableProduct product = presentProduct(id);
         assertEquals(numberOfUnits, product.getNumberOfUnits());
+    }
+
+    protected void assertSaleOrderIsCanceled(PresentableSale order, boolean canceled) {
+        assertEquals(canceled, order.isCanceled());
     }
 }

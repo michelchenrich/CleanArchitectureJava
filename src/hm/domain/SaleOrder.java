@@ -7,14 +7,16 @@ import java.util.List;
 public class SaleOrder implements Identifiable<SaleOrder>, Sale {
     private String id;
     private List<Item> items;
+    private boolean canceled;
 
-    private SaleOrder(String id, List<Item> items) {
+    private SaleOrder(String id, List<Item> items, boolean canceled) {
         this.id = id;
         this.items = items;
+        this.canceled = canceled;
     }
 
     public static SaleOrder create() {
-        return new SaleOrder("", ImmutableList.of());
+        return new SaleOrder("", ImmutableList.of(), false);
     }
 
     public String getId() {
@@ -26,13 +28,21 @@ public class SaleOrder implements Identifiable<SaleOrder>, Sale {
     }
 
     public SaleOrder withId(String id) {
-        return new SaleOrder(id, items);
+        return new SaleOrder(id, items, canceled);
     }
 
     public SaleOrder withItem(Item item) {
         ImmutableList.Builder<Item> builder = ImmutableList.builder();
         builder.addAll(items);
         builder.add(item);
-        return new SaleOrder(id, builder.build());
+        return new SaleOrder(id, builder.build(), canceled);
+    }
+
+    public SaleOrder asCanceled() {
+        return new SaleOrder(id, items, true);
+    }
+
+    public boolean isCanceled() {
+        return canceled;
     }
 }

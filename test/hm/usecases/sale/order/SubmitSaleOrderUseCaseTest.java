@@ -33,13 +33,15 @@ public class SubmitSaleOrderUseCaseTest extends UseCaseTest {
         String orderId = submitOrder(customerId);
 
         PresentableSale cart = presentCart(customerId);
-        assertAttributes(cart, 0, 0.0);
+        assertSaleAttributes(cart, 0, 0.0);
 
         PresentableSale order = presentOrder(orderId);
-        assertAttributes(order, 3, 750.0);
-        assertHasItem(order, productId, "Name", "Description", "PictureURI", 10, 10.0);
-        assertHasItem(order, productId2, "Name", "Description", "PictureURI", 50, 10.0);
-        assertHasItem(order, productId3, "Name", "Description", "PictureURI", 15, 10.0);
+        assertSaleAttributes(order, 3, 750.0);
+        assertSaleItem(order, productId, "Name", "Description", "PictureURI", 10, 10.0);
+        assertSaleItem(order, productId2, "Name", "Description", "PictureURI", 50, 10.0);
+        assertSaleItem(order, productId3, "Name", "Description", "PictureURI", 15, 10.0);
+        assertSaleOrderIsCanceled(order, false);
+
     }
 
     @Test
@@ -51,10 +53,11 @@ public class SubmitSaleOrderUseCaseTest extends UseCaseTest {
         updateProduct(productId3, "Name", "Description", "PictureURI", 11.0);
 
         PresentableSale order = presentOrder(orderId);
-        assertAttributes(order, 3, 750.0);
-        assertHasItem(order, productId, "Name", "Description", "PictureURI", 10, 10.0);
-        assertHasItem(order, productId2, "Name", "Description", "PictureURI", 50, 10.0);
-        assertHasItem(order, productId3, "Name", "Description", "PictureURI", 15, 10.0);
+        assertSaleAttributes(order, 3, 750.0);
+        assertSaleItem(order, productId, "Name", "Description", "PictureURI", 10, 10.0);
+        assertSaleItem(order, productId2, "Name", "Description", "PictureURI", 50, 10.0);
+        assertSaleItem(order, productId3, "Name", "Description", "PictureURI", 15, 10.0);
+        assertSaleOrderIsCanceled(order, false);
     }
 
     @Test

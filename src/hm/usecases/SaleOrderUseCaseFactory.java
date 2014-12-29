@@ -5,10 +5,8 @@ import hm.domain.Memory;
 import hm.domain.Product;
 import hm.domain.SaleOrder;
 import hm.usecases.commons.IdBasedRequest;
-import hm.usecases.sale.PresentSaleResponder;
-import hm.usecases.sale.order.PresentSaleOrderUseCase;
-import hm.usecases.sale.order.SubmitSaleOrderResponder;
-import hm.usecases.sale.order.SubmitSaleOrderUseCase;
+import hm.usecases.commons.IdentityResponder;
+import hm.usecases.sale.order.*;
 
 public class SaleOrderUseCaseFactory {
     private Memory<Customer> customerMemory;
@@ -25,7 +23,11 @@ public class SaleOrderUseCaseFactory {
         return SubmitSaleOrderUseCase.create(saleOrderMemory, customerMemory, request, responder);
     }
 
-    public UseCase makeOrderPresenter(IdBasedRequest request, PresentSaleResponder responder) {
+    public UseCase makeOrderPresenter(IdBasedRequest request, PresentSaleOrderResponder responder) {
         return PresentSaleOrderUseCase.create(saleOrderMemory, productMemory, request, responder);
+    }
+
+    public UseCase makeOrderCanceler(IdBasedRequest request, IdentityResponder responder) {
+        return CancelSaleOrderUseCase.create(saleOrderMemory, productMemory, request, responder);
     }
 }

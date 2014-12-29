@@ -1,6 +1,7 @@
-package hm.boundaries.delivery;
+package hm.boundaries.delivery.customer;
 
-import hm.boundaries.delivery.customer.*;
+import hm.boundaries.delivery.IdBasedRequest;
+import hm.boundaries.delivery.UseCase;
 import hm.boundaries.persistence.Memory;
 import hm.domain.Customer;
 import hm.usecases.customer.CreateCustomerUseCase;

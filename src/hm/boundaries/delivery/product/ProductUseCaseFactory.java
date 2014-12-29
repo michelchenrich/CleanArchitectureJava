@@ -1,6 +1,8 @@
-package hm.boundaries.delivery;
+package hm.boundaries.delivery.product;
 
-import hm.boundaries.delivery.product.*;
+import hm.boundaries.delivery.IdBasedRequest;
+import hm.boundaries.delivery.IdentityResponder;
+import hm.boundaries.delivery.UseCase;
 import hm.boundaries.persistence.Memory;
 import hm.domain.Product;
 import hm.usecases.product.AddUnitsUseCase;

@@ -1,15 +1,15 @@
 package hm.usecases;
 
-import hm.boundaries.delivery.CartUseCaseFactory;
-import hm.boundaries.delivery.CustomerUseCaseFactory;
-import hm.boundaries.delivery.ProductUseCaseFactory;
-import hm.boundaries.delivery.SaleOrderUseCaseFactory;
+import hm.boundaries.delivery.customer.CustomerUseCaseFactory;
 import hm.boundaries.delivery.customer.PresentableCustomer;
 import hm.boundaries.delivery.product.PresentableProduct;
+import hm.boundaries.delivery.product.ProductUseCaseFactory;
 import hm.boundaries.delivery.sale.PresentableItem;
 import hm.boundaries.delivery.sale.PresentableSale;
+import hm.boundaries.delivery.sale.cart.CartUseCaseFactory;
 import hm.boundaries.delivery.sale.cart.PresentableCart;
 import hm.boundaries.delivery.sale.order.PresentableSaleOrder;
+import hm.boundaries.delivery.sale.order.SaleOrderUseCaseFactory;
 import hm.domain.Customer;
 import hm.domain.Product;
 import hm.domain.SaleOrder;

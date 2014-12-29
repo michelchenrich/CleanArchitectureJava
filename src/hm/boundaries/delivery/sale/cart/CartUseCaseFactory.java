@@ -1,9 +1,8 @@
-package hm.boundaries.delivery;
+package hm.boundaries.delivery.sale.cart;
 
-import hm.boundaries.delivery.sale.cart.AddToCartRequest;
-import hm.boundaries.delivery.sale.cart.AddToCartResponder;
-import hm.boundaries.delivery.sale.cart.ChangeCartRequest;
-import hm.boundaries.delivery.sale.cart.PresentCartResponder;
+import hm.boundaries.delivery.IdBasedRequest;
+import hm.boundaries.delivery.IdentityResponder;
+import hm.boundaries.delivery.UseCase;
 import hm.boundaries.persistence.Memory;
 import hm.domain.Customer;
 import hm.domain.Product;

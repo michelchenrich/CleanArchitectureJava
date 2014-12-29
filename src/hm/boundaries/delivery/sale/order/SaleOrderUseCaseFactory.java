@@ -1,7 +1,8 @@
-package hm.boundaries.delivery;
+package hm.boundaries.delivery.sale.order;
 
-import hm.boundaries.delivery.sale.order.PresentSaleOrderResponder;
-import hm.boundaries.delivery.sale.order.SubmitSaleOrderResponder;
+import hm.boundaries.delivery.IdBasedRequest;
+import hm.boundaries.delivery.IdentityResponder;
+import hm.boundaries.delivery.UseCase;
 import hm.boundaries.persistence.Memory;
 import hm.domain.Customer;
 import hm.domain.Product;

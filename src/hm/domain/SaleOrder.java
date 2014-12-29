@@ -1,6 +1,7 @@
 package hm.domain;
 
 import com.google.common.collect.ImmutableList;
+import hm.boundaries.persistence.Identifiable;
 
 import java.util.List;
 

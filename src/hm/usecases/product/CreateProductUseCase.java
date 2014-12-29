@@ -1,9 +1,11 @@
 package hm.usecases.product;
 
-import hm.domain.Memory;
+import hm.boundaries.delivery.UseCase;
+import hm.boundaries.delivery.product.CreateProductResponder;
+import hm.boundaries.delivery.product.PersistProductRequest;
+import hm.boundaries.persistence.Memory;
 import hm.domain.Product;
-import hm.usecases.UseCase;
-import hm.usecases.commons.ValidatedUseCase;
+import hm.usecases.ValidatedUseCase;
 
 public class CreateProductUseCase implements UseCase {
     private Memory<Product> memory;

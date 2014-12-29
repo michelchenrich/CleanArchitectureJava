@@ -1,7 +1,7 @@
 package hm.usecases;
 
-import hm.domain.Identifiable;
-import hm.domain.Memory;
+import hm.boundaries.persistence.Identifiable;
+import hm.boundaries.persistence.Memory;
 
 import java.util.HashMap;
 import java.util.Map;

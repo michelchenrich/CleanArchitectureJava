@@ -1,13 +1,15 @@
 package hm.usecases.customer;
 
-import hm.usecases.commons.Validation;
+import hm.boundaries.delivery.customer.CustomerDataResponder;
+import hm.boundaries.delivery.customer.PersistCustomerRequest;
+import hm.usecases.Validation;
 
 public class CustomerDataValidation implements Validation {
     private String firstName;
     private String lastName;
     private CustomerDataResponder responder;
 
-    public CustomerDataValidation(CustomerPersistenceRequest request, CustomerDataResponder responder) {
+    public CustomerDataValidation(PersistCustomerRequest request, CustomerDataResponder responder) {
         firstName = makeSafe(request.getFirstName());
         lastName = makeSafe(request.getLastName());
         this.responder = responder;

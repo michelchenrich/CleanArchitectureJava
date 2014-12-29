@@ -1,10 +1,15 @@
 package hm.usecases.sale.order;
 
-import hm.domain.*;
-import hm.usecases.UseCase;
-import hm.usecases.commons.IdBasedRequest;
-import hm.usecases.commons.IdentityValidation;
-import hm.usecases.commons.ValidatedUseCase;
+import hm.boundaries.delivery.IdBasedRequest;
+import hm.boundaries.delivery.UseCase;
+import hm.boundaries.delivery.sale.order.SubmitSaleOrderResponder;
+import hm.boundaries.persistence.Memory;
+import hm.domain.Cart;
+import hm.domain.Customer;
+import hm.domain.Item;
+import hm.domain.SaleOrder;
+import hm.usecases.IdentityValidation;
+import hm.usecases.ValidatedUseCase;
 
 public class SubmitSaleOrderUseCase implements UseCase {
     private Memory<SaleOrder> saleOrderMemory;

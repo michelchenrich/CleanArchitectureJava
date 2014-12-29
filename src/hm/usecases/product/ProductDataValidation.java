@@ -1,6 +1,8 @@
 package hm.usecases.product;
 
-import hm.usecases.commons.Validation;
+import hm.boundaries.delivery.product.PersistProductRequest;
+import hm.boundaries.delivery.product.ProductDataResponder;
+import hm.usecases.Validation;
 
 public class ProductDataValidation implements Validation {
     private String name;

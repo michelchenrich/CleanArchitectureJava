@@ -1,7 +1,7 @@
 package hm.usecases.sale.cart;
 
+import hm.boundaries.delivery.sale.cart.PresentableCart;
 import hm.usecases.UseCaseTest;
-import hm.usecases.sale.PresentableSale;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +22,7 @@ public class AddToCartUseCaseTest extends UseCaseTest {
 
         assertProductUnits(productId, 0);
 
-        PresentableSale cart = presentCart(customerId);
+        PresentableCart cart = presentCart(customerId);
         assertSaleAttributes(cart, 1, 10.0);
         assertSaleItem(cart, productId, "Name", "Description", "PictureURI", 1, 10.0);
     }
@@ -33,7 +33,7 @@ public class AddToCartUseCaseTest extends UseCaseTest {
         assertProductUnits(productId, 0);
         updateProduct(productId, "Name", "Description", "PictureURI", 11.0);
 
-        PresentableSale cart = presentCart(customerId);
+        PresentableCart cart = presentCart(customerId);
         assertSaleAttributes(cart, 1, 10.0);
         assertSaleItem(cart, productId, "Name", "Description", "PictureURI", 1, 10.0);
     }
@@ -54,7 +54,7 @@ public class AddToCartUseCaseTest extends UseCaseTest {
     public void addNonexistentProductToCart() {
         addProductToCart(customerId, "nonexistent", 1);
         assertNotFound("nonexistent");
-        PresentableSale cart = presentCart(customerId);
+        PresentableCart cart = presentCart(customerId);
         assertSaleAttributes(cart, 0, 0.0);
         assertNotInCart(cart, productId);
     }
@@ -63,7 +63,7 @@ public class AddToCartUseCaseTest extends UseCaseTest {
     public void addNoUnitToCart() throws Exception {
         addProductToCart(customerId, productId, 0);
         assertErrorsSent("numberOfUnitsIsLessThanOne");
-        PresentableSale cart = presentCart(customerId);
+        PresentableCart cart = presentCart(customerId);
         assertSaleAttributes(cart, 0, 0.0);
         assertNotInCart(cart, productId);
     }
@@ -75,7 +75,7 @@ public class AddToCartUseCaseTest extends UseCaseTest {
         addProductToCart(customerId, productId, 100);
         assertProductUnits(productId, 0);
 
-        PresentableSale cart = presentCart(customerId);
+        PresentableCart cart = presentCart(customerId);
         assertSaleAttributes(cart, 1, 30.0);
         assertSaleItem(cart, productId, "Name", "Description", "PictureURI", 3, 10.0);
     }
@@ -86,7 +86,7 @@ public class AddToCartUseCaseTest extends UseCaseTest {
         addProductToCart(customerId, productId, 100);
         assertProductUnits(productId, 1);
 
-        PresentableSale cart = presentCart(customerId);
+        PresentableCart cart = presentCart(customerId);
         assertSaleAttributes(cart, 1, 1000.0);
         assertSaleItem(cart, productId, "Name", "Description", "PictureURI", 100, 10.0);
     }
@@ -103,7 +103,7 @@ public class AddToCartUseCaseTest extends UseCaseTest {
         addProductToCart(customerId, productId2, 5);
         addProductToCart(customerId, productId3, 10);
 
-        PresentableSale cart = presentCart(customerId);
+        PresentableCart cart = presentCart(customerId);
         assertSaleAttributes(cart, 3, 205.0);
         assertSaleItem(cart, productId, "Name", "Description", "PictureURI", 1, 10.0);
         assertSaleItem(cart, productId2, "Name 2", "Description 2", "PictureURI 2", 5, 12.0);
@@ -117,7 +117,7 @@ public class AddToCartUseCaseTest extends UseCaseTest {
         addProductToCart(customerId, productId, 5);
         addProductToCart(customerId, productId, 5);
 
-        PresentableSale cart = presentCart(customerId);
+        PresentableCart cart = presentCart(customerId);
         assertSaleAttributes(cart, 1, 100.0);
         assertSaleItem(cart, productId, "Name", "Description", "PictureURI", 10, 10.0);
     }

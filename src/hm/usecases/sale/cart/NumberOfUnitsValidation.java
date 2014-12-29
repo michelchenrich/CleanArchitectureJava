@@ -1,12 +1,14 @@
 package hm.usecases.sale.cart;
 
-import hm.usecases.commons.Validation;
+import hm.boundaries.delivery.sale.cart.AddToCartRequest;
+import hm.boundaries.delivery.sale.cart.AddToCartResponder;
+import hm.usecases.Validation;
 
 public class NumberOfUnitsValidation implements Validation {
-    private AddProductToCartRequest request;
-    private AddProductToCartResponder responder;
+    private AddToCartRequest request;
+    private AddToCartResponder responder;
 
-    public NumberOfUnitsValidation(AddProductToCartRequest request, AddProductToCartResponder responder) {
+    public NumberOfUnitsValidation(AddToCartRequest request, AddToCartResponder responder) {
         this.request = request;
         this.responder = responder;
     }

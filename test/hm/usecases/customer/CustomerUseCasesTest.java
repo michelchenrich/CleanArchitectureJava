@@ -1,6 +1,7 @@
 package hm.usecases.customer;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import hm.boundaries.delivery.customer.PresentableCustomer;
 import hm.usecases.UseCaseTest;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;

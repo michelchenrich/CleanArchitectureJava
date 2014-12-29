@@ -1,7 +1,7 @@
 package hm.usecases;
 
+import hm.boundaries.persistence.Memory;
 import hm.domain.Customer;
-import hm.domain.Memory;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +11,7 @@ public class CustomerMemoryTest {
 
     @Before
     public void setUp() throws Exception {
-        customers = new FakeMemory();
+        customers = new FakeMemory<>();
     }
 
     @Test

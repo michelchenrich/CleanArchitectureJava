@@ -1,15 +1,15 @@
 package hm.usecases;
 
-import hm.usecases.commons.IdBasedRequest;
-import hm.usecases.customer.CustomerPersistenceRequest;
-import hm.usecases.customer.UpdateCustomerRequest;
-import hm.usecases.product.AddProductUnitRequest;
-import hm.usecases.product.PersistProductRequest;
-import hm.usecases.product.UpdateProductRequest;
-import hm.usecases.sale.cart.AddProductToCartRequest;
-import hm.usecases.sale.cart.CartMovementRequest;
+import hm.boundaries.delivery.IdBasedRequest;
+import hm.boundaries.delivery.customer.PersistCustomerRequest;
+import hm.boundaries.delivery.customer.UpdateCustomerRequest;
+import hm.boundaries.delivery.product.AddUnitsRequest;
+import hm.boundaries.delivery.product.PersistProductRequest;
+import hm.boundaries.delivery.product.UpdateProductRequest;
+import hm.boundaries.delivery.sale.cart.AddToCartRequest;
+import hm.boundaries.delivery.sale.cart.ChangeCartRequest;
 
-class FakeRequest implements IdBasedRequest, CustomerPersistenceRequest, UpdateCustomerRequest, PersistProductRequest, AddProductUnitRequest, UpdateProductRequest, AddProductToCartRequest, CartMovementRequest {
+class FakeRequest implements IdBasedRequest, PersistCustomerRequest, UpdateCustomerRequest, PersistProductRequest, AddUnitsRequest, UpdateProductRequest, AddToCartRequest, ChangeCartRequest {
     public String id;
     public String firstName;
     public String lastName;

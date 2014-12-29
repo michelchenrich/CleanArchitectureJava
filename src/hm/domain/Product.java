@@ -1,5 +1,7 @@
 package hm.domain;
 
+import hm.boundaries.persistence.Identifiable;
+
 public class Product implements Identifiable<Product> {
     private String id;
     private String name;

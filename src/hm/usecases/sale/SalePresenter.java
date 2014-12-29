@@ -1,8 +1,10 @@
 package hm.usecases.sale;
 
 import com.google.common.collect.ImmutableList;
+import hm.boundaries.delivery.sale.PresentableItem;
+import hm.boundaries.delivery.sale.PresentableSale;
+import hm.boundaries.persistence.Memory;
 import hm.domain.Item;
-import hm.domain.Memory;
 import hm.domain.Product;
 import hm.domain.Sale;
 

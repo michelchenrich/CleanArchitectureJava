@@ -1,20 +1,19 @@
 package hm.usecases.sale.cart;
 
+import hm.boundaries.delivery.IdBasedRequest;
+import hm.boundaries.delivery.UseCase;
+import hm.boundaries.delivery.sale.cart.PresentCartResponder;
+import hm.boundaries.persistence.Memory;
 import hm.domain.Customer;
-import hm.domain.Memory;
 import hm.domain.Product;
-import hm.usecases.UseCase;
-import hm.usecases.commons.IdBasedRequest;
-import hm.usecases.commons.IdentityValidation;
-import hm.usecases.commons.ValidatedUseCase;
-import hm.usecases.sale.CartPresenter;
-import hm.usecases.sale.SalePresenter;
+import hm.usecases.IdentityValidation;
+import hm.usecases.ValidatedUseCase;
 
 public class PresentCartUseCase implements UseCase {
     private Memory<Customer> customerMemory;
     private IdBasedRequest request;
     private PresentCartResponder responder;
-    private SalePresenter presenter;
+    private CartPresenter presenter;
 
     public static UseCase create(Memory<Customer> customerMemory, Memory<Product> productMemory, IdBasedRequest request, PresentCartResponder responder) {
         UseCase useCase = new PresentCartUseCase(customerMemory, productMemory, request, responder);

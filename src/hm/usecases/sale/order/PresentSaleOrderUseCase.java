@@ -1,12 +1,13 @@
 package hm.usecases.sale.order;
 
-import hm.domain.Memory;
+import hm.boundaries.delivery.IdBasedRequest;
+import hm.boundaries.delivery.UseCase;
+import hm.boundaries.delivery.sale.order.PresentSaleOrderResponder;
+import hm.boundaries.persistence.Memory;
 import hm.domain.Product;
 import hm.domain.SaleOrder;
-import hm.usecases.UseCase;
-import hm.usecases.commons.IdBasedRequest;
-import hm.usecases.commons.IdentityValidation;
-import hm.usecases.commons.ValidatedUseCase;
+import hm.usecases.IdentityValidation;
+import hm.usecases.ValidatedUseCase;
 
 public class PresentSaleOrderUseCase implements UseCase {
     private Memory<SaleOrder> saleOrderMemory;

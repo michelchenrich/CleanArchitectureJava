@@ -1,6 +1,7 @@
 package hm.usecases.sale.order;
 
-import hm.domain.Memory;
+import hm.boundaries.delivery.sale.order.PresentableSaleOrder;
+import hm.boundaries.persistence.Memory;
 import hm.domain.Product;
 import hm.domain.SaleOrder;
 import hm.usecases.sale.SalePresenter;

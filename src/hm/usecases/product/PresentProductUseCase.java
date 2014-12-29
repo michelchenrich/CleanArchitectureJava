@@ -1,11 +1,13 @@
 package hm.usecases.product;
 
-import hm.domain.Memory;
+import hm.boundaries.delivery.IdBasedRequest;
+import hm.boundaries.delivery.UseCase;
+import hm.boundaries.delivery.product.PresentProductResponder;
+import hm.boundaries.delivery.product.PresentableProduct;
+import hm.boundaries.persistence.Memory;
 import hm.domain.Product;
-import hm.usecases.UseCase;
-import hm.usecases.commons.IdBasedRequest;
-import hm.usecases.commons.IdentityValidation;
-import hm.usecases.commons.ValidatedUseCase;
+import hm.usecases.IdentityValidation;
+import hm.usecases.ValidatedUseCase;
 
 public class PresentProductUseCase implements UseCase {
     private Memory<Product> memory;

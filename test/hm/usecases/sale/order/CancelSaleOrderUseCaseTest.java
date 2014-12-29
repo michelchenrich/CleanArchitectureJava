@@ -1,7 +1,7 @@
 package hm.usecases.sale.order;
 
+import hm.boundaries.delivery.sale.order.PresentableSaleOrder;
 import hm.usecases.UseCaseTest;
-import hm.usecases.sale.PresentableSale;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class CancelSaleOrderUseCaseTest extends UseCaseTest {
     public void afterCanceling_theOrderMustExistAsCanceled_andTheProductUnitsShouldBeRestored() {
         cancelOrder(orderId);
 
-        PresentableSale order = presentOrder(orderId);
+        PresentableSaleOrder order = presentOrder(orderId);
         assertSaleAttributes(order, 3, 750.0);
         assertSaleItem(order, productId, "Name", "Description", "PictureURI", 10, 10.0);
         assertSaleItem(order, productId2, "Name", "Description", "PictureURI", 50, 10.0);

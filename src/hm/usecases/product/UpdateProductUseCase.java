@@ -1,10 +1,12 @@
 package hm.usecases.product;
 
-import hm.domain.Memory;
+import hm.boundaries.delivery.UseCase;
+import hm.boundaries.delivery.product.UpdateProductRequest;
+import hm.boundaries.delivery.product.UpdateProductResponder;
+import hm.boundaries.persistence.Memory;
 import hm.domain.Product;
-import hm.usecases.UseCase;
-import hm.usecases.commons.IdentityValidation;
-import hm.usecases.commons.ValidatedUseCase;
+import hm.usecases.IdentityValidation;
+import hm.usecases.ValidatedUseCase;
 
 public class UpdateProductUseCase implements UseCase {
     private Memory<Product> memory;

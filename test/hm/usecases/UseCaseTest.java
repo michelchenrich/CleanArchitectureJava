@@ -1,13 +1,18 @@
 package hm.usecases;
 
+import hm.boundaries.delivery.CartUseCaseFactory;
+import hm.boundaries.delivery.CustomerUseCaseFactory;
+import hm.boundaries.delivery.ProductUseCaseFactory;
+import hm.boundaries.delivery.SaleOrderUseCaseFactory;
+import hm.boundaries.delivery.customer.PresentableCustomer;
+import hm.boundaries.delivery.product.PresentableProduct;
+import hm.boundaries.delivery.sale.PresentableItem;
+import hm.boundaries.delivery.sale.PresentableSale;
+import hm.boundaries.delivery.sale.cart.PresentableCart;
+import hm.boundaries.delivery.sale.order.PresentableSaleOrder;
 import hm.domain.Customer;
 import hm.domain.Product;
 import hm.domain.SaleOrder;
-import hm.usecases.customer.PresentableCustomer;
-import hm.usecases.product.PresentableProduct;
-import hm.usecases.sale.PresentableItem;
-import hm.usecases.sale.PresentableSale;
-import hm.usecases.sale.order.PresentableSaleOrder;
 import static org.junit.Assert.*;
 import org.junit.Before;
 
@@ -105,25 +110,25 @@ public abstract class UseCaseTest {
         request.productId = productId;
         request.numberOfUnits = numberOfUnits;
         responder = new FakeResponder();
-        cartUseCaseFactory.makeProductAdder(request, responder).execute();
+        cartUseCaseFactory.makeAdder(request, responder).execute();
     }
 
-    protected void dropProductFromCart(String customerId, String productId) {
+    protected void removeFromCart(String customerId, String productId) {
         FakeRequest request = new FakeRequest();
         request.customerId = customerId;
         request.productId = productId;
         responder = new FakeResponder();
-        cartUseCaseFactory.makeProductDropper(request, responder).execute();
+        cartUseCaseFactory.makeRemover(request, responder).execute();
     }
 
-    protected void dropAllFromCart(String id) {
+    protected void dropCart(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
         cartUseCaseFactory.makeDropper(request, responder).execute();
     }
 
-    protected PresentableSale presentCart(String id) {
+    protected PresentableCart presentCart(String id) {
         FakeRequest request = new FakeRequest();
         request.id = id;
         responder = new FakeResponder();
@@ -225,7 +230,7 @@ public abstract class UseCaseTest {
         assertEquals(numberOfUnits, product.getNumberOfUnits());
     }
 
-    protected void assertSaleOrderIsCanceled(PresentableSale order, boolean canceled) {
+    protected void assertSaleOrderIsCanceled(PresentableSaleOrder order, boolean canceled) {
         assertEquals(canceled, order.isCanceled());
     }
 }

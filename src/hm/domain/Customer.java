@@ -1,5 +1,7 @@
 package hm.domain;
 
+import hm.boundaries.persistence.Identifiable;
+
 import java.util.List;
 
 public class Customer implements Identifiable<Customer> {

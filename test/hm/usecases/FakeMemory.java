@@ -1,9 +1,11 @@
 package hm.usecases;
 
+import com.google.common.collect.ImmutableList;
 import hm.boundaries.persistence.Identifiable;
 import hm.boundaries.persistence.Memory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 class FakeMemory<E extends Identifiable<E>> implements Memory<E> {
@@ -24,6 +26,10 @@ class FakeMemory<E extends Identifiable<E>> implements Memory<E> {
     public E findById(String id) {
         if (!existsWithId(id)) throw new NoSuchEntityException(id);
         return map.get(id);
+    }
+
+    public List<E> findAll() {
+        return ImmutableList.copyOf(map.values());
     }
 
     private String nextId() {

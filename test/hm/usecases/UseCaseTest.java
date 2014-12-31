@@ -16,6 +16,8 @@ import hm.domain.SaleOrder;
 import static org.junit.Assert.*;
 import org.junit.Before;
 
+import java.util.List;
+
 public abstract class UseCaseTest {
     protected static final double PRICE_PRECISION = .001;
     private FakeResponder responder;
@@ -76,6 +78,12 @@ public abstract class UseCaseTest {
         responder = new FakeResponder();
         productUseCaseFactory.makePresenter(request, responder).execute();
         return responder.product;
+    }
+
+    protected List<PresentableProduct> presentProducts() {
+        responder = new FakeResponder();
+        productUseCaseFactory.makeListPresenter(responder).execute();
+        return responder.products;
     }
 
     protected PresentableCustomer presentCustomer(String id) {
@@ -178,9 +186,22 @@ public abstract class UseCaseTest {
             assertFalse((Boolean) FakeResponder.class.getField(errorMessage).get(responder));
     }
 
+    protected void assertProduct(List<PresentableProduct> products, String id, String name, String description, String pictureURI, double price, int numberOfUnits) {
+        for (PresentableProduct product : products)
+            if (product.getId().equals(id)) {
+                assertProduct(product, name, description, pictureURI, price, numberOfUnits);
+                return;
+            }
+        fail();
+    }
+
     protected void assertProduct(String id, String name, String description, String pictureURI, double price, int numberOfUnits) {
         PresentableProduct product = presentProduct(id);
         assertFound();
+        assertProduct(product, name, description, pictureURI, price, numberOfUnits);
+    }
+
+    private void assertProduct(PresentableProduct product, String name, String description, String pictureURI, double price, int numberOfUnits) {
         assertEquals(name, product.getName());
         assertEquals(description, product.getDescription());
         assertEquals(pictureURI, product.getPictureURI());

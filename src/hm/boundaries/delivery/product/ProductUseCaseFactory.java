@@ -5,10 +5,7 @@ import hm.boundaries.delivery.IdentityResponder;
 import hm.boundaries.delivery.UseCase;
 import hm.boundaries.persistence.Memory;
 import hm.domain.Product;
-import hm.usecases.product.AddUnitsUseCase;
-import hm.usecases.product.CreateProductUseCase;
-import hm.usecases.product.PresentProductUseCase;
-import hm.usecases.product.UpdateProductUseCase;
+import hm.usecases.product.*;
 
 public class ProductUseCaseFactory {
     private Memory<Product> memory;
@@ -23,6 +20,10 @@ public class ProductUseCaseFactory {
 
     public UseCase makePresenter(IdBasedRequest request, PresentProductResponder responder) {
         return PresentProductUseCase.create(memory, request, responder);
+    }
+
+    public UseCase makeListPresenter(PresentProductsResponder responder) {
+        return PresentProductsUseCase.create(memory, responder);
     }
 
     public UseCase makeUnitAdder(AddUnitsRequest request, IdentityResponder responder) {

@@ -5,10 +5,7 @@ import hm.boundaries.delivery.customer.CreateCustomerResponder;
 import hm.boundaries.delivery.customer.PresentCustomerResponder;
 import hm.boundaries.delivery.customer.PresentableCustomer;
 import hm.boundaries.delivery.customer.UpdateCustomerResponder;
-import hm.boundaries.delivery.product.CreateProductResponder;
-import hm.boundaries.delivery.product.PresentProductResponder;
-import hm.boundaries.delivery.product.PresentableProduct;
-import hm.boundaries.delivery.product.UpdateProductResponder;
+import hm.boundaries.delivery.product.*;
 import hm.boundaries.delivery.sale.cart.AddToCartResponder;
 import hm.boundaries.delivery.sale.cart.PresentCartResponder;
 import hm.boundaries.delivery.sale.cart.PresentableCart;
@@ -16,7 +13,9 @@ import hm.boundaries.delivery.sale.order.PresentSaleOrderResponder;
 import hm.boundaries.delivery.sale.order.PresentableSaleOrder;
 import hm.boundaries.delivery.sale.order.SubmitSaleOrderResponder;
 
-class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, UpdateProductResponder, AddToCartResponder, PresentCartResponder, SubmitSaleOrderResponder, IdentityResponder, PresentSaleOrderResponder {
+import java.util.List;
+
+class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder, UpdateCustomerResponder, CreateProductResponder, PresentProductResponder, UpdateProductResponder, AddToCartResponder, PresentCartResponder, SubmitSaleOrderResponder, IdentityResponder, PresentSaleOrderResponder, PresentProductsResponder {
     public PresentableCustomer customer;
     public boolean firstNameIsEmpty;
     public boolean lastNameIsEmpty;
@@ -31,6 +30,7 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
     public boolean numberOfUnitsIsLessThanOne;
     public PresentableCart sale;
     public PresentableSaleOrder order;
+    public List<PresentableProduct> products;
 
     public void invalidId(String id) {
         idIsInvalid = true;
@@ -83,5 +83,9 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
 
     public void saleOrderFound(PresentableSaleOrder order) {
         this.order = order;
+    }
+
+    public void productsFound(List<PresentableProduct> products) {
+        this.products = products;
     }
 }

@@ -9,6 +9,10 @@ public class PresentableProduct {
         this.product = product;
     }
 
+    public String getId() {
+        return product.getId();
+    }
+
     public String getName() {
         return product.getName();
     }

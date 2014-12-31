@@ -1,10 +1,14 @@
 package hm.usecases.product;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import hm.boundaries.delivery.product.PresentableProduct;
 import hm.usecases.UseCaseTest;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.List;
 
 @RunWith(HierarchicalContextRunner.class)
 public class ProductUseCasesTest extends UseCaseTest {
@@ -24,20 +28,42 @@ public class ProductUseCasesTest extends UseCaseTest {
     }
 
     @Test
-    public void afterUpdating1() {
-        String id = createDefaultProduct();
-        addUnitToProduct(id, 2);
-        addUnitToProduct(id, 3);
-        updateProduct(id, "New Name", "New Description", "New PictureURI", 5.0);
-        assertProduct(id, "New Name", "New Description", "New PictureURI", 5.0, 5);
+    public void presentAll() {
+        String id1 = createProduct("Name", "Description", "PictureURI", 10.0);
+        addUnitToProduct(id1, 3);
+        String id2 = createProduct("Name 2", "Description 2", "PictureURI 2", 10.0);
+        addUnitToProduct(id2, 2);
+        String id3 = createProduct("Name 3", "Description 3", "PictureURI 3", 10.0);
+
+        List<PresentableProduct> products = presentProducts();
+        assertProduct(products, id1, "Name", "Description", "PictureURI", 10.0, 3);
+        assertProduct(products, id2, "Name 2", "Description 2", "PictureURI 2", 10.0, 2);
+        assertProduct(products, id3, "Name 3", "Description 3", "PictureURI 3", 10.0, 0);
+        assertEquals(3, products.size());
     }
 
-    @Test
-    public void afterUpdating2() {
-        String id = createProduct("Name", "Description", "PictureURI", 9.0);
-        addUnitToProduct(id, 3);
-        updateProduct(id, "New Name 2", "New Description 2", "New PictureURI 2", 10.0);
-        assertProduct(id, "New Name 2", "New Description 2", "New PictureURI 2", 10.0, 3);
+    public class WithDefaultProduct {
+        private String id;
+
+        @Before
+        public void setUp() {
+            id = createDefaultProduct();
+        }
+
+        @Test
+        public void afterUpdating1() {
+            addUnitToProduct(id, 2);
+            addUnitToProduct(id, 3);
+            updateProduct(id, "New Name", "New Description", "New PictureURI", 5.0);
+            assertProduct(id, "New Name", "New Description", "New PictureURI", 5.0, 5);
+        }
+
+        @Test
+        public void afterUpdating2() {
+            addUnitToProduct(id, 3);
+            updateProduct(id, "New Name 2", "New Description 2", "New PictureURI 2", 11.0);
+            assertProduct(id, "New Name 2", "New Description 2", "New PictureURI 2", 11.0, 3);
+        }
     }
 
     public class IdentityValidations {
@@ -59,6 +85,7 @@ public class ProductUseCasesTest extends UseCaseTest {
             assertNotFound("nonexistent");
         }
     }
+
     private abstract class DataValidationOnPersistence {
         @Test
         public void invalidInputs() throws Exception {
@@ -109,6 +136,7 @@ public class ProductUseCasesTest extends UseCaseTest {
         protected abstract void persistProduct(String name, String description, String pictureURI, double price);
         protected abstract void assertNothingChanged();
     }
+
     public class DataValidationOnCreation extends DataValidationOnPersistence {
         protected void persistProduct(String name, String description, String pictureURI, double price) {
             createProduct(name, description, pictureURI, price);
@@ -118,6 +146,7 @@ public class ProductUseCasesTest extends UseCaseTest {
             assertNothingCreated();
         }
     }
+
     public class DataValidationOnUpdate extends DataValidationOnPersistence {
         private String id;
 

@@ -28,6 +28,10 @@ public class SaleOrder implements Identifiable<SaleOrder>, Sale {
         return items;
     }
 
+    public boolean isCanceled() {
+        return canceled;
+    }
+
     public SaleOrder withId(String id) {
         return new SaleOrder(id, items, canceled);
     }
@@ -41,9 +45,5 @@ public class SaleOrder implements Identifiable<SaleOrder>, Sale {
 
     public SaleOrder asCanceled() {
         return new SaleOrder(id, items, true);
-    }
-
-    public boolean isCanceled() {
-        return canceled;
     }
 }

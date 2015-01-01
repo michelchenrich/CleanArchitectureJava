@@ -88,4 +88,12 @@ class FakeResponder implements PresentCustomerResponder, CreateCustomerResponder
     public void productsFound(List<PresentableProduct> products) {
         this.products = products;
     }
+
+    public void invalidCustomerId(String id) {
+        this.invalidId(id);
+    }
+
+    public void invalidProductId(String id) {
+        this.invalidId(id);
+    }
 }

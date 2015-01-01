@@ -6,25 +6,21 @@ import hm.boundaries.persistence.Memory;
 
 public class IdentityValidation implements Validation {
     private Memory memory;
-    private String id;
+    private IdBasedRequest request;
     private IdentityResponder responder;
 
-    public IdentityValidation(Memory memory, String id, IdentityResponder responder) {
+    public IdentityValidation(Memory memory, IdBasedRequest request, IdentityResponder responder) {
         this.memory = memory;
-        this.id = id;
+        this.request = request;
         this.responder = responder;
     }
 
-    public IdentityValidation(Memory memory, IdBasedRequest request, IdentityResponder responder) {
-        this(memory, request.getId(), responder);
-    }
-
     public boolean hasErrors() {
-        return !memory.existsWithId(id);
+        return !memory.existsWithId(request.getId());
     }
 
     public void sendErrors() {
-        if (!memory.existsWithId(id))
-            responder.invalidId(id);
+        if (!memory.existsWithId(request.getId()))
+            responder.invalidId(request.getId());
     }
 }

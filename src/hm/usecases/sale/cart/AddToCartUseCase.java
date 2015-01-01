@@ -6,9 +6,7 @@ import hm.boundaries.delivery.sale.cart.AddToCartResponder;
 import hm.boundaries.persistence.Memory;
 import hm.domain.Customer;
 import hm.domain.Product;
-import hm.usecases.IdentityValidation;
 import hm.usecases.ValidatedUseCase;
-import hm.usecases.Validation;
 
 public class AddToCartUseCase implements UseCase {
     private Memory<Customer> customerMemory;
@@ -17,10 +15,7 @@ public class AddToCartUseCase implements UseCase {
 
     public static UseCase create(Memory<Customer> customerMemory, Memory<Product> productMemory, AddToCartRequest request, AddToCartResponder responder) {
         UseCase useCase = new AddToCartUseCase(customerMemory, productMemory, request);
-        Validation customerIdValidation = new IdentityValidation(customerMemory, request.getCustomerId(), responder);
-        Validation productIdValidation = new IdentityValidation(productMemory, request.getProductId(), responder);
-        Validation numberOfUnitsValidation = new NumberOfUnitsValidation(request, responder);
-        return new ValidatedUseCase(useCase, customerIdValidation, productIdValidation, numberOfUnitsValidation);
+        return new ValidatedUseCase(useCase, new AddToCartValidation(customerMemory, productMemory, request, responder));
     }
 
     private AddToCartUseCase(Memory<Customer> customerMemory, Memory<Product> productMemory, AddToCartRequest request) {

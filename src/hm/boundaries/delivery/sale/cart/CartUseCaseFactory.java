@@ -28,7 +28,7 @@ public class CartUseCaseFactory {
         return PresentCartUseCase.create(customerMemory, productMemory, request, responder);
     }
 
-    public UseCase makeRemover(ChangeCartRequest request, IdentityResponder responder) {
+    public UseCase makeRemover(ChangeCartRequest request, ChangeCartResponder responder) {
         return RemoveFromCartUseCase.create(customerMemory, productMemory, request, responder);
     }
 
